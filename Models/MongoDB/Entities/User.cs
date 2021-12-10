@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace PComputerApi.Models.Entities
-
+namespace MusimilarApi.MongoDB.Models.Entities
 {
     public class User : Entity
     {

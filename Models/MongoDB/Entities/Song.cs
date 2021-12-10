@@ -1,8 +1,8 @@
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace PComputerApi.Models.Entities{
+namespace MusimilarApi.MongoDB.Models.Entities{
 
-    public class Track : Entity{
+    public class Song : Entity{
 
         [BsonElement("artist")]
         public string Artist { get; set; }
@@ -15,16 +15,16 @@ namespace PComputerApi.Models.Entities{
     public class AudioFeatures{
 
         [BsonElement("acounsticness")]
-        public double Acounsticness { get; set; }
+        public double? Acounsticness { get; set; }
 
         [BsonElement("acounsticness")]
-        public double Energy { get; set; }
+        public double? Energy { get; set; }
 
         [BsonElement("timeSignature")]
-        public string TimeSignature { get; set; }
+        public double? TimeSignature { get; set; }
 
         [BsonElement("valence")]
-        public string Valence { get; set; }
+        public double? Valence { get; set; }
     }
     
 }

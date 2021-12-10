@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace MusimilarApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ArtistController : ControllerBase
     {
         private readonly ILogger<ArtistController> _logger;

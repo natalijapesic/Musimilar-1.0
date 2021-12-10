@@ -1,4 +1,5 @@
-namespace PComputerApi.Models
+
+namespace MusimilarApi.MongoDB.Models
 {
     public class DatabaseSettings : IDatabaseSettings
     {
