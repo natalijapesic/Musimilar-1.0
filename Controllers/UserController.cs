@@ -30,11 +30,19 @@ namespace MusimilarApi.Controllers
         }
 
         
-        [HttpGet("id")]
+        [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
            return await userService.GetAsync(id);
         }
+
+        [HttpDelete("{id:length(24)}")]
+        public async Task DeleteUser(string id)
+        {
+           await userService.DeleteAsync(id);
+        }
+
+
 
         [AllowAnonymous]
         [HttpPost]
