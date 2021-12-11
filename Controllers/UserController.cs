@@ -42,8 +42,6 @@ namespace MusimilarApi.Controllers
            await userService.DeleteAsync(id);
         }
 
-
-
         [AllowAnonymous]
         [HttpPost]
         public async Task<User> Insert(User user){

@@ -6,8 +6,10 @@ namespace MusimilarApi.MongoDB.Models.Entities{
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("id")]
         public virtual string Id { get; set; }
 
+        [BsonElement("name")]
         public virtual string Name { get; set; }
 
     }
