@@ -9,8 +9,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MusimilarApi.Interfaces;
-using MusimilarApi.MongoDB.Models;
+using MusimilarApi.Models.MongoDB;
 using MusimilarApi.Service;
+using Neo4j.Driver;
 
 namespace MusimilarApi
 {
@@ -26,20 +27,27 @@ namespace MusimilarApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();//.AddNewtonsoftJson(options => options.UseMemberCasing());
+
             services.Configure<DatabaseSettings>(
             Configuration.GetSection(nameof(DatabaseSettings)));
+
 
             services.AddSingleton<IDatabaseSettings>(sp =>
             sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
+            
+            
+
+            services.AddSingleton(GraphDatabase.Driver(Configuration.GetSection("Neo4jSettings:Server").Value,
+                                      AuthTokens.Basic(Configuration.GetSection("Neo4jSettings:UserName").Value,
+                                                       Configuration.GetSection("Neo4jSettings:Password").Value)));
 
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISongService, SongService>();
             services.AddScoped<IArtistService, ArtistService>();
             
-            services.AddControllers();
-                // .AddNewtonsoftJson(options => options.UseMemberCasing());
 
             AddJwt(services);
 

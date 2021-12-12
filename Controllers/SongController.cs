@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MusimilarApi.Interfaces;
-using MusimilarApi.MongoDB.Models.Entities;
+using MusimilarApi.Models.MongoDB.Entities;
 
 namespace MusimilarApi.Controllers
 {

@@ -50,3 +50,5 @@ C:\Users\Nand\web\NBP\MusimilarApi\obj\Debug\net5.0\MusimilarApi.genruntimeconfi
 C:\Users\Nand\web\NBP\MusimilarApi\obj\Debug\net5.0\staticwebassets\MusimilarApi.StaticWebAssets.Manifest.cache
 C:\Users\Nand\web\NBP\MusimilarApi\obj\Debug\net5.0\staticwebassets\MusimilarApi.StaticWebAssets.xml
 C:\Users\Nand\web\NBP\MusimilarApi\obj\Debug\net5.0\scopedcss\bundle\MusimilarApi.styles.css
+C:\Users\Nand\web\NBP\MusimilarApi\bin\Debug\net5.0\Neo4j.Driver.dll
+C:\Users\Nand\web\NBP\MusimilarApi\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MusimilarApi.Interfaces;
-using MusimilarApi.Models.MongoDB.Requests;
-using MusimilarApi.MongoDB.Models.Entities;
+using MusimilarApi.Models.Requests;
+using MusimilarApi.Models.MongoDB.Entities;
 
 namespace MusimilarApi.Controllers
 {

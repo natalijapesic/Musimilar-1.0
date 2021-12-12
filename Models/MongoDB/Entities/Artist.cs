@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace MusimilarApi.MongoDB.Models.Entities{
+namespace MusimilarApi.Models.MongoDB.Entities{
 
     public class Artist : Entity{
 
@@ -10,10 +10,10 @@ namespace MusimilarApi.MongoDB.Models.Entities{
         public string Image { get; set; }
 
         [BsonElement("genres")]
-        public IEnumerable<string> Genres { get; set; }
+        public List<string> Genres { get; set; }
 
         [BsonElement("albums")]
-        public IEnumerable<Album> Albums { get; set; }
+        public List<Album> Albums { get; set; }
 
     }
 

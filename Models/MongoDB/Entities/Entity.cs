@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace MusimilarApi.MongoDB.Models.Entities{
+namespace MusimilarApi.Models.MongoDB.Entities{
     public abstract class Entity
     {
         [BsonId]
