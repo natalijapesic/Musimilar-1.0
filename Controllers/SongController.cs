@@ -13,43 +13,42 @@ namespace MusimilarApi.Controllers
     [Route("api/[controller]")]
     public class SongController : ControllerBase
     {
-        private readonly ILogger<SongController> logger;
-        private readonly ISongService SongService;
+        private readonly ILogger<SongController> _logger;
+        private readonly ISongService _songService;
 
-        public SongController(ISongService SongService, ILogger<SongController> logger)
+        public SongController(ISongService songService, ILogger<SongController> logger)
         {
-            this.SongService = SongService;
-            this.logger = logger;
+            this._songService = songService;
+            this._logger = logger;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Song>> GetSongs(){
-            //this.logger.LogInformation("Get Song");
 
-            return await SongService.GetAllAsync();
+            return await _songService.GetAllAsync();
         }
 
         
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Song>> GetSong(string id)
         {
-           return await SongService.GetAsync(id);
+           return await _songService.GetAsync(id);
         }
 
         [HttpDelete("{id:length(24)}")]
         public async Task DeleteSong(string id)
         {
-           await SongService.DeleteAsync(id);
+           await _songService.DeleteAsync(id);
         }
 
         [HttpPost]
         public async Task<Song> Insert(Song Song){
-            return await SongService.InsertAsync(Song);
+            return await _songService.InsertAsync(Song);
         }
 
         [HttpPost("many")]
         public async Task<IEnumerable<Song>> InsertMany(IEnumerable<Song> songs){
-            return await SongService.InsertManyAsync(songs);
+            return await _songService.InsertManyAsync(songs);
         }
 
 

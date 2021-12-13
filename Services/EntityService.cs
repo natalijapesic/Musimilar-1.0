@@ -11,8 +11,8 @@ namespace MusimilarApi.Services
 {
     public class EntityService<T> : IEntityService<T> where T : Entity
     {
-        public readonly IMongoCollection<T> collection;
-        public readonly ILogger<EntityService<T>> logger;
+        public readonly IMongoCollection<T> _collection;
+        public readonly ILogger<EntityService<T>> _logger;
 
         public EntityService(   IDatabaseSettings settings, 
                                 string collectionName, 
@@ -25,34 +25,34 @@ namespace MusimilarApi.Services
             if (! database.ListCollectionNames().ToList().Contains(collectionName))
                 database.CreateCollection(collectionName); 
 
-            this.collection = database.GetCollection<T>(collectionName);
+            this._collection = database.GetCollection<T>(collectionName);
 
-            this.logger = logger;
+            this._logger = logger;
         }
 
 
         public async Task<IEnumerable<T>> GetAllAsync() =>
-            await collection.Find(obj => true).ToListAsync();
+            await _collection.Find(obj => true).ToListAsync();
 
         public async Task<T> GetAsync(string id)
         {
-            return await collection.Find<T>(obj => obj.Id == id).FirstOrDefaultAsync();
+            return await _collection.Find<T>(obj => obj.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<T> InsertAsync(T obj)
         {
-            await collection.InsertOneAsync(obj);
+            await _collection.InsertOneAsync(obj);
             return obj;
         }
 
         public async Task DeleteAsync(string id)
         {
-            await collection.DeleteOneAsync(obj => obj.Id == id);
+            await _collection.DeleteOneAsync(obj => obj.Id == id);
         }
 
         public async Task<IEnumerable<T>> InsertManyAsync(IEnumerable<T> obj)
         {
-            await collection.InsertManyAsync(obj);
+            await _collection.InsertManyAsync(obj);
             return obj;
         }
     }

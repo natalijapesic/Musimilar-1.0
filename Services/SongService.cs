@@ -10,8 +10,8 @@ namespace MusimilarApi.Service
 {
     public class SongService: EntityService<Song>, ISongService
     {
-        public readonly IMongoCollection<Song> Songs;
-        public readonly IConfiguration configuration;
+        public readonly IMongoCollection<Song> _songs;
+
         //private readonly string key;
 
         public SongService(IDatabaseSettings settings, ILogger<SongService> logger)

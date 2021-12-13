@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MusimilarApi.Interfaces;
-using MusimilarApi.Models.MongoDB.Entities;
 
-namespace MusimilarApi.Interfaces{
-    public interface IArtistService : IEntityService<Artist>{
+namespace MusimilarApi.Interfaces
+{
+    public interface IArtistService {
 
-        Task<ArtistNode> InserNodeAsync(Artist a);
-        Task<List<string>> ConnectArtistWithGenresAsync(string id, List<string> genres);
+        Task<ArtistNode> InserNodeAsync(ArtistNode a);
+        Task<List<string>> ConnectArtistWithGenresAsync(string name, List<string> genres);
+        Task<List<ArtistNode>> GetArtistNodesByGenreAsync(string genre);
+        Task<List<ArtistNode>> GetSimilarArtistsAsync(string artistName);
+        Task<ArtistNode> GetArtistAsync(string artistName);
+        Task DeleteAsync(string name);
 
     }
 }

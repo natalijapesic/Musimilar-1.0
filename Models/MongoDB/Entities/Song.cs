@@ -20,11 +20,12 @@ namespace MusimilarApi.Models.MongoDB.Entities{
         [BsonElement("energy")]
         public double? Energy { get; set; }
 
-        [BsonElement("timeSignature")]
-        public double? TimeSignature { get; set; }
+        [BsonElement("instrumentalness")]
+        public double? Instrumentalness { get; set; }
 
         [BsonElement("valence")]
         public double? Valence { get; set; }
+
     }
     
 }

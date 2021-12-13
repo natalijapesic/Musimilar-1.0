@@ -23,37 +23,43 @@ namespace MusimilarApi.Controllers
             this._logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Artist>> GetArtists(){
-            //this.logger.LogInformation("Get Artist");
+    
 
-            return await _artistService.GetAllAsync();
-        }
-
-        
-        [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<Artist>> GetArtist(string id)
+        [HttpDelete("{name}")]
+        public async Task DeleteArtistAsync(string name)
         {
-           return await _artistService.GetAsync(id);
+           await _artistService.DeleteAsync(name);
         }
 
-        [HttpDelete("{id:length(24)}")]
-        public async Task DeleteArtist(string id)
+        [HttpGet("{name}")]
+        public async Task<ArtistNode> GetArtistAsync(string name)
         {
-           await _artistService.DeleteAsync(id);
+           return await _artistService.GetArtistAsync(name);
         }
+
+        [HttpGet("genre/{genre}")]
+        public async Task<List<ArtistNode>> GetArtistByGenreAsync(string genre)
+        {
+           return await _artistService.GetArtistNodesByGenreAsync(genre);
+        }
+
+        [HttpGet("similar/{artistName}")]
+        public async Task<List<ArtistNode>> GetSimilarArtistsAsync(string artistName)
+        {
+           return await _artistService.GetSimilarArtistsAsync(artistName);
+        }
+
 
         [HttpPost]
-        public async Task<Artist> Insert(Artist Artist){
-            return await _artistService.InsertAsync(Artist);
-        }
+        public async Task<List<string>> InsertAsync(ArtistNode artist){
 
-        [HttpPost("many")]
-        public async Task<List<string>> InsertMany(Artist artist){
+            await _artistService.InserNodeAsync(artist);
+            this._logger.LogInformation($"{artist.Name} was inserted in Neo4j");
 
-            Artist obj = await _artistService.InsertAsync(artist);
-            await _artistService.InserNodeAsync(obj);
-            return await _artistService.ConnectArtistWithGenresAsync(obj.Id.ToString(), obj.Genres);
+            List<string> result = await _artistService.ConnectArtistWithGenresAsync(artist.Name, artist.Genres);
+            this._logger.LogInformation($"{result} was inserted in Neo4j");
+
+            return result;
             
         }
 

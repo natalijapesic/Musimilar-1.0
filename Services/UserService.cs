@@ -17,9 +17,9 @@ namespace MusimilarApi.Service
 {
     public class UserService: EntityService<User>, IUserService
     {
-        public readonly IMongoCollection<User> users;
-        public readonly IConfiguration configuration;
-        public readonly UserManager<User> userManager;
+        public readonly IMongoCollection<User> _users;
+        public readonly IConfiguration _configuration;
+        public readonly UserManager<User> _userManager;
 
         //private readonly string key;
 
@@ -28,19 +28,19 @@ namespace MusimilarApi.Service
                           ILogger<UserService> logger)
         :base(settings, settings.UsersCollectionName, logger){
             
-            this.configuration = config;
+            this._configuration = config;
         }
 
 
         public async Task<string> LogIn(string email, string password)
         {
-            var user = await collection.Find(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
+            var user = await _collection.Find(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
 
             if(user == null)
                 return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.UTF8.GetBytes(configuration.GetSection("JwtKey").ToString());
+            var tokenKey = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtKey").ToString());
             var tokenDescriptor = new SecurityTokenDescriptor(){
                 Subject = new ClaimsIdentity(new Claim[]{
                     new Claim(ClaimTypes.Email, email),
