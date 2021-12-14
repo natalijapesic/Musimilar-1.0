@@ -49,6 +49,81 @@ namespace MusimilarApi.Service
             throw new System.NotImplementedException();
         }
 
+        public async Task<List<ArtistNode>> GetSimilarArtistsAsync(string artistName)
+        {
+            if(string.IsNullOrWhiteSpace(artistName))
+            {
+                this._logger.LogError("String is null or white space");
+                return null;
+            }
+
+            using(var session = _driver.AsyncSession())
+            {
+                return await session.WriteTransactionAsync(async tx => 
+                {
+                        var cursor = await tx.RunAsync(@"MATCH (a1:ArtistNode 
+                                                        {name: $artistName})-[:PLAYS*2]-(a:ArtistNode)
+                                                        RETURN a.name AS name,
+                                                               a.genres AS genres,
+                                                               a.image AS image",
+                                                    new {artistName}
+                                                    );
+
+                        return await cursor.ToListAsync(record => new ArtistNode(
+                            record["name"].As<string>(), record["genres"].As<List<string>>(), record["image"].As<string>()
+                        ));
+                });
+            }
+        }
+
+        public async Task<List<ArtistNode>> GetArtistNodesByGenreAsync(string genre)
+        {     
+            if(string.IsNullOrWhiteSpace(genre))
+            {
+                this._logger.LogError("String is null or white space");
+                return null;
+            }                                                                                     
+
+            using(var session = _driver.AsyncSession())
+            {
+                return await session.WriteTransactionAsync(async tx => 
+                {
+                        var cursor = await tx.RunAsync(@"MATCH (g:GenreNode), (a:ArtistNode) 
+                                                        WHERE (a)<-[:PLAYS]-(g) AND g.name = $genre
+                                                        RETURN a.name AS name,
+                                                               a.genres AS genres,
+                                                               a.image AS image",
+                                                    new {genre = genre}
+                                                    );
+
+                        return await cursor.ToListAsync(record => new ArtistNode(
+                            record["name"].As<string>(), record["genres"].As<List<string>>(), record["image"].As<string>()
+                        ));
+                });
+            }
+        }
+
+        public async Task<ArtistNode> InserNodeAsync(ArtistNode obj)
+        {
+            using(var session = _driver.AsyncSession())
+            {
+                return await session.WriteTransactionAsync(async tx => 
+                {
+                    var cursor = await tx.RunAsync(@"MERGE (a:ArtistNode 
+                                                    {name: $name, genres: $genres, image: $image})
+                                                    RETURN a.name AS name,
+                                                           a.genres AS genres,
+                                                           a.image AS image",
+                                                    new {name = obj.Name, genres = obj.Genres, image = obj.Image}
+                                                   );
+
+                    return await cursor.SingleAsync<ArtistNode>(record => new ArtistNode(
+                            record["name"].As<string>(), record["genres"].As<List<string>>(), record["image"].As<string>()));
+
+                });
+            }
+        }
+
         public async Task<ArtistNode> GetArtistAsync(string artistName)
         {
             if(string.IsNullOrWhiteSpace(artistName))
@@ -72,64 +147,6 @@ namespace MusimilarApi.Service
                         return await cursor.SingleAsync(record => new ArtistNode(
                             record["name"].As<string>(), record["genres"].As<List<string>>(), record["image"].As<string>()
                         ));
-                });
-            }
-        }
-
-        public async Task<List<ArtistNode>> GetArtistNodesByGenreAsync(string genre)
-        {                                                                                          
-
-            using(var session = _driver.AsyncSession())
-            {
-                return await session.WriteTransactionAsync(async tx => 
-                {
-                        var cursor = await tx.RunAsync(@"MATCH (g:GenreNode), (a:ArtistNode) 
-                                                        WHERE (a)<-[:PLAYS]-(g) AND g.name = $genre
-                                                        RETURN a.name AS name,
-                                                               a.genres AS genres,
-                                                               a.image AS image",
-                                                    new {genre = genre}
-                                                    );
-
-                        return await cursor.ToListAsync(record => new ArtistNode(
-                            record["name"].As<string>(), record["genres"].As<List<string>>(), record["image"].As<string>()
-                        ));
-                });
-            }
-        }
-
-        public async Task<List<ArtistNode>> GetSimilarArtistsAsync(string artistName)
-        {
-            List<ArtistNode> union = new List<ArtistNode>();
-            ArtistNode artist = await GetArtistAsync(artistName);
-            if(artist != null)
-            {
-                foreach (var genre in artist.Genres)
-                    union = union.Union(await GetArtistNodesByGenreAsync(genre)).ToList();
-                
-                union.OrderByDescending(a => a.Genres.Intersect(artist.Genres).Count()).ToList().Remove(artist);
-                return union;
-            }
-            return null;
-        }
-
-        public async Task<ArtistNode> InserNodeAsync(ArtistNode obj)
-        {
-            using(var session = _driver.AsyncSession())
-            {
-                return await session.WriteTransactionAsync(async tx => 
-                {
-                    var cursor = await tx.RunAsync(@"MERGE (a:ArtistNode 
-                                                    {name: $name, genres: $genres, image: $image})
-                                                    RETURN a.name AS name,
-                                                           a.genres AS genres,
-                                                           a.image AS image",
-                                                    new {name = obj.Name, genres = obj.Genres, image = obj.Image}
-                                                   );
-
-                    return await cursor.SingleAsync<ArtistNode>(record => new ArtistNode(
-                            record["name"].As<string>(), record["genres"].As<List<string>>(), record["image"].As<string>()));
-
                 });
             }
         }

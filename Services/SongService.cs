@@ -69,9 +69,7 @@ namespace MusimilarApi.Service
                                                             .Select(song => song.Name)
                                                             .ToList();
 
-             
-
-            Playlist newPlaylist = new Playlist(request.PlaylistName, recommendedNames);
+            Playlist newPlaylist = new Playlist(request.PlaylistName, recommendedNames, songExample.Id);
 
             return newPlaylist;            
         }

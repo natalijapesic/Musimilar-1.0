@@ -25,10 +25,15 @@ namespace MusimilarApi.Models.MongoDB.Entities
         [BsonElement("songs")]
         public List<string> Songs { get; set; }
 
-        public Playlist(string name, List<string> songs){
+        [BsonElement("songId")]
+        public string SongId { get; set; }
+
+        public Playlist(string name, List<string> songs, string songId){
             
             this.Name = name;
             this.Songs = songs;
+            this.SongId = songId;
+            
         }
 
     }
