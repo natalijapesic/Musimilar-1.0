@@ -57,21 +57,32 @@ namespace MusimilarApi.Service
                 return null;
             }
 
+            ArtistNode artist = await GetArtistAsync(artistName);
+
+            if(artist == null)
+            {
+                _logger.LogError($"Artist {artistName} doesnt exist");
+                return null;
+            }    
+
             using(var session = _driver.AsyncSession())
             {
                 return await session.WriteTransactionAsync(async tx => 
                 {
                         var cursor = await tx.RunAsync(@"MATCH (a1:ArtistNode 
                                                         {name: $artistName})-[:PLAYS*2]-(a:ArtistNode)
-                                                        RETURN a.name AS name,
+                                                        RETURN DISTINCT a.name AS name,
                                                                a.genres AS genres,
                                                                a.image AS image",
                                                     new {artistName}
-                                                    );
+                                                    );                        
 
-                        return await cursor.ToListAsync(record => new ArtistNode(
+                        List<ArtistNode> similarArtists = await cursor.ToListAsync(record => new ArtistNode(
                             record["name"].As<string>(), record["genres"].As<List<string>>(), record["image"].As<string>()
                         ));
+
+                        return similarArtists.OrderByDescending(a => a.Genres.Intersect(artist.Genres).Count()).ToList();
+
                 });
             }
         }
