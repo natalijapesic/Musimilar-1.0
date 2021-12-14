@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Models.MongoDB.Entities;
+using MusimilarApi.Models.Requests;
 
 namespace MusimilarApi.Controllers
 {
@@ -35,6 +36,12 @@ namespace MusimilarApi.Controllers
            return await _songService.GetAsync(id);
         }
 
+        [HttpGet("playlist")]
+        public async Task<Playlist> RecommendPlaylist(PlaylistRequest request)
+        {
+           return await _songService.RecommendPlaylistAsync(request);
+        }
+
         [HttpDelete("{id:length(24)}")]
         public async Task DeleteSong(string id)
         {
@@ -43,13 +50,15 @@ namespace MusimilarApi.Controllers
 
         [HttpPost]
         public async Task<Song> Insert(Song Song){
-            return await _songService.InsertAsync(Song);
+            return await _songService.InsertSongAsync(Song);
         }
 
         [HttpPost("many")]
         public async Task<IEnumerable<Song>> InsertMany(IEnumerable<Song> songs){
             return await _songService.InsertManyAsync(songs);
         }
+
+
 
 
     }

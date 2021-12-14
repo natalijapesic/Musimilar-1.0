@@ -7,6 +7,9 @@ namespace MusimilarApi.Models.MongoDB.Entities{
         [BsonElement("artist")]
         public string Artist { get; set; }
 
+        [BsonElement("genre")]
+        public string Genre { get; set; }
+
         [BsonElement("audioFeatures")]
         public AudioFeatures AudioFeatures { get; set; }
 
@@ -14,17 +17,23 @@ namespace MusimilarApi.Models.MongoDB.Entities{
 
     public class AudioFeatures{
 
-        [BsonElement("acounsticness")]
-        public double? Acounsticness { get; set; }
+        [BsonElement("tempo")]
+        public double Tempo { get; set; }
 
         [BsonElement("energy")]
-        public double? Energy { get; set; }
+        public double Energy { get; set; }
 
-        [BsonElement("instrumentalness")]
-        public double? Instrumentalness { get; set; }
+        [BsonElement("speechiness")]
+        public double Speechiness { get; set; }
+
+        [BsonElement("danceability")]
+        public double Danceability { get; set; }
+
+        [BsonElement("durationMS")]
+        public double DurationMS { get; set; }
 
         [BsonElement("valence")]
-        public double? Valence { get; set; }
+        public double Valence { get; set; }
 
     }
     

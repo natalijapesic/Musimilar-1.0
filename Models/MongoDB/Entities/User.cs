@@ -23,7 +23,13 @@ namespace MusimilarApi.Models.MongoDB.Entities
         public string Name { get; set; }
 
         [BsonElement("songs")]
-        public IEnumerable<ObjectId> Songs { get; set; }
+        public List<string> Songs { get; set; }
+
+        public Playlist(string name, List<string> songs){
+            
+            this.Name = name;
+            this.Songs = songs;
+        }
 
     }
 
