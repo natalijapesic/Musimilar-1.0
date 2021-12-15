@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MusimilarApi.Entities.Neo4j;
 
 namespace MusimilarApi.Interfaces
 {

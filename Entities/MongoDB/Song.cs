@@ -1,6 +1,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace MusimilarApi.Models.MongoDB.Entities{
+namespace MusimilarApi.Entities.MongoDB{
 
     public class Song : Entity{
 

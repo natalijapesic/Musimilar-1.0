@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
-using MusimilarApi.Models.MongoDB;
-using MusimilarApi.Models.MongoDB.Entities;
 
 namespace MusimilarApi.Services
 {

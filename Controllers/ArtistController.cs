@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MusimilarApi.Entities.Neo4j;
 using MusimilarApi.Interfaces;
-using MusimilarApi.Models.MongoDB.Entities;
 using Neo4j.Driver;
 
 namespace MusimilarApi.Controllers

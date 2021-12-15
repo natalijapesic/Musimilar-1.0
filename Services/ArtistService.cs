@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using MusimilarApi.Entities.Neo4j;
 using MusimilarApi.Interfaces;
 using Neo4j.Driver;
 

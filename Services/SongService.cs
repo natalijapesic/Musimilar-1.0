@@ -4,9 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
-using MusimilarApi.Models.MongoDB;
-using MusimilarApi.Models.MongoDB.Entities;
 using MusimilarApi.Models.Requests;
 using MusimilarApi.Services;
 
@@ -55,6 +54,7 @@ namespace MusimilarApi.Service
         public async Task<Playlist> RecommendPlaylistAsync(PlaylistRequest request)
         {
             Song songExample = await GetSongByNameAsync(request.SongExample);
+            
             if(songExample == null)
             {
                 this._logger.LogError("Song doesnt exist in database");

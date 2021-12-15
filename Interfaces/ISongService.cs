@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MusimilarApi.Models.MongoDB.Entities;
+using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Models.Requests;
 
 namespace MusimilarApi.Interfaces

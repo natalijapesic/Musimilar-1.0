@@ -8,8 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
-using MusimilarApi.Models.MongoDB;
 using MusimilarApi.Service;
 using Neo4j.Driver;
 

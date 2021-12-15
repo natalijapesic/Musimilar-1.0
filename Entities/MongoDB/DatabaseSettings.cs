@@ -1,5 +1,5 @@
 
-namespace MusimilarApi.Models.MongoDB
+namespace MusimilarApi.Entities.MongoDB
 {
     public class DatabaseSettings : IDatabaseSettings
     {

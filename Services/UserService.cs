@@ -8,9 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
-using MusimilarApi.Models.MongoDB;
-using MusimilarApi.Models.MongoDB.Entities;
 using MusimilarApi.Services;
 
 namespace MusimilarApi.Service
