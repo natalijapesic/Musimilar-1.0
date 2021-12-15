@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MusimilarApi.Entities.MongoDB;
+using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Service;
 using Neo4j.Driver;
@@ -27,6 +28,7 @@ namespace MusimilarApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
 
             services.Configure<DatabaseSettings>(
@@ -67,9 +69,14 @@ namespace MusimilarApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MusimilarApi v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection(); //za sta je ovo?
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -82,21 +89,18 @@ namespace MusimilarApi
 
         private IServiceCollection AddJwt(IServiceCollection services)
 		{
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            // .AddJwtBearer(
-            //kaze da i ovako moze da radi ??
-			// services.AddAuthentication(options =>
-			// {
-			// 	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-			// 	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			// })
+			services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
 				.AddJwtBearer(options =>
 				{
                     options.RequireHttpsMetadata = false;
                     options.SaveToken = true;
 
                     //ovo da proverim
-					options.TokenValidationParameters = new TokenValidationParameters()
+					options.TokenValidationParameters = new TokenValidationParameters
 					{
 						ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key: Encoding.UTF8.GetBytes(Configuration.GetSection("JwtKey").ToString())),

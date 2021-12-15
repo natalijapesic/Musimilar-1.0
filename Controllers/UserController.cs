@@ -51,7 +51,7 @@ namespace MusimilarApi.Controllers
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> LogIn([FromBody] LoginRequest user){
-            var token = await this._userService.LogIn(user.Email, user.Password);
+            var token = await this._userService.Authenticate(user.Email, user.Password);
 
             if(token == null)
                 return Unauthorized();

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MusimilarApi.Entities.MongoDB;
+using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Models.Requests;
 using MusimilarApi.Services;

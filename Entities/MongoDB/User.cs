@@ -12,6 +12,12 @@ namespace MusimilarApi.Entities.MongoDB
         [BsonElement("password")]
         public string Password { get; set; }
 
+        [BsonElement("password")]
+        public string Role { get; set; }
+        
+        [BsonElement("password")]
+        public string Token { get; set; }
+
         [BsonElement("playlists")]
         public IEnumerable<Playlist> Playlists { get; set; }
         

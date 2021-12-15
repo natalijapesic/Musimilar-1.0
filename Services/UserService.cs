@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using MusimilarApi.Entities.MongoDB;
+using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Services;
 
@@ -31,7 +33,7 @@ namespace MusimilarApi.Service
         }
 
 
-        public async Task<string> LogIn(string email, string password)
+        public async Task<User> Authenticate(string email, string password)
         {
             var user = await _collection.Find(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
 
@@ -54,8 +56,15 @@ namespace MusimilarApi.Service
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            
-            return tokenHandler.WriteToken(token);            
+            user.Token = tokenHandler.WriteToken(token);      
+
+            return user.WithoutPassword();      
+        }
+
+        public async Task<User> GetById(string id) 
+        {
+            var user = await _collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            return user.WithoutPassword();
         }
 
     }
