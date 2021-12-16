@@ -9,6 +9,7 @@ using MusimilarApi.Models.Requests;
 
 namespace MusimilarApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -22,18 +23,29 @@ namespace MusimilarApi.Controllers
             this._logger = logger;
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet]
-        public async Task<IEnumerable<User>> GetUsers(){
-            //this.logger.LogInformation("Get user");
+        public async Task<IActionResult> GetUsers(){
 
-            return await _userService.GetAllAsync();
+            var users = await _userService.GetAllAsync();
+
+            return Ok(users);
         }
 
         
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
-           return await _userService.GetAsync(id);
+            var currentUser = User.Identity.Name;
+            if (id != currentUser && !User.IsInRole(Role.Admin))
+                return Forbid();
+
+            var user = await _userService.GetAsync(id);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
         }
 
         [HttpDelete("{id:length(24)}")]
@@ -42,7 +54,7 @@ namespace MusimilarApi.Controllers
            await _userService.DeleteAsync(id);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public async Task<User> Insert(User user){
             return await _userService.InsertAsync(user);
@@ -50,13 +62,13 @@ namespace MusimilarApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult> LogIn([FromBody] LoginRequest user){
-            var token = await this._userService.Authenticate(user.Email, user.Password);
+        public async Task<ActionResult> LogIn([FromBody] LoginRequest request){
+            var user = await this._userService.Authenticate(request.Email, request.Password);
 
-            if(token == null)
+            if(user.Token == null)
                 return Unauthorized();
 
-            return Ok(new {token, user});
+            return Ok(user);
         }
 
 

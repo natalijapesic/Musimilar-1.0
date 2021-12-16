@@ -45,6 +45,7 @@ namespace MusimilarApi.Service
             var tokenDescriptor = new SecurityTokenDescriptor(){
                 Subject = new ClaimsIdentity(new Claim[]{
                     new Claim(ClaimTypes.Email, email),
+                    new Claim(ClaimTypes.Role, user.Role)
                 }),
 
                 Expires = DateTime.Now.AddHours(6),
