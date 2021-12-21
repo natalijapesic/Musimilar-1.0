@@ -7,9 +7,9 @@ namespace MusimilarApi.Interfaces
 {
     public interface ISongService : IEntityService<Song>{
         Task<Song> InsertSongAsync(SongRequest song);
-        //Task<Playlist> RecommendPlaylistAsync(PlaylistRequest request);
+        Task<Playlist> RecommendPlaylistAsync(PlaylistRequest request);
         Task<Song> GetSongByNameAsync(string name);
-        Task<IEnumerable<Song>> GetSongsByGenreAsync(string genre);
+        Task<List<Song>> GetSongsByGenreAsync(string genre);
 
     }
 }

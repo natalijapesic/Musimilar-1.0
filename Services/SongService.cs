@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
@@ -62,38 +65,38 @@ namespace MusimilarApi.Service
                 return SongGenre.Latin;        
         }
 
-        // public async Task<Playlist> RecommendPlaylistAsync(PlaylistRequest request)
-        // {
-        //     Song songExample = await GetSongByNameAsync(request.SongExample);
+        public async Task<Playlist> RecommendPlaylistAsync(PlaylistRequest request)
+        {
+            Song songExample = await GetSongByNameAsync(request.SongExample);
             
-        //     if(songExample == null)
-        //     {
-        //         this._logger.LogError("Song doesnt exist in database");
-        //         return null;
-        //     }  
+            if(songExample == null)
+            {
+                this._logger.LogError("Song doesnt exist in database");
+                return null;
+            }  
 
-        //     List<Song> recommendedSongs = await GetSongsByGenreAsync(songExample.Genre);
+            IEnumerable<Song> recommendedSongs = await GetSongsByGenreAsync(songExample.Genre);
 
-        //     List<SongInfo> recommendedNames = recommendedSongs.OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
-        //                                                                   Math.Abs(s.AudioFeatures.Valence - songExample.AudioFeatures.Valence))
-        //                                                     .Take(request.NumberOfSongs)
-        //                                                     .Select(song => new SongInfo(song.Name, song.Artist))
-        //                                                     .ToList();
+            List<SongInfo> recommendedNames = await _collection.AsQueryable()
+                                                            .Where<Song>(songs => songs.Genre == songExample.Genre)
+                                                            .OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
+                                                                          Math.Abs(s.AudioFeatures.Valence - songExample.AudioFeatures.Valence))
+                                                            .Take(request.NumberOfSongs)
+                                                            .Select(song => new SongInfo(song.Name, song.Artist))
+                                                            .ToListAsync();
 
-        //     Playlist newPlaylist = new Playlist(request.PlaylistName, recommendedNames, new SongInfo(songExample.Name, songExample.Artist));
 
-        //     ISubscriber subscriber = _redis.GetSubscriber();
-        //     await subscriber.PublishAsync(songExample.Genre, JsonSerializer.Serialize<Playlist>(newPlaylist));
+            Playlist newPlaylist = new Playlist(request.PlaylistName, recommendedNames, new SongInfo(songExample.Name, songExample.Artist));
 
-        //     return newPlaylist;            
-        // }
+            return newPlaylist;            
+        }
 
         public async Task<Song> GetSongByNameAsync(string name)
         {
             return await _collection.Find<Song>(s => s.Name == name).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Song>> GetSongsByGenreAsync(string genre)
+        public async Task<List<Song>> GetSongsByGenreAsync(string genre)
         {
             return await _collection.Find<Song>(song => song.Genre == genre).ToListAsync();
         }
