@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,18 +17,22 @@ namespace MusimilarApi.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+        public UserController(IUserService userService, 
+                              ILogger<UserController> logger,
+                              IMapper mapper)
         {
             this._userService = userService;
             this._logger = logger;
+            this._mapper = mapper;
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpGet]
-        public async Task<IActionResult> GetUsers(){
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers(){
 
-            var users = await _userService.GetAllAsync();
+            IEnumerable<User> users = _mapper.Map<IEnumerable<User>>(await _userService.GetAllAsync());
 
             return Ok(users);
         }
@@ -40,7 +45,7 @@ namespace MusimilarApi.Controllers
             if (id != currentUser && !User.IsInRole(Role.Admin))
                 return Forbid();
 
-            var user = await _userService.GetAsync(id);
+            User user = _mapper.Map<User>(await _userService.GetAsync(id));
 
             if (user == null)
                 return NotFound();
@@ -56,14 +61,16 @@ namespace MusimilarApi.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
-        public async Task<User> Insert(User user){
+        public async Task<User> Insert(UserRequest request){
+
+            User user = _mapper.Map<User>(request);
             return await _userService.InsertAsync(user);
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult> LogIn([FromBody] LoginRequest request){
-            var user = await this._userService.Authenticate(request.Email, request.Password);
+        public async Task<ActionResult<User>> LogIn([FromBody] LoginRequest request){
+            User user = await _userService.LogInAsync(request.Email, request.Password);
 
             if(user.Token == null)
                 return Unauthorized();
@@ -71,6 +78,16 @@ namespace MusimilarApi.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
+        [HttpPost("registration")]
+        public async Task<ActionResult<User>> Registration([FromBody] RegisterRequest request)
+        {
+            User user = await _userService.RegisterAsync(request);
+
+            User response = _mapper.Map<User>(user);
+
+            return Ok(user);
+        }
 
     }
 }

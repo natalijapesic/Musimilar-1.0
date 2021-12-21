@@ -17,20 +17,8 @@ namespace MusimilarApi.Entities.MongoDB{
 
     public class AudioFeatures{
 
-        [BsonElement("tempo")]
-        public double Tempo { get; set; }
-
         [BsonElement("energy")]
         public double Energy { get; set; }
-
-        [BsonElement("speechiness")]
-        public double Speechiness { get; set; }
-
-        [BsonElement("danceability")]
-        public double Danceability { get; set; }
-
-        [BsonElement("durationMS")]
-        public double DurationMS { get; set; }
 
         [BsonElement("valence")]
         public double Valence { get; set; }

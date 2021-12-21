@@ -8,11 +8,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Service;
 using Neo4j.Driver;
+using StackExchange.Redis;
 
 namespace MusimilarApi
 {
@@ -38,7 +38,8 @@ namespace MusimilarApi
             services.AddSingleton<IDatabaseSettings>(sp =>
             sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
-            
+            var multiplexer = ConnectionMultiplexer.Connect("localhost");
+            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
             
 
             services.AddSingleton(GraphDatabase.Driver(Configuration.GetSection("Neo4jSettings:Server").Value,
@@ -49,14 +50,16 @@ namespace MusimilarApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISongService, SongService>();
             services.AddScoped<IArtistService, ArtistService>();
-            
 
             AddJwt(services);
+            
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MusimilarApi", Version = "v1" });
             });
+
+            services.AddAutoMapper(typeof(OrganizationProfile));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

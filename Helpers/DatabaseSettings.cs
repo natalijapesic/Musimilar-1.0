@@ -4,7 +4,6 @@ namespace MusimilarApi.Helpers
     public class DatabaseSettings : IDatabaseSettings
     {
         public string UsersCollectionName { get; set; }
-        //public string ArtistsCollectionName { get; set; }
         public string SongsCollectionName { get; set; }
         
         public string ConnectionString { get; set; }
@@ -14,7 +13,6 @@ namespace MusimilarApi.Helpers
     public interface IDatabaseSettings
     {
         string UsersCollectionName { get; set; }
-        //string ArtistsCollectionName { get; set; }
         string SongsCollectionName { get; set; }
 
         string ConnectionString { get; set; }

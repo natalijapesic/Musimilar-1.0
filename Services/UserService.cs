@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -12,33 +11,38 @@ using MongoDB.Driver;
 using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
+using MusimilarApi.Models.Requests;
 using MusimilarApi.Services;
+using StackExchange.Redis;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace MusimilarApi.Service
 {
     public class UserService: EntityService<User>, IUserService
     {
-        public readonly IMongoCollection<User> _users;
+        private readonly IConnectionMultiplexer _redis;
         public readonly IConfiguration _configuration;
-        public readonly UserManager<User> _userManager;
+
 
         //private readonly string key;
-
         public UserService(IDatabaseSettings settings, 
                           IConfiguration config, 
-                          ILogger<UserService> logger)
-        :base(settings, settings.UsersCollectionName, logger){
-            
+                          ILogger<UserService> logger,
+                          IConnectionMultiplexer redis,
+                          IMapper mapper)
+        :base(settings, settings.UsersCollectionName, logger, mapper){
+
             this._configuration = config;
+            this._redis = redis;
         }
 
 
-        public async Task<User> Authenticate(string email, string password)
+        public async Task<User> LogInAsync(string email, string password)
         {
-            var user = await _collection.Find(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
+            User user = await _collection.Find(u => u.Email == email).FirstOrDefaultAsync();
 
-            if(user == null)
-                return null;
+            if(user == null || !BCryptNet.Verify(password, user.PasswordHash))
+                throw new AppException("Username or password is incorrect");
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtKey").ToString());
@@ -65,8 +69,22 @@ namespace MusimilarApi.Service
         public async Task<User> GetById(string id) 
         {
             var user = await _collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+
             return user.WithoutPassword();
         }
 
+        public async Task<User> RegisterAsync(RegisterRequest model)
+        {
+            if(_collection.Find(x => x.Email == model.Email).Any())
+                throw new AppException($"User with this email already exist");
+
+            User user = _mapper.Map<User>(model);
+            user.PasswordHash = BCryptNet.HashPassword(model.Password);
+            user.Role = Entities.MongoDB.Role.User;
+
+            await _collection.InsertOneAsync(user);   
+
+            return user;
+        }
     }
 }

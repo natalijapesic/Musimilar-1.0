@@ -1,0 +1,50 @@
+
+"userEntity":
+{
+	"objectId": "asad",
+	"name": "Smara",
+	"password": "61b3580fd95216debb851df3",
+	"email": "marijastanokovic@elfak.rs",
+	"role": "Admin",
+	"token": "gfcgvhbjklloscnpoauvn.."
+	"subscriptions": ["rap", "rock"]
+	"playlists": { 
+			"name": "Happy",
+			"songs": [
+					{ "name": "MANGO", "artist": "KAMAUU" },
+					{ "name": "The Brand New Heavies", 
+					   "artist": "Dream On Dreamer" }, {…}]
+		       }
+}
+
+"userResponse":
+{
+	"objectId": "asad",
+	"name": "Smara",
+	"email": "marijastanokovic@elfak.rs",
+	"role": "Admin",
+	"token": "gfcgvhbjklloscnpoauvn.."
+	"subscriptions": ["rap", "rock"]
+	"playlists": { 
+			"name": "Happy",
+			"example": { "name": "You & I", "artist": "Dabeull" },
+			"songs": [
+					{ "name": "MANGO", "artist": "KAMAUU" },
+					{ "name": "The Brand New Heavies", 
+					   "artist": "Dream On Dreamer" }, {…}]
+		       }
+}
+
+"login":
+{
+	"name": "Smara",
+	"email": "marijastanokovic@elfak.rs"
+}
+
+"registration":
+{
+	"name": "Smara",
+	"email": "marijastanokovic@elfak.rs",
+	"password": "gbhnjkmlsdlkm"
+}
+

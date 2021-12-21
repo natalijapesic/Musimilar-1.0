@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MusimilarApi.Entities.MongoDB;
@@ -13,10 +14,12 @@ namespace MusimilarApi.Services
     {
         public readonly IMongoCollection<T> _collection;
         public readonly ILogger<EntityService<T>> _logger;
+        public readonly IMapper _mapper;
 
         public EntityService(   IDatabaseSettings settings, 
                                 string collectionName, 
-                                ILogger<EntityService<T>> logger 
+                                ILogger<EntityService<T>> logger,
+                                IMapper mapper 
                             ){
 
             var client = new MongoClient(settings.ConnectionString);
@@ -25,9 +28,10 @@ namespace MusimilarApi.Services
             if (! database.ListCollectionNames().ToList().Contains(collectionName))
                 database.CreateCollection(collectionName); 
 
-            this._collection = database.GetCollection<T>(collectionName);
+            _collection = database.GetCollection<T>(collectionName);
 
-            this._logger = logger;
+            _logger = logger;
+            _mapper = mapper;
         }
 
 

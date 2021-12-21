@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using MusimilarApi.Entities.MongoDB;
 
-namespace MusimilarApi.Helpers{
+namespace MusimilarApi.Helpers
+{
     public static class ExtensionMethods{
         public static IEnumerable<User> WithoutPasswords(this IEnumerable<User> users) 
         {
@@ -15,7 +16,7 @@ namespace MusimilarApi.Helpers{
         {
             if (user == null) return null;
 
-            user.Password = null;
+            user.PasswordHash = null;
             return user;
         }
     }

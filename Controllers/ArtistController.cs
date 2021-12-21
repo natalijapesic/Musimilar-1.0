@@ -23,7 +23,6 @@ namespace MusimilarApi.Controllers
             this._logger = logger;
         }
 
-    
 
         [HttpDelete("{name}")]
         public async Task DeleteArtistAsync(string name)
