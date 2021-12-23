@@ -13,6 +13,8 @@ namespace MusimilarApi.Helpers
             CreateMap<AudioFeaturesRequest, AudioFeatures>();
             CreateMap<SongRequest, Song>();
             CreateMap<Song, SongResponse>();
+            CreateMap<SongInfo, SongInfoResponse>();
+            CreateMap<Song, SongInfo>();
 
             CreateMap<RegisterRequest, User>();
             CreateMap<User, UserResponse>();

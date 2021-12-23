@@ -11,19 +11,19 @@ using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Models.Requests;
 using MusimilarApi.Services;
-using StackExchange.Redis;
 
 namespace MusimilarApi.Service
 {
     public class SongService: EntityService<Song>, ISongService
-    {
-        private readonly IConnectionMultiplexer _redis;
+    {   
+        private readonly IPlaylistService _playlistService;
         public SongService(IDatabaseSettings settings, 
-                          ILogger<SongService> logger, 
-                          IConnectionMultiplexer redis,
-                          IMapper mapper)
+                          ILogger<SongService> logger,
+                          IMapper mapper,
+                          IPlaylistService playlistService)
         :base(settings, settings.SongsCollectionName, logger, mapper){
-            _redis = redis;
+
+            _playlistService = playlistService;
         }
 
         public async Task<Song> InsertSongAsync(SongRequest request){
@@ -87,36 +87,30 @@ namespace MusimilarApi.Service
                 return SongGenre.Latin;        
         }
 
-        public async Task<Playlist> RecommendPlaylistAsync(PlaylistRequest request)
+        public async Task<List<SongInfo>> RecommendPlaylistAsync(PlaylistRequest request)
         {
-            //ovde proveri da li vec postoji generisana pl u Redisu na osnovu pesme
-            Song songExample = await GetSongByNameAsync(request.SongExample);
+            Song songExample = await GetSongByNameAsync(request.Name, request.Artist);
+
+            List<Song> songs = await GetSongsByGenreAsync(songExample.Genre);
+
+            List<Song> recommendedSongs = songs.OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
+                                                            Math.Abs(s.AudioFeatures.Valence - songExample.AudioFeatures.Valence))
+                                                .Take(10)
+                                                .ToList();
+
+            List<SongInfo> songInfos = _mapper.Map<List<SongInfo>>(recommendedSongs);
+            long numberInput = await _playlistService.CreateSetOfSongs(songInfos, songExample.Id);
+            _logger.LogInformation($"Set has {numberInput} songs");
             
-            if(songExample == null)
-            {
-                this._logger.LogError("Song doesnt exist in database");
-                return null;
-            }  
 
-            IEnumerable<Song> recommendedSongs = await GetSongsByGenreAsync(songExample.Genre);
-
-            List<SongInfo> recommendedNames = await _collection.AsQueryable()
-                                                            .Where<Song>(songs => songs.Genre == songExample.Genre) 
-                                                            .OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
-                                                                          Math.Abs(s.AudioFeatures.Valence - songExample.AudioFeatures.Valence))
-                                                            .Take(request.NumberOfSongs)
-                                                            .Select(song => new SongInfo(song.Id, song.Name, song.Artist))
-                                                            .ToListAsync();
-
-
-            Playlist newPlaylist = new Playlist(request.PlaylistName, recommendedNames, new SongInfo(songExample.Id, songExample.Name, songExample.Artist));
-
-            return newPlaylist;            
+            return songInfos;            
         }
 
-        public async Task<Song> GetSongByNameAsync(string name)
+
+
+        public async Task<Song> GetSongByNameAsync(string name, string artist)
         {
-            return await _collection.Find<Song>(s => s.Name == name).FirstOrDefaultAsync();
+            return await _collection.Find<Song>(s => s.Name == name && s.Artist == artist).FirstAsync();
         }
 
         public async Task<List<Song>> GetSongsByGenreAsync(string genre)

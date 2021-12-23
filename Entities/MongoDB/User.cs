@@ -26,44 +26,4 @@ namespace MusimilarApi.Entities.MongoDB
         
     }
 
-    public class Playlist {
-        
-        [BsonElement("name")]
-        public string Name { get; set; }
-
-        [BsonElement("songs")]
-        public ICollection<SongInfo> Songs { get; set; }
-
-        [BsonElement("example")]
-        public SongInfo Example { get; set; }
-
-        public Playlist(string name, List<SongInfo> songs, SongInfo info){
-            
-            this.Name = name;
-            this.Songs = songs;  
-            this.Example = info;          
-        }
-
-    }
-
-    public class SongInfo{
-
-        [BsonElement("songId")]
-        public string SongId { get; set; }
-
-        [BsonElement("name")]
-        public string Name { get; set; }
-
-        [BsonElement("artist")]
-        public string Artist { get; set; }
-
-        public SongInfo(string id, string name, string artist)
-        {
-            this.SongId = SongId;
-            this.Name = name;
-            this.Artist = artist; 
-        }
-
-    }
-
 }

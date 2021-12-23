@@ -50,6 +50,7 @@ namespace MusimilarApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISongService, SongService>();
             services.AddScoped<IArtistService, ArtistService>();
+            services.AddScoped<IPlaylistService, PlaylistService>();
 
             AddJwt(services);
             

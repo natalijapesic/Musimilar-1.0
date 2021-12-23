@@ -43,11 +43,12 @@ namespace MusimilarApi.Controllers
            return _autoMapper.Map<SongResponse>(await _songService.GetAsync(id));
         }
 
-        // [HttpGet("playlist")]
-        // public async Task<Playlist> RecommendPlaylist(PlaylistRequest request)
-        // {
-        //    return await _songService.RecommendPlaylistAsync(request);
-        // }
+        [AllowAnonymous]
+        [HttpPost("playlist")]
+        public async Task<List<SongInfoResponse>> RecommendPlaylist(PlaylistRequest request)
+        {
+           return _autoMapper.Map<List<SongInfoResponse>>(await _songService.RecommendPlaylistAsync(request));
+        }
 
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id:length(24)}")]

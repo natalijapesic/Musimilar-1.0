@@ -6,7 +6,7 @@ namespace MusimilarApi.Interfaces
 {
     public interface IPlaylistService {
 
-        Task<long> CreateSetOfSongs(List<SongInfo> playlist, SongInfo example);
+        Task<long> CreateSetOfSongs(List<SongInfo> playlist, string songId);
         Task<bool> DoesKeyExist(string key);
         Task<int> ExtendTTL(string key);
         Task AddNewPlaylist(string genre, Playlist playlist);

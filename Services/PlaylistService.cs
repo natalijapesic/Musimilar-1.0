@@ -24,7 +24,7 @@ namespace MusimilarApi.Service
             throw new System.NotImplementedException();
         }
 
-        public async Task<long> CreateSetOfSongs(List<SongInfo> songs, SongInfo example)
+        public async Task<long> CreateSetOfSongs(List<SongInfo> songs, string songId)
         {
             int length = songs.Count;
             string songName = null;
@@ -36,7 +36,7 @@ namespace MusimilarApi.Service
 
                 playlist[i] = new SortedSetEntry(songName, DateTime.Now.ToOADate());
             }
-            string key = $"playlist:{example.SongId}";
+            string key = $"playlist:{songId}";
 
             return await _redisClient.SortedSetAddAsync(key, playlist);
         }
