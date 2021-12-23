@@ -3,10 +3,10 @@ namespace MusimilarApi.Models.Requests{
       public string Name { get; set; }
       public string Artist { get; set; }
       
-      public AudioFeature AudioFeatures { get; set; }
+      public AudioFeaturesRequest AudioFeatures { get; set; }
     }
 
-    public class AudioFeature
+    public class AudioFeaturesRequest
     {
         public double Tempo { get; set; }
         public double Energy { get; set; }

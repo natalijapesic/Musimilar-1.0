@@ -10,14 +10,11 @@ namespace MusimilarApi.Helpers
     {
         public OrganizationProfile(){
 
-            // Request -> DTO
+            CreateMap<AudioFeaturesRequest, AudioFeatures>();
             CreateMap<SongRequest, Song>();
-
-            // DTO -> Song
             CreateMap<Song, SongResponse>();
 
             CreateMap<RegisterRequest, User>();
-
             CreateMap<User, UserResponse>();
 
         }

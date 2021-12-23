@@ -58,17 +58,16 @@ namespace MusimilarApi.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
-        public async Task<Song> Insert(SongRequest request){
-
-            return _autoMapper.Map<Song>(await _songService.InsertSongAsync(request));
+        public async Task<SongResponse> Insert(SongRequest request){
+            
+            return _autoMapper.Map<SongResponse>(await _songService.InsertSongAsync(request));
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost("many")]
         public async Task<IEnumerable<SongResponse>> InsertMany(IEnumerable<SongRequest> request){
 
-            IEnumerable<Song> songs = _autoMapper.Map<IEnumerable<Song>>(request);
-            return _autoMapper.Map<IEnumerable<SongResponse>>(await _songService.InsertManyAsync(songs));
+            return _autoMapper.Map<IEnumerable<SongResponse>>(await _songService.InsertSongManyAsync(request));
         }
 
     }

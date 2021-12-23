@@ -43,21 +43,19 @@ namespace MusimilarApi.Services
             return await _collection.Find<T>(obj => obj.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<T> InsertAsync(T obj)
-        {
-            await _collection.InsertOneAsync(obj);
-            return obj;
-        }
-
         public async Task DeleteAsync(string id)
         {
             await _collection.DeleteOneAsync(obj => obj.Id == id);
         }
 
-        public async Task<IEnumerable<T>> InsertManyAsync(IEnumerable<T> obj)
+        public Task<IEnumerable<T>> InsertManyAsync(IEnumerable<T> obj)
         {
-            await _collection.InsertManyAsync(obj);
-            return obj;
+            throw new System.NotImplementedException();
+        }
+
+        public Task<T> InsertAsync(T obj)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

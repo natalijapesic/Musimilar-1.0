@@ -63,3 +63,4 @@ C:\Users\Nand\web\NBP\MusimilarApi\bin\Debug\net5.0\data\models.json
 C:\Users\Nand\web\NBP\MusimilarApi\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\Nand\web\NBP\MusimilarApi\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Nand\web\NBP\MusimilarApi\bin\Debug\net5.0\BCrypt.Net-Next.dll
+C:\Users\Nand\web\NBP\MusimilarApi\bin\Debug\net5.0\data\song.json

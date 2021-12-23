@@ -38,7 +38,29 @@ namespace MusimilarApi.Service
             return song;
         }
 
-        public string DetermineGenre(AudioFeature song){
+        public async Task<IEnumerable<Song>> InsertSongManyAsync(IEnumerable<SongRequest> requests){
+
+            string genre = null;
+            Song song = null;
+            List<Song> songs = new List<Song>();
+
+            foreach (var request in requests)
+            {
+                genre = DetermineGenre(request.AudioFeatures);
+
+                song = _mapper.Map<Song>(request);
+                song.Genre = genre;
+
+                songs.Add(song);
+            }
+
+            await _collection.InsertManyAsync(songs);
+
+            return songs;
+
+        }
+
+        public string DetermineGenre(AudioFeaturesRequest song){
 
             if(song.Speechiness >= 0.22)
             {    
@@ -67,6 +89,7 @@ namespace MusimilarApi.Service
 
         public async Task<Playlist> RecommendPlaylistAsync(PlaylistRequest request)
         {
+            //ovde proveri da li vec postoji generisana pl u Redisu na osnovu pesme
             Song songExample = await GetSongByNameAsync(request.SongExample);
             
             if(songExample == null)
@@ -78,15 +101,15 @@ namespace MusimilarApi.Service
             IEnumerable<Song> recommendedSongs = await GetSongsByGenreAsync(songExample.Genre);
 
             List<SongInfo> recommendedNames = await _collection.AsQueryable()
-                                                            .Where<Song>(songs => songs.Genre == songExample.Genre)
+                                                            .Where<Song>(songs => songs.Genre == songExample.Genre) 
                                                             .OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
                                                                           Math.Abs(s.AudioFeatures.Valence - songExample.AudioFeatures.Valence))
                                                             .Take(request.NumberOfSongs)
-                                                            .Select(song => new SongInfo(song.Name, song.Artist))
+                                                            .Select(song => new SongInfo(song.Id, song.Name, song.Artist))
                                                             .ToListAsync();
 
 
-            Playlist newPlaylist = new Playlist(request.PlaylistName, recommendedNames, new SongInfo(songExample.Name, songExample.Artist));
+            Playlist newPlaylist = new Playlist(request.PlaylistName, recommendedNames, new SongInfo(songExample.Id, songExample.Name, songExample.Artist));
 
             return newPlaylist;            
         }

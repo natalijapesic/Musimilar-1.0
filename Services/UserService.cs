@@ -80,7 +80,7 @@ namespace MusimilarApi.Service
 
             User user = _mapper.Map<User>(model);
             user.PasswordHash = BCryptNet.HashPassword(model.Password);
-            user.Role = Entities.MongoDB.Role.User;
+            user.Role = model.UserRole;
 
             await _collection.InsertOneAsync(user);   
 

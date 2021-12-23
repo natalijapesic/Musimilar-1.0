@@ -1,0 +1,62 @@
+[
+	{
+		"name" : "rapsong",
+		"artist" : "Artist2",
+		"audioFeatures" : {
+				"tempo" : 140.55,
+				"energy" : 0.58,
+				"speechiness" : 0.25,
+				"danceability" : 0.411,
+				"durationMS" : 157859,
+				"valence" : 0.27
+		}
+	},
+	{
+		"name" : "rocksong",
+		"artist" : "Artist3",
+		"audioFeatures" : {
+				"tempo" : 140.55,
+				"energy" : 0.58,
+				"speechiness" : 0.11,
+				"danceability" : 0.411,
+				"durationMS" : 157859,
+				"valence" : 0.27
+		}
+	},
+	{
+		"name" : "edmsong",
+		"artist" : "Artist3",
+		"audioFeatures" : {
+				"tempo" : 0.25,
+				"energy" : 0.58,
+				"speechiness" : 0.11,
+				"danceability" : 0.7,
+				"durationMS" : 157859,
+				"valence" : 0.27
+		}
+	},
+	{
+		"name" : "randbsong",
+		"artist" : "Artist3",
+		"audioFeatures" : {
+				"tempo" : 0.03,
+				"energy" : 0.58,
+				"speechiness" : 0.11,
+				"danceability" : 0.7,
+				"durationMS" : 0.4,
+				"valence" : 0.27
+		}
+	},
+	{
+		"name" : "latinsong",
+		"artist" : "Artist3",
+		"audioFeatures" : {
+				"tempo" : 0.03,
+				"energy" : 0.58,
+				"speechiness" : 0.11,
+				"danceability" : 0.7,
+				"durationMS" : 0.3,
+				"valence" : 0.27
+		}
+	}
+]

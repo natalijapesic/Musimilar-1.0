@@ -10,6 +10,7 @@ namespace MusimilarApi.Interfaces
         Task<Playlist> RecommendPlaylistAsync(PlaylistRequest request);
         Task<Song> GetSongByNameAsync(string name);
         Task<List<Song>> GetSongsByGenreAsync(string genre);
+        Task<IEnumerable<Song>> InsertSongManyAsync(IEnumerable<SongRequest> requests);
 
     }
 }

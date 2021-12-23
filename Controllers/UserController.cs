@@ -59,14 +59,6 @@ namespace MusimilarApi.Controllers
            await _userService.DeleteAsync(id);
         }
 
-        [Authorize(Roles = Role.Admin)]
-        [HttpPost]
-        public async Task<User> Insert(UserRequest request){
-
-            User user = _mapper.Map<User>(request);
-            return await _userService.InsertAsync(user);
-        }
-
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<User>> LogIn([FromBody] LoginRequest request){
