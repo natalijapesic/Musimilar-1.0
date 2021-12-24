@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
+using MusimilarApi.Models.DTOs;
 using MusimilarApi.Models.Requests;
 
 namespace MusimilarApi.Controllers
@@ -62,11 +63,13 @@ namespace MusimilarApi.Controllers
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<User>> LogIn([FromBody] LoginRequest request){
-            User user = await _userService.LogInAsync(request.Email, request.Password);
 
-            if(user.Token == null)
+            UserDTO userDTO = await _userService.LogInAsync(request.Email, request.Password);
+
+            if(userDTO.Token == null)
                 return Unauthorized();
 
+            User user = _mapper.Map<User>(userDTO);
             return Ok(user);
         }
 
@@ -74,9 +77,10 @@ namespace MusimilarApi.Controllers
         [HttpPost("registration")]
         public async Task<ActionResult<User>> Registration([FromBody] RegisterRequest request)
         {
-            User user = await _userService.RegisterAsync(request);
+            UserDTO userDTO = _mapper.Map<UserDTO>(request);
+            userDTO = await _userService.RegisterAsync(userDTO);
 
-            User response = _mapper.Map<User>(user);
+            User user = _mapper.Map<User>(userDTO);
 
             return Ok(user);
         }

@@ -9,12 +9,13 @@ using MongoDB.Driver.Linq;
 using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
+using MusimilarApi.Models.DTOs;
 using MusimilarApi.Models.Requests;
 using MusimilarApi.Services;
 
 namespace MusimilarApi.Service
 {
-    public class SongService: EntityService<Song>, ISongService
+    public class SongService: EntityService<Song, SongDTO>, ISongService
     {   
         private readonly IPlaylistService _playlistService;
         public SongService(IDatabaseSettings settings, 
@@ -26,41 +27,34 @@ namespace MusimilarApi.Service
             _playlistService = playlistService;
         }
 
-        public async Task<Song> InsertSongAsync(SongRequest request){
+        public override async Task<SongDTO> InsertAsync(SongDTO request){
 
             string genre = DetermineGenre(request.AudioFeatures);
+            request.Genre = genre;
 
-            Song song = _mapper.Map<Song>(request);
+            await _collection.InsertOneAsync(_mapper.Map<Song>(request));
 
-            song.Genre = genre;
-
-            await _collection.InsertOneAsync(song);
-            return song;
+            return request;
         }
 
-        public async Task<IEnumerable<Song>> InsertSongManyAsync(IEnumerable<SongRequest> requests){
+        public override async Task<ICollection<SongDTO>> InsertManyAsync(ICollection<SongDTO> requests){
 
             string genre = null;
-            Song song = null;
-            List<Song> songs = new List<Song>();
 
             foreach (var request in requests)
             {
                 genre = DetermineGenre(request.AudioFeatures);
 
-                song = _mapper.Map<Song>(request);
-                song.Genre = genre;
-
-                songs.Add(song);
+                request.Genre = genre;
             }
 
-            await _collection.InsertManyAsync(songs);
+            await _collection.InsertManyAsync(_mapper.Map<IEnumerable<Song>>(requests));
 
-            return songs;
+            return requests;
 
         }
 
-        public string DetermineGenre(AudioFeaturesRequest song){
+        public string DetermineGenre(AudioFeaturesDTO song){
 
             if(song.Speechiness >= 0.22)
             {    
@@ -87,18 +81,18 @@ namespace MusimilarApi.Service
                 return SongGenre.Latin;        
         }
 
-        public async Task<List<SongInfo>> RecommendPlaylistAsync(PlaylistRequest request)
+        public async Task<List<SongInfoDTO>> RecommendPlaylistAsync(PlaylistDTO request)
         {
-            Song songExample = await GetSongByNameAsync(request.Name, request.Artist);
+            SongDTO songExample = await GetSongByNameAsync(request.Name, request.Artist);
 
-            List<Song> songs = await GetSongsByGenreAsync(songExample.Genre);
+            List<SongDTO> songs = await GetSongsByGenreAsync(songExample.Genre);
 
-            List<Song> recommendedSongs = songs.OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
+            List<SongDTO> recommendedSongs = songs.OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
                                                             Math.Abs(s.AudioFeatures.Valence - songExample.AudioFeatures.Valence))
                                                 .Take(10)
                                                 .ToList();
 
-            List<SongInfo> songInfos = _mapper.Map<List<SongInfo>>(recommendedSongs);
+            List<SongInfoDTO> songInfos = _mapper.Map<List<SongInfoDTO>>(recommendedSongs);
             long numberInput = await _playlistService.CreateSetOfSongs(songInfos, songExample.Id);
             _logger.LogInformation($"Set has {numberInput} songs");
             
@@ -108,14 +102,17 @@ namespace MusimilarApi.Service
 
 
 
-        public async Task<Song> GetSongByNameAsync(string name, string artist)
+        public async Task<SongDTO> GetSongByNameAsync(string name, string artist)
         {
-            return await _collection.Find<Song>(s => s.Name == name && s.Artist == artist).FirstAsync();
+            Song song = await _collection.Find<Song>(s => s.Name == name && s.Artist == artist).FirstAsync();
+            return _mapper.Map<SongDTO>(song);
         }
 
-        public async Task<List<Song>> GetSongsByGenreAsync(string genre)
+        public async Task<List<SongDTO>> GetSongsByGenreAsync(string genre)
         {
-            return await _collection.Find<Song>(song => song.Genre == genre).ToListAsync();
+            List<Song> songs = await _collection.Find<Song>(song => song.Genre == genre).ToListAsync();
+            return _mapper.Map<List<SongDTO>>(songs);
         }
+
     }
 }

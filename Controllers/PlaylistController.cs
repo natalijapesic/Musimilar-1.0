@@ -9,11 +9,9 @@ namespace MusimilarApi.Controllers
     public class PlaylistController : ControllerBase
     {
         private readonly ILogger<SongController> _logger;
-        private readonly ISongService _songService;
 
-        public PlaylistController(ISongService songService, ILogger<SongController> logger)
+        public PlaylistController(ILogger<SongController> logger)
         {
-            this._songService = songService;
             this._logger = logger;
         }
 

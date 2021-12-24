@@ -1,13 +1,6 @@
-namespace MusimilarApi.Models.Requests{
-    public class SongRequest
-    {
-      public string Name { get; set; }
-      public string Artist { get; set; }
-      
-      public AudioFeaturesRequest AudioFeatures { get; set; }
-    }
+namespace MusimilarApi.Models.DTOs{
 
-    public class AudioFeaturesRequest
+    public class AudioFeaturesDTO
     {
         public double Tempo { get; set; }
         public double Energy { get; set; }

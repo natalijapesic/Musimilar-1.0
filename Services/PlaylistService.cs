@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
+using MusimilarApi.Models.DTOs;
 using StackExchange.Redis;
 
 namespace MusimilarApi.Service
@@ -19,12 +19,12 @@ namespace MusimilarApi.Service
             _logger = logger;
         }
 
-        public Task AddNewPlaylist(string genre, Playlist playlist)
+        public Task AddNewPlaylist(string genre, PlaylistDTO playlist)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<long> CreateSetOfSongs(List<SongInfo> songs, string songId)
+        public async Task<long> CreateSetOfSongs(List<SongInfoDTO> songs, string songId)
         {
             int length = songs.Count;
             string songName = null;

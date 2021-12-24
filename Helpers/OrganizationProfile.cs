@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using MusimilarApi.Entities.MongoDB;
+using MusimilarApi.Models.DTOs;
 using MusimilarApi.Models.Requests;
 using MusimilarApi.Models.Responses;
 
@@ -10,14 +11,31 @@ namespace MusimilarApi.Helpers
     {
         public OrganizationProfile(){
 
-            CreateMap<AudioFeaturesRequest, AudioFeatures>();
-            CreateMap<SongRequest, Song>();
-            CreateMap<Song, SongResponse>();
-            CreateMap<SongInfo, SongInfoResponse>();
-            CreateMap<Song, SongInfo>();
+            CreateMap<AudioFeaturesRequest, AudioFeaturesDTO>();
 
-            CreateMap<RegisterRequest, User>();
-            CreateMap<User, UserResponse>();
+            CreateMap<SongRequest, SongDTO>();
+            CreateMap<SongDTO, SongResponse>();
+            
+            CreateMap<SongInfo, SongInfoDTO>();
+            CreateMap<SongInfoDTO, SongInfo>();
+
+            CreateMap<SongDTO, SongInfoDTO>();
+
+            CreateMap<Song, SongDTO>();
+            CreateMap<AudioFeatures, AudioFeaturesDTO>();
+
+            CreateMap<SongDTO, Song>();
+            CreateMap<AudioFeaturesDTO, AudioFeatures>();
+
+
+            CreateMap<RegisterRequest, UserDTO>();
+            CreateMap<UserDTO, UserResponse>();
+
+            CreateMap<PlaylistRequest, PlaylistDTO>();
+            
+            CreateMap<UserDTO, User>();
+            CreateMap<User, UserDTO>();
+            
 
         }
 

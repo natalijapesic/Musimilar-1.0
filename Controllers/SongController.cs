@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
+using MusimilarApi.Models.DTOs;
 using MusimilarApi.Models.Requests;
 using MusimilarApi.Models.Responses;
 
@@ -18,7 +19,7 @@ namespace MusimilarApi.Controllers
     {
         private readonly ILogger<SongController> _logger;
         private readonly ISongService _songService;
-        private readonly IMapper _autoMapper;
+        private readonly IMapper _mapper;
 
         public SongController(ISongService songService, 
                               ILogger<SongController> logger,
@@ -26,28 +27,30 @@ namespace MusimilarApi.Controllers
         {
             _songService = songService;
             _logger = logger;
-            _autoMapper = autoMapper;
+            _mapper = autoMapper;
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public async Task<IEnumerable<SongResponse>> GetSongs(){
             
-            return _autoMapper.Map<IEnumerable<SongResponse>>(await _songService.GetAllAsync());
+            return _mapper.Map<IEnumerable<SongResponse>>(await _songService.GetAllAsync());
         }
 
         
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<SongResponse>> GetSong(string id)
         {
-           return _autoMapper.Map<SongResponse>(await _songService.GetAsync(id));
+           return _mapper.Map<SongResponse>(await _songService.GetAsync(id));
         }
 
         [AllowAnonymous]
         [HttpPost("playlist")]
-        public async Task<List<SongInfoResponse>> RecommendPlaylist(PlaylistRequest request)
+        public async Task<List<SongInfoDTO>> RecommendPlaylist(PlaylistRequest request)
         {
-           return _autoMapper.Map<List<SongInfoResponse>>(await _songService.RecommendPlaylistAsync(request));
+            PlaylistDTO playlistDTO = _mapper.Map<PlaylistDTO>(request);
+            List<SongInfoDTO> songInfoDTOs = await _songService.RecommendPlaylistAsync(playlistDTO);
+            return songInfoDTOs;
         }
 
         [Authorize(Roles = Role.Admin)]
@@ -61,14 +64,18 @@ namespace MusimilarApi.Controllers
         [HttpPost]
         public async Task<SongResponse> Insert(SongRequest request){
             
-            return _autoMapper.Map<SongResponse>(await _songService.InsertSongAsync(request));
+            SongDTO songDTO = _mapper.Map<SongDTO>(request);
+            songDTO = await _songService.InsertAsync(songDTO);
+            return _mapper.Map<SongResponse>(songDTO);
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost("many")]
-        public async Task<IEnumerable<SongResponse>> InsertMany(IEnumerable<SongRequest> request){
-
-            return _autoMapper.Map<IEnumerable<SongResponse>>(await _songService.InsertSongManyAsync(request));
+        public async Task<ICollection<SongResponse>> InsertMany(ICollection<SongRequest> requests){
+            
+            ICollection<SongDTO> songDTOs = _mapper.Map<ICollection<SongDTO>>(requests);
+            songDTOs = await _songService.InsertManyAsync(songDTOs);
+            return _mapper.Map<ICollection<SongResponse>>(songDTOs);
         }
 
     }

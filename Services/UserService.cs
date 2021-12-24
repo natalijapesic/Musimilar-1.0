@@ -11,6 +11,7 @@ using MongoDB.Driver;
 using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
+using MusimilarApi.Models.DTOs;
 using MusimilarApi.Models.Requests;
 using MusimilarApi.Services;
 using StackExchange.Redis;
@@ -18,7 +19,7 @@ using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace MusimilarApi.Service
 {
-    public class UserService: EntityService<User>, IUserService
+    public class UserService: EntityService<User, UserDTO>, IUserService
     {
         private readonly IConnectionMultiplexer _redis;
         public readonly IConfiguration _configuration;
@@ -37,7 +38,7 @@ namespace MusimilarApi.Service
         }
 
 
-        public async Task<User> LogInAsync(string email, string password)
+        public async Task<UserDTO> LogInAsync(string email, string password)
         {
             User user = await _collection.Find(u => u.Email == email).FirstOrDefaultAsync();
 
@@ -61,30 +62,33 @@ namespace MusimilarApi.Service
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);      
+            user.Token = tokenHandler.WriteToken(token);     
+            user.WithoutPassword();
 
-            return user.WithoutPassword();      
+            return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<User> GetById(string id) 
+        public async Task<UserDTO> GetById(string id) 
         {
             var user = await _collection.Find(x => x.Id == id).FirstOrDefaultAsync();
-
-            return user.WithoutPassword();
+            user.WithoutPassword();
+            
+            return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<User> RegisterAsync(RegisterRequest model)
+        public async Task<UserDTO> RegisterAsync(UserDTO model)
         {
             if(_collection.Find(x => x.Email == model.Email).Any())
                 throw new AppException($"User with this email already exist");
 
             User user = _mapper.Map<User>(model);
             user.PasswordHash = BCryptNet.HashPassword(model.Password);
-            user.Role = model.UserRole;
+            user.Role = model.Role;
 
             await _collection.InsertOneAsync(user);   
-
-            return user;
+            
+            user.WithoutPassword();
+            return _mapper.Map<UserDTO>(user);
         }
     }
 }

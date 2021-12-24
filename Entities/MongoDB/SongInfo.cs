@@ -2,10 +2,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace MusimilarApi.Entities.MongoDB
 {
+    //song in playlist
     public class SongInfo{
-
-        [BsonElement("songId")]
-        public string SongId { get; set; }
 
         [BsonElement("name")]
         public string Name { get; set; }
@@ -13,9 +11,8 @@ namespace MusimilarApi.Entities.MongoDB
         [BsonElement("artist")]
         public string Artist { get; set; }
 
-        public SongInfo(string id, string name, string artist)
+        public SongInfo(string name, string artist)
         {
-            this.SongId = SongId;
             this.Name = name;
             this.Artist = artist; 
         }
