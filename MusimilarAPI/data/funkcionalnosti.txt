@@ -1,0 +1,19 @@
+public:
+-trazi slicnog artista
+-login
+-registration
+-prikaze slicne artiste
+
+logovani:
+-trazi playlist-u
+-prikaze tu playlist-u, kao pop-up, moze da sacuva na svom profilu ili ne
+-ako ide na save onda treba da unese ime...ima input koji aktivira dugme save kada se popuni
+-moze da vidi nove playlist-e zanrova koje prati na dugme news ili feed
+-moze da doda neku od tih playlisti u svoj niz (ima ogranicenje na 10)
+-moze da vidi top 10 playlist-i 
+-moze da lajkuje playlis-u
+
+admin:
+-CUD artist
+-CUD song
+-CUD user
