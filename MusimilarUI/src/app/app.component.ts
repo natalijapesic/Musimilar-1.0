@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { AuthenticationService } from './_services';
 import { User, Role } from './_models';
@@ -14,6 +13,10 @@ export class AppComponent {
 
     get isAdmin() {
         return this.user && this.user.role === Role.Admin;
+    }
+
+    get isLogin(){
+        return localStorage.getItem('user') === null ? false : true;     
     }
 
     logout() {
