@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YNtiAHBEaZmKCQhtTTgvsWTDUCSK9vsGhyNiLKah2iGtx5JFj9HNRIaq7fJxCkgZRpjAUS1CcKkhM55zDnsXeg==",
+  "dgSpecHash": "QWcVzkUOkxtwPjs636Ps9+f0cwk5eKhza73GKBjLOAzUe/UcpmkT6PHG8wo2d9C5beaSgIs1DemRjHf5Q8gXmg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nand\\web\\NBP\\MusimilarApi\\MusimilarApi.csproj",
+  "projectFilePath": "C:\\Users\\Nand\\web\\NBP\\Musimilar-1.0\\MusimilarAPI\\MusimilarApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nand\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Nand\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

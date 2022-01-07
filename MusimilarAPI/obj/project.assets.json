@@ -5973,11 +5973,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Nand\\web\\NBP\\MusimilarApi\\MusimilarApi.csproj",
+      "projectUniqueName": "C:\\Users\\Nand\\web\\NBP\\Musimilar-1.0\\MusimilarAPI\\MusimilarApi.csproj",
       "projectName": "MusimilarApi",
-      "projectPath": "C:\\Users\\Nand\\web\\NBP\\MusimilarApi\\MusimilarApi.csproj",
+      "projectPath": "C:\\Users\\Nand\\web\\NBP\\Musimilar-1.0\\MusimilarAPI\\MusimilarApi.csproj",
       "packagesPath": "C:\\Users\\Nand\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Nand\\web\\NBP\\MusimilarApi\\obj\\",
+      "outputPath": "C:\\Users\\Nand\\web\\NBP\\Musimilar-1.0\\MusimilarAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Nand\\AppData\\Roaming\\NuGet\\NuGet.Config",

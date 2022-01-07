@@ -1,0 +1,33 @@
+_services:
+@Injectable({ providedIn: 'root' })
+
+	Dekorator koji speificiraju da Angular moze koristiti klasu koja sledi u DI sistemu.
+	providedIn: 'root', znaci da je klasa vidljiva u aplikaciji.  
+BehaviorSubject, Observable, AsyncSubject, ReplySubject => RxJS
+	-specijalni tip Observable, koji deli jednistveno izvrsenje na vise observers.
+	BehaviorSubject: zahteva pocetnu vrednost i prikazuje trenutnu vrednost novim 
+subovima.
+	// RxJS v6+
+	import { BehaviorSubject } from 'rxjs';
+
+	const subject = new BehaviorSubject(123);
+
+	// two new subscribers will get initial value => output: 123, 123
+	subject.subscribe(console.log);
+	subject.subscribe(console.log);
+
+	// two subscribers will get new value => output: 456, 456
+	subject.next(456);
+
+	// new subscriber will get latest value (456) => output: 456
+	subject.subscribe(console.log);
+
+	// all three subscribers will get new value => output: 789, 789, 789
+	subject.next(789);
+
+	Observable/Subscription: stream ili ivor podataka koji moze doci u tokom vremena. Najcesce se pravi za event-e. button clicks, mouse move, input into text field, route change. 
+
+Gde se inicijalizuje Router?
+HttpClient
+localStorage.getItem
+.pipe

@@ -8,6 +8,7 @@ using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Models.DTOs;
 using MusimilarApi.Models.Requests;
+using MusimilarApi.Models.Responses;
 
 namespace MusimilarApi.Controllers
 {
@@ -62,14 +63,14 @@ namespace MusimilarApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<User>> LogIn([FromBody] LoginRequest request){
+        public async Task<ActionResult<UserResponse>> LogIn([FromBody] LoginRequest request){
 
             UserDTO userDTO = await _userService.LogInAsync(request.Email, request.Password);
 
             if(userDTO.Token == null)
                 return Unauthorized();
 
-            User user = _mapper.Map<User>(userDTO);
+            UserResponse user = _mapper.Map<UserResponse>(userDTO);
             return Ok(user);
         }
 
