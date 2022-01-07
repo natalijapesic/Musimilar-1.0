@@ -10,7 +10,7 @@ import { AuthenticationService } from '@app/_services';
 })
 export class LoginComponent implements OnInit {
 
-    emptStringy: boolean = false;
+    emptyString: boolean = false;
     wrongPassword: boolean = false;
     wrongEmail: boolean = false;
 
@@ -33,22 +33,22 @@ export class LoginComponent implements OnInit {
           else if (this.wrongEmail) {
             errorMessage = "Wrong email";
           }
-          else if (this.emptStringy) {
+          else if (this.emptyString) {
             errorMessage = "All fields must be filled";
           }
           errorLabel.innerHTML = errorMessage;
     }
 
-    onLogin(){
+    onSignIn(){
         let errorLabel = document.getElementById("error");
         const email: string = (document.getElementById("e-mail") as HTMLInputElement).value;
         const password = (document.getElementById("password") as HTMLInputElement).value;
 
         if (!email || !password) {
-            this.emptStringy = true;
+            this.emptyString = true;
             this.setErrorLabel(errorLabel);
         } else {
-            this.emptStringy = false;
+            this.emptyString = false;
             this.setErrorLabel(errorLabel);
       
             let request = {

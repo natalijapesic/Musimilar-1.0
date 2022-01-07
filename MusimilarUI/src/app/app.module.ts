@@ -11,7 +11,7 @@ import { JwtInterceptor, ErrorInterceptor } from "./_helpers"
 import { HomeComponent } from './home';
 import { AdminComponent } from './admin';
 import { LoginComponent } from './login';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './register';
 
 
 @NgModule({

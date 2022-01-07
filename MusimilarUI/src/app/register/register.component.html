@@ -1,25 +1,20 @@
 <div class="main">
     <div class="form">
-        <h1>Register</h1>
-        <label id="error" class="error-label"></label>
-        <h3>
-            Name
-        </h3>
+        <h1>Welcome to Musimilar</h1>
+        <label id="error-reg" class="error-label"></label>
         <div class="info">
-            <input id="name" type="password" placeholder="Input name">
+            <label>Input name:</label>
+            <input id="name-reg" type="text" placeholder="Input name">
         </div>
-        <h3>
-            E-mail
-        </h3>
         <div class="info">
-            <input id="e-mail" type="text" placeholder="Input e-mail">
+            <label>Input e-mail:</label>
+            <input id="email-reg" type="text" placeholder="Input e-mail">
+            <span *ngIf="!isEmailGood"><img src="../../../assets/img/error (1).png"></span>
         </div>
-        <h3>
-            Password
-        </h3>
         <div class="info">
-            <input id="password" type="password" placeholder="Input password">
+            <label>Input password:</label>
+            <input id="password-reg" type="password" placeholder="Input password">
         </div>
-        <button (click)="onRegister()">Register</button>
+        <button id="signInBtn" (click)="onSignUp()">Sign Up</button>
     </div>
 </div>
