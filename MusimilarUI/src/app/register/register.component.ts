@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Route } from '@angular/router';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { RegisterRequest } from '@app/_requests';
 import { UserService } from '@app/_services';
 import { fromEvent, map } from 'rxjs';
 
 @Component({
-  selector: 'register',
+  selector: 'app-register',
   templateUrl: 'register.component.html',
   styleUrls: ['register.component.css']
 })
@@ -14,58 +13,54 @@ export class RegisterComponent implements OnInit {
   isNameGood: boolean = true;
   doesNameExist: boolean = true;
   isEmailGood:boolean = true;
+  emailInput: string = '';
+  nameInput: string = '';
+  passwordInput: string = '';
+  errorMessage: string = '';
 
 
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService, 
+              private errorLabel: ElementRef) 
+              {
+                this.errorLabel.nativeElement;
+                
+              }
 
-  ngOnInit(){
-    let emailInput = document.getElementById("email-reg");
-    let nameInput = document.getElementById("name-reg");
+  ngOnInit(){}
 
-    this.checkEmail(emailInput);
-    this.checkName(nameInput);
+  checkEmail(email: string){
+    console.log(email);
+    if (email.indexOf("@") === -1 || (email.indexOf(".com") === -1 && email.indexOf(".rs") === -1))
+      this.isEmailGood = false;
+    else
+      this.isEmailGood = true;
+    this.setErrorLabel();
+    this.emailInput = email;
   }
 
-  checkEmail(email){
-    let errorLabel = document.getElementById("error-reg");
-    fromEvent(email, "input").pipe(
-      map(ev => ev['target'].value)
-    ).subscribe(mail =>{
-      console.log(mail);
-      if (mail.indexOf("@") === -1 || (mail.indexOf(".com") === -1 && mail.indexOf(".rs") === -1))
-        this.isEmailGood = false;
-      else
-        this.isEmailGood = true;
-      this.setErrorLabel(errorLabel);
-    });
-  }
+  setErrorLabel(){
 
-  setErrorLabel(errorLabel){
-    let errorMessage = "";
-    
     if(!this.isEmailGood){  
-      errorMessage = "Email must contain @ and .com or .rs";
+      this.errorMessage = "Email must contain @ and .com or .rs";
     }
     else if(!this.isNameGood){
-      errorMessage = "Name may conatain only letters, numbers, _ and .";
-    }
-
-    (errorLabel as HTMLLabelElement).innerHTML = errorMessage;
+      this.errorMessage = "Name may conatain only letters, numbers, _ and .";
+    }    
   }
 
-  checkName(name){
-    let errorLabel = document.getElementById("error");
-    fromEvent(name, "input").pipe(
-      map(ev => ev['target'].value)
-    ).subscribe(username =>{
-      console.log(username);
-      if (this.validateName(username))
-        this.isNameGood = false;
-      else
-        this.isNameGood = true;
-      this.setErrorLabel(errorLabel);
-  })
+  checkName(name: string){
+    console.log(name);
+    if (this.validateName(name))
+      this.isNameGood = false;
+    else
+      this.isNameGood = true;
+    this.setErrorLabel();
+    this.nameInput = name;
 }
+
+  checkPassword(password: string){
+    this.passwordInput = password;
+  }
   
   validateName(name: string){
     let flag = true;
@@ -88,21 +83,15 @@ export class RegisterComponent implements OnInit {
   }
 
   onSignUp(){
-    const email:string = (document.getElementById("email-reg") as HTMLInputElement).value;
-    const name:string = (document.getElementById("name-reg") as HTMLInputElement).value;
-    const password: string = (document.getElementById("password-reg") as HTMLInputElement).value;
-    let errorLabel = document.getElementById("error-reg");
-
-    if(!email || !password || !name)
+    if(!this.emailInput || !this.passwordInput || !this.nameInput)
       alert("All fields must be filled");
     
-    let request =  new RegisterRequest(name, password, email);
+    let request =  new RegisterRequest(this.nameInput, this.passwordInput, this.emailInput);
 
 
     this.userService.register(request).subscribe(response =>{
       console.log(response);
-    }
-    )
+    })
   }
 
 }

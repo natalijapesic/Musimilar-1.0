@@ -1,11 +1,10 @@
 <div>
     <h4 >Admin</h4>
-    <div class="card-body">
-        <p>This page can be accessed <u>only by administrators</u>.</p>
-        <p class="mb-1">All users from secure (admin only) api end point:</p>
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        <ul *ngIf="users">
-            <li *ngFor="let user of users">{{user.email}}</li>
-        </ul>
+    <div class="forms">
+        <app-add></app-add>
+        <app-delete></app-delete>
     </div>
+    <ul *ngIf="users">
+        <li *ngFor="let user of users">{{user.email}}</li>
+    </ul>
 </div>
