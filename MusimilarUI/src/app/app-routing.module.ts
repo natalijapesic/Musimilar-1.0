@@ -6,31 +6,21 @@ import { LoginComponent } from './login';
 import { AuthGuard } from './_helpers';
 import { Role } from './_models';
 import { RegisterComponent } from './register';
-import { DeleteComponent } from './delete';
-import { AddComponent } from './add';
 import { AdminComponent } from './admin';
+import { ArtistListComponent } from './artist-list';
 
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
+        component: HomeComponent
+    },
+    {
+        path: 'artist/similar/:artist_name',
+        component: ArtistListComponent
     },
     {
         path: 'admin',
         component: AdminComponent,
-        canActivate: [AuthGuard],
-        data: { roles: [Role.Admin] }
-    },
-    {
-        path: 'delete',
-        component: DeleteComponent,
-        canActivate: [AuthGuard],
-        data: { roles: [Role.Admin] }
-    },
-    {
-        path: 'add',
-        component: AddComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
     },

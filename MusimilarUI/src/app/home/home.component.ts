@@ -14,14 +14,14 @@ export class HomeComponent {
         private userService: UserService,
         private authenticationService: AuthenticationService
     ) {
-        this.user = this.authenticationService.userValue;
+        //this.user = this.authenticationService.userValue;
     }
 
     ngOnInit() {
-        this.loading = true;
-        this.userService.getById(this.user.id).pipe(first()).subscribe(user => {
-            this.loading = false;
-            this.userFromApi = user;
-        });
+    //     this.loading = true;
+    //     this.userService.getById(this.user.id).pipe(first()).subscribe(user => {
+    //         this.loading = false;
+    //         this.userFromApi = user;
+    //     });
     }
 }

@@ -14,6 +14,7 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AddComponent } from './add';
 import { DeleteComponent } from './delete';
+import { ArtistListComponent } from './artist-list';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DeleteComponent } from './delete';
     LoginComponent,
     RegisterComponent,
     AddComponent,
-    DeleteComponent
+    DeleteComponent,
+    ArtistListComponent
   ],
   imports: [
     BrowserModule,
