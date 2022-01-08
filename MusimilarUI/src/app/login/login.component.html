@@ -1,19 +1,19 @@
 <div class="main">
     <div class="form">
         <h1>Sign in to Musimilar</h1>
-        <label id="error" class="error-label"></label>
+        <label class="error-label">{{errorMessage}}</label>
         <h3>
             E-mail
         </h3>
         <div class="info">
-            <input id="e-mail" type="text" placeholder="Input e-mail">
+            <input #email type="text" placeholder="Input e-mail">
         </div>
         <h3>
             Password
         </h3>
         <div class="info">
-            <input id="password" type="password" placeholder="Input password">
+            <input #password type="password" placeholder="Input password">
         </div>
-        <button (click)="onSignIn()">Sign In</button>
+        <button (click)="onSignIn(email, password)">Sign In</button>
     </div>
 </div>

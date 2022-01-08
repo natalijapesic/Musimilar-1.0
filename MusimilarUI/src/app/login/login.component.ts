@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginRequest } from '@app/_requests';
 
 import { AuthenticationService } from '@app/_services';
 
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
     emptyString: boolean = false;
     wrongPassword: boolean = false;
     wrongEmail: boolean = false;
+    errorMessage: string = '';
 
     constructor(public authenticationService: AuthenticationService, 
                 public router: Router) { }
@@ -23,45 +25,35 @@ export class LoginComponent implements OnInit {
         console.log(passwordInput);
     }
 
-    setErrorLabel(errorLabel){
-
-        let errorMessage = "";
-
-        if (this.wrongPassword) {
-            errorMessage = "Wrong password";
-          }
-          else if (this.wrongEmail) {
-            errorMessage = "Wrong email";
-          }
-          else if (this.emptyString) {
-            errorMessage = "All fields must be filled";
-          }
-          errorLabel.innerHTML = errorMessage;
+    setErrorLabel(){
+      if (this.wrongPassword) {
+          this.errorMessage = "Wrong password";
+        }
+        else if (this.wrongEmail) {
+          this.errorMessage = "Wrong email";
+        }
+        else if (this.emptyString) {
+          this.errorMessage = "All fields must be filled";
+        }
     }
 
-    onSignIn(){
-        let errorLabel = document.getElementById("error");
-        const email: string = (document.getElementById("e-mail") as HTMLInputElement).value;
-        const password = (document.getElementById("password") as HTMLInputElement).value;
+    onSignIn(email: HTMLInputElement,  password: HTMLInputElement){
+      console.log(email.value);
 
-        if (!email || !password) {
-            this.emptyString = true;
-            this.setErrorLabel(errorLabel);
-        } else {
-            this.emptyString = false;
-            this.setErrorLabel(errorLabel);
-      
-            let request = {
-              password: password,
-              email: email
-            }
+      if (!email || !password) {
+          this.emptyString = true;
+          this.setErrorLabel();
+      } else
+      {
+        this.emptyString = false;
+        this.setErrorLabel();
+  
+        let request = new LoginRequest(password.value, email.value);
 
-            this.authenticationService.login(request).subscribe(response =>
-              {
-                console.log(response);
-              })
-
-        }      
+        this.authenticationService.login(request).subscribe(response =>{
+          console.log(response);
+        })
+      }      
     }
 
 }

@@ -1,7 +1,6 @@
 
 export class LoginRequest {
 
-    password: string;
-    email: string;
+    constructor(public password: string, public  email: string){}
 
 }
