@@ -1,0 +1,16 @@
+.artist-list{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.artist{
+    display: flex;
+    margin: 40px;
+}
+
+.artist-info{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

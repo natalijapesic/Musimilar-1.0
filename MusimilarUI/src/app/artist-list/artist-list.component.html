@@ -1,10 +1,12 @@
-
-<div class = "artistList" *ngFor="let artist of artistList | async">
-    <div class = "artist">
-        <img src="{{artist.image}}">
-        <label class="artistName">{{artist.name}}</label>
-    </div>
-    <div *ngIf="finished" class = "eof">
-        You reviewed all similar musicians.
+<div class = "artist-list">
+    <div class = "artist" *ngFor="let artist of artistList | async">
+        <div class = "artist-info">
+            <img src="{{artist.image}}">
+            <label class="artistName">{{artist.name}}</label>
+            <label>genres: {{artist.genres}}</label>
+        </div>
+        <div *ngIf="finished" class = "eof">
+            You reviewed all similar musicians.
+        </div>
     </div>
 </div>

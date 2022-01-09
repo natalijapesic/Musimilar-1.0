@@ -13,4 +13,8 @@ export class ArtistService {
   getSimilarArtists(artistRequest: string){
     return this.http.get<Artist[]>(`${environment.apiUrl}/artist/similar/${artistRequest}`)
   }
+
+  addMany(artists: JSON){
+    console.log(artists);
+  }
 }

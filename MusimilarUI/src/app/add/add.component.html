@@ -1,1 +1,9 @@
-<p>add works!</p>
+<div class="add">
+    <h3>Input json file with data:</h3>
+    <select #selectEntity>
+        <option *ngFor="let entity of entities"> {{entity}} </option>
+    </select>
+    <input (change)="onFileChange($event)" type="file" id="json" required>
+    <button (click)="onClick(selectEntity)">Add</button>
+</div>
+

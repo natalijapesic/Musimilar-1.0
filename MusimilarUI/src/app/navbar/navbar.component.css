@@ -11,15 +11,9 @@ a{
     display: flex;
 }
 
-.search img{
-  max-width: 35px;
-  margin-top:10px;
-  margin-left: 10px;
-  height: auto;
-}
-
 .logo img{
     height: 50px;
+    padding-left: 20px;
 }
 
 .logo a{
@@ -48,10 +42,20 @@ input{
     display: flex;
 }
 
-.drop-down-btn {
+.search a{
     background-color: #000000;
     color: white;
     padding: 20px 40px;
+    font-size: 16px;
+    border: none;
+    max-width:110px;
+    margin-right: 10px;
+}
+
+.drop-down-btn {
+    background-color: #000000;
+    color: white;
+    padding: 20px;
     font-size: 16px;
     border: none;
     max-width:110px;
@@ -72,14 +76,16 @@ input{
     margin-right: 10px;
     left: auto;
     right: 0;
+    width: 100px;
+    text-align: right;
 }
 
 .drop-down-content a{
     color: black;
-    padding: 20px 40px;
+    padding: 20px;
     text-decoration: none;
     display: block;
-    max-width:150px;
+    width:100px;
   }
 
 .drop-down-content a:hover {

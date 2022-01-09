@@ -25,6 +25,7 @@ export class ArtistListComponent implements OnInit {
   }
 
   getSimilarArtist(){
+    this.artistList=new BehaviorSubject<any[]>([]);
     this.activeRoute.params.subscribe(routeParams => {
       this.searchValue = routeParams['artist_name'];
       

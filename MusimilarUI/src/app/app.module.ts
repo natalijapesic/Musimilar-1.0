@@ -13,7 +13,6 @@ import { AdminComponent } from './admin';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AddComponent } from './add';
-import { DeleteComponent } from './delete';
 import { ArtistListComponent } from './artist-list';
 import { NavbarComponent } from './navbar/navbar.component';
 
@@ -26,7 +25,6 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoginComponent,
     RegisterComponent,
     AddComponent,
-    DeleteComponent,
     ArtistListComponent,
     NavbarComponent
   ],
