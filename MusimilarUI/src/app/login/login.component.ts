@@ -53,6 +53,8 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(request).subscribe(response =>{
           console.log(response);
         })
+        this.router.navigate(["/"]);
+
       }      
     }
 

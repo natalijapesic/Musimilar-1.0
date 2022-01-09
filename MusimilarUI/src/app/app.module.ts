@@ -15,6 +15,7 @@ import { RegisterComponent } from './register';
 import { AddComponent } from './add';
 import { DeleteComponent } from './delete';
 import { ArtistListComponent } from './artist-list';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ArtistListComponent } from './artist-list';
     RegisterComponent,
     AddComponent,
     DeleteComponent,
-    ArtistListComponent
+    ArtistListComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

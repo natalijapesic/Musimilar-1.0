@@ -1,17 +1,5 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-  <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/">Home</a>
-
-      <input #artist type="text" placeholder="Input artist name">
-
-      <a class="nav-item nav-link" routerLink="/similar" (click)="onSearch(artist)">Search</a>
-      <a class="nav-item nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
-      <a class="nav-item nav-link" (click)="logout()" *ngIf="isLogin">Logout</a>
-      <a class="nav-item nav-link" routerLink="/login" *ngIf="!isLogin">SignIn</a>
-      <a class="nav-item nav-link" routerLink="/register" *ngIf="!isLogin">SignUp</a>
-  </div>
-</nav>
+<app-navbar></app-navbar>
 
 <!-- main app container -->
 <div class="container">

@@ -1,0 +1,19 @@
+<nav >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <ul class = "navbar">
+        <li class = "logo"><a  routerLink="/"><img src="../../assets/img/logo2.0.jpg"></a></li>
+        <li class = "search">
+            <input #artist type="text" placeholder="Input artist name">
+            <a (click)="onSearch(artist)"><img src="../../assets/img/search.png"></a>
+        </li>
+        <div class= "drop-down">
+            <button class="drop-down-btn"> User </button>
+            <div class="drop-down-content">
+                <a routerLink="/admin" *ngIf="isAdmin">Admin</a>
+                <a (click)="logout()" *ngIf="isLogin">Logout</a>
+                <a routerLink="/login" *ngIf="!isLogin">SignIn</a>
+                <a routerLink="/register" *ngIf="!isLogin">SignUp</a>
+            </div>
+        </div>
+    </ul>
+  </nav>
