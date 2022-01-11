@@ -10,7 +10,6 @@ using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Models.DTOs;
-using MusimilarApi.Models.Requests;
 using MusimilarApi.Services;
 
 namespace MusimilarApi.Service
@@ -81,7 +80,7 @@ namespace MusimilarApi.Service
                 return SongGenre.Latin;        
         }
 
-        public async Task<List<SongInfoDTO>> RecommendPlaylistAsync(PlaylistDTO request)
+        public async Task<List<SongInfoDTO>> RecommendPlaylistAsync(SimilarSongsDTO request)
         {
             SongDTO songExample = await GetSongByNameAsync(request.Name, request.Artist);
 
@@ -89,8 +88,8 @@ namespace MusimilarApi.Service
 
             List<SongDTO> recommendedSongs = songs.OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
                                                             Math.Abs(s.AudioFeatures.Valence - songExample.AudioFeatures.Valence))
-                                                .Take(10)
-                                                .ToList();
+                                                  .Take(10)
+                                                  .ToList();
 
             List<SongInfoDTO> songInfos = _mapper.Map<List<SongInfoDTO>>(recommendedSongs);
             long numberInput = await _playlistService.CreateSetOfSongs(songInfos, songExample.Id);

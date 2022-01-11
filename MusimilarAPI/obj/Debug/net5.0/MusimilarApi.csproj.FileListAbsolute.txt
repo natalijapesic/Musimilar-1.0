@@ -130,3 +130,4 @@ C:\Users\Nand\web\NBP\Musimilar-1.0\MusimilarAPI\obj\Debug\net5.0\MusimilarApi.d
 C:\Users\Nand\web\NBP\Musimilar-1.0\MusimilarAPI\obj\Debug\net5.0\ref\MusimilarApi.dll
 C:\Users\Nand\web\NBP\Musimilar-1.0\MusimilarAPI\obj\Debug\net5.0\MusimilarApi.pdb
 C:\Users\Nand\web\NBP\Musimilar-1.0\MusimilarAPI\obj\Debug\net5.0\MusimilarApi.genruntimeconfig.cache
+C:\Users\Nand\web\NBP\Musimilar-1.0\MusimilarAPI\bin\Debug\net5.0\data\song - Copy.json

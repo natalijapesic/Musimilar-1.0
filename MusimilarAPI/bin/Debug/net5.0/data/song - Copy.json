@@ -1,0 +1,22 @@
+[
+	{
+		"name" : "rapsong2",
+		"artist" : "Artist6",
+		"audio" : {
+				"tempo" : 140.55,
+				"energy" : 0.85,
+
+				"valence" : 1
+		}
+	},
+	{
+		"audio" : {
+				"tempo" : 140.55,
+				"energy" : 0.85,
+				"speechiness" : 0.11,
+				"danceability" : 0.411,
+				"durationMS" : 157859,
+				"valence" : 0.79
+		}
+	}
+]

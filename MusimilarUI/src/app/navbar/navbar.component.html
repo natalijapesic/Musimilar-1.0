@@ -3,17 +3,18 @@
     <ul class = "navbar">
         <li class = "logo"><a  routerLink="/"><img src="../../assets/img/logo2.0.jpg"></a></li>
         <li class = "search">
-            <input #artist type="text" placeholder="Input artist name">
-            <a (click)="onSearch(artist)">Search</a>
+            <input #artist type="text" placeholder="Input full artist name">
+            <a (click)="onSearch(artist)">Find similar artists</a>
         </li>
         <div class= "drop-down">
             <button class="drop-down-btn"> User </button>
             <div class="drop-down-content">
                 <a routerLink="/admin" *ngIf="isAdmin">Admin</a>
+                <a routerLink="/playlist" *ngIf="isLogin">Playlist</a>
                 <a (click)="logout()" *ngIf="isLogin">Logout</a>
                 <a routerLink="/login" *ngIf="!isLogin">Sign In</a>
                 <a routerLink="/register" *ngIf="!isLogin">Sign Up</a>
             </div>
         </div>
     </ul>
-  </nav>
+</nav>

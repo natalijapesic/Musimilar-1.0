@@ -6,7 +6,7 @@ using MusimilarApi.Models.DTOs;
 namespace MusimilarApi.Interfaces
 {
     public interface ISongService : IEntityService<Song, SongDTO>{
-        Task<List<SongInfoDTO>> RecommendPlaylistAsync(PlaylistDTO request);
+        Task<List<SongInfoDTO>> RecommendPlaylistAsync(SimilarSongsDTO request);
         Task<SongDTO> GetSongByNameAsync(string name, string artist);
         Task<List<SongDTO>> GetSongsByGenreAsync(string genre);
 

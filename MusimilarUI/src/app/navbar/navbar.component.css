@@ -45,10 +45,10 @@ input{
 .search a{
     background-color: #000000;
     color: white;
-    padding: 20px 40px;
+    padding: 18px;
     font-size: 16px;
     border: none;
-    max-width:110px;
+
     margin-right: 10px;
 }
 

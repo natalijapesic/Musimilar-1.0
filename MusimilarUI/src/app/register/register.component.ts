@@ -1,7 +1,6 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { RegisterRequest } from '@app/_requests';
 import { UserService } from '@app/_services';
-import { fromEvent, map } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -39,7 +38,6 @@ export class RegisterComponent implements OnInit {
   }
 
   setErrorLabel(){
-
     if(!this.isEmailGood){  
       this.errorMessage = "Email must contain @ and .com or .rs";
     }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
-import { RegisterRequest } from '@app/_requests';
+import { AddPlaylistRequest, RegisterRequest } from '@app/_requests';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -19,5 +19,9 @@ export class UserService {
 
     register(request: RegisterRequest){
         return this.http.post(`${environment.apiUrl}/user/registration`, request);
+    }
+
+    addPlaylist(request: AddPlaylistRequest){
+        return this.http.put(`${environment.apiUrl}/user/playlist`, request);
     }
 }

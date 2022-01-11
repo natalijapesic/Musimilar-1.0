@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ArtistService } from '@app/_services/artist.service';
-import { SongService } from '@app/_services/song.service';
+import { SongService, ArtistService } from '@app/_services';
 
 @Component({
   selector: 'app-add',
@@ -22,8 +21,6 @@ export class AddComponent implements OnInit {
     this.fileToLoad = event.target.files[0];
     
   }
-
-
 
   onClick(selectEntity: HTMLSelectElement){
     console.log(selectEntity.value);

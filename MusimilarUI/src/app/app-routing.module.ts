@@ -8,6 +8,7 @@ import { Role } from './_models';
 import { RegisterComponent } from './register';
 import { AdminComponent } from './admin';
 import { ArtistListComponent } from './artist-list';
+import { PlaylistComponent } from './playlist';
 
 const routes: Routes = [
     {
@@ -23,6 +24,11 @@ const routes: Routes = [
         component: AdminComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
+    },
+    {
+        path: 'playlist',
+        component: PlaylistComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'login',

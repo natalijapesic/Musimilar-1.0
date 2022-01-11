@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,7 +13,7 @@ using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Helpers;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Models.DTOs;
-using MusimilarApi.Models.Requests;
+using MongoDB.Driver.Linq;
 using MusimilarApi.Services;
 using StackExchange.Redis;
 using BCryptNet = BCrypt.Net.BCrypt;
@@ -89,6 +90,23 @@ namespace MusimilarApi.Service
             
             user.WithoutPassword();
             return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<ICollection<PlaylistDTO>> AddPlaylistAsync(PlaylistDTO model, UserDTO userDTO)
+        {
+            var result = userDTO.Playlists.Find(p => p.Example.Name == model.Example.Name && p.Example.Artist == model.Example.Artist);
+            if(userDTO.Playlists.Find(p => p.Example.Name == model.Example.Name && p.Example.Artist == model.Example.Artist) == null)
+            {
+                Playlist playlist = _mapper.Map<Playlist>(model);
+
+                ICollection<Playlist> playlists = _mapper.Map<ICollection<Playlist>>(userDTO.Playlists);
+                playlists.Add(playlist);
+                var update = Builders<User>.Update.Set(p => p.Playlists, playlists);
+                await _collection.UpdateOneAsync(u => u.Id == userDTO.Id, update);
+                return userDTO.Playlists;
+            }
+            else 
+                return null;
         }
     }
 }

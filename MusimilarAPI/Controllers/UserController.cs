@@ -39,7 +39,7 @@ namespace MusimilarApi.Controllers
             return Ok(users);
         }
 
-        
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
@@ -55,6 +55,7 @@ namespace MusimilarApi.Controllers
             return Ok(user);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id:length(24)}")]
         public async Task DeleteUser(string id)
         {
@@ -84,6 +85,21 @@ namespace MusimilarApi.Controllers
             User user = _mapper.Map<User>(userDTO);
 
             return Ok(user);
+        }
+
+        [Authorize]
+        [HttpPut("playlist")]
+        public async Task<ActionResult<PlaylistDTO>> AddPlaylistAsync([FromBody] AddPlaylistRequest request){
+            PlaylistDTO playlistDTO = _mapper.Map<PlaylistDTO>(request);
+
+            UserDTO userDTO = await _userService.GetById(request.UserId);
+            
+            IEnumerable<PlaylistDTO> userPlaylists = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
+
+            if(userPlaylists == null)
+                return BadRequest("Playlist already exists");
+            else 
+                return Ok(userPlaylists);
         }
 
     }

@@ -11,6 +11,7 @@
     margin-top:1%;
     display: flex;
     flex-direction: column;
+    align-content: center;
     text-align: center;
     color:black;
     font-size: 16px;
@@ -23,6 +24,7 @@
     display: flex;
     flex-wrap: nowrap;
     text-align: left;
+    justify-content: center;
 }
 
 input{
@@ -33,12 +35,12 @@ input{
     margin-left:2%;
     margin-top:2%;
     margin-bottom: 2%;
-    width: 50%;
+    width: 80%;
     color:black;
 }
 
 input:hover{
-    border-bottom: rgb(221, 212, 92) 2px solid;
+    border-bottom: rgb(46, 110, 125) 2px solid;
 }
 
 button{
@@ -49,8 +51,9 @@ button{
     padding-top: 10px;
     text-align: center;
     padding-bottom: 10px;
-    background-color: rgb(207, 207, 207);
-    width:50%;
+    color: #dddddd;
+    background-color: rgb(46, 110, 125);
+    width:70%;
 }
 
 button:hover{
