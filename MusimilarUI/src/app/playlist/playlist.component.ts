@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Playlist, Song, User } from '@app/_models';
+import { Song, User } from '@app/_models';
 import { AddPlaylistRequest, PlaylistRequest } from '@app/_requests';
 import { SongResponse } from '@app/_responses';
 import { AuthenticationService, SongService, UserService } from '@app/_services';
-import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-playlist',
@@ -23,8 +22,7 @@ export class PlaylistComponent implements OnInit {
                 this.authenticationService.user.subscribe(x => this.user = x);
               }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onRecommend(songName: HTMLInputElement, artistName: HTMLInputElement){
     this.example = new Song(songName.value, artistName.value);

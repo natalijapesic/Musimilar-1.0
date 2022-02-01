@@ -70,12 +70,14 @@ namespace MusimilarApi.Service
             {
                 return await session.WriteTransactionAsync(async tx => 
                 {
-                        var cursor = await tx.RunAsync(@"MATCH (a1:ArtistNode 
-                                                        {name: $artistName})-[:PLAYS*2]-(a:ArtistNode)
+                        var cursor = await tx.RunAsync(@"MATCH (a1:ArtistNode), (a:ArtistNode)
+                                                        WHERE TOLOWER(a1.name) CONTAINS TOLOWER($artist)
+                                                        AND
+                                                        (a1)-[:PLAYS*2]-(a)
                                                         RETURN DISTINCT a.name AS name,
-                                                               a.genres AS genres,
-                                                               a.image AS image",
-                                                    new {artistName}
+                                                                        a.genres AS genres,
+                                                                        a.image AS image",
+                                                    new {artist = artistName}
                                                     );                        
 
                         List<ArtistNode> similarArtists = await cursor.ToListAsync(record => new ArtistNode(

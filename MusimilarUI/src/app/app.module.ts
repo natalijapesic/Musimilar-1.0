@@ -16,6 +16,7 @@ import { AddComponent } from './add';
 import { ArtistListComponent } from './artist-list';
 import { NavbarComponent } from './navbar';
 import { PlaylistComponent } from './playlist';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { PlaylistComponent } from './playlist';
     AddComponent,
     ArtistListComponent,
     NavbarComponent,
-    PlaylistComponent
+    PlaylistComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
