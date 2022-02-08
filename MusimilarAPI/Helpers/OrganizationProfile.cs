@@ -32,8 +32,6 @@ namespace MusimilarApi.Helpers
             CreateMap<RegisterRequest, UserDTO>();
             CreateMap<UserDTO, UserResponse>();
 
-            CreateMap<SimilarSongsRequest, SimilarSongsDTO>();
-
             CreateMap<SongInfoRequest, SongInfoDTO>();
 
             CreateMap<PlaylistRequest, PlaylistDTO>();
@@ -41,6 +39,7 @@ namespace MusimilarApi.Helpers
             CreateMap<PlaylistDTO, Playlist>();
             CreateMap<Playlist, PlaylistDTO>();
             CreateMap<PlaylistDTO, PlaylistResponse>();
+            CreateMap<PlaylistFeedDTO, PlaylistFeedResponse>();
             
             CreateMap<UserDTO, User>().ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password));
             CreateMap<User, UserDTO>().ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.PasswordHash));

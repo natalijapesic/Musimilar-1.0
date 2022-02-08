@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 namespace MusimilarApi.Models.DTOs
 {
-    public class PlaylistDTO {
-        
+    public class PlaylistDTO
+    {
         public string Name { get; set; }
-        public ICollection<SongInfoDTO> Songs { get; set; }
+        public List<SongInfoDTO> Songs { get; set; }
 
         public SongInfoDTO Example { get; set; }
 

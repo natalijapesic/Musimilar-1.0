@@ -4,5 +4,11 @@ namespace MusimilarApi.Models.DTOs{
     {
         public string Artist { get; set; }
         public string Name { get; set; }
+
+        public SongInfoDTO(string artist, string name)
+        {
+            this.Name = name;
+            this.Artist = artist; 
+        }
     }
 }

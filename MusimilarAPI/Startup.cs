@@ -73,7 +73,7 @@ namespace MusimilarApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MusimilarApi v1"));
             }
 
-            app.UseHttpsRedirection(); //za sta je ovo?
+            app.UseHttpsRedirection(); 
 
             app.UseRouting();
 

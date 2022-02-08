@@ -19,15 +19,19 @@ namespace MusimilarApi.Controllers
     {
         private readonly ILogger<SongController> _logger;
         private readonly ISongService _songService;
+        private readonly IPlaylistService _playlistService;
         private readonly IMapper _mapper;
 
         public SongController(ISongService songService, 
+                              IPlaylistService playlistService,
                               ILogger<SongController> logger,
-                              IMapper autoMapper)
+                              IMapper autoMapper
+                              )
         {
             _songService = songService;
             _logger = logger;
             _mapper = autoMapper;
+            _playlistService = playlistService;
         }
 
         [Authorize(Roles = Role.Admin)]
@@ -46,10 +50,16 @@ namespace MusimilarApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("playlist")]
-        public async Task<List<SongInfoDTO>> RecommendPlaylist(SimilarSongsRequest request)
+        public async Task<List<SongInfoDTO>> RecommendPlaylist(SongInfoRequest request)
         {
-            SimilarSongsDTO playlistDTO = _mapper.Map<SimilarSongsDTO>(request);
-            List<SongInfoDTO> songInfoDTOs = await _songService.RecommendPlaylistAsync(playlistDTO);
+            SongDTO songExample = await this._songService.GetSongByNameAsync(request.Name, request.Artist);
+
+            List<SongInfoDTO> songInfoDTOs = await this._playlistService.GetPlaylistAsync(songExample.Id);
+            if(songInfoDTOs != null)
+                return songInfoDTOs;
+                
+            SongInfoDTO playlistDTO = _mapper.Map<SongInfoDTO>(request);
+            songInfoDTOs = await _songService.RecommendPlaylistAsync(playlistDTO, songExample);
             return songInfoDTOs;
         }
 

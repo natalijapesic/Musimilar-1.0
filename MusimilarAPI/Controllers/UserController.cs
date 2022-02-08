@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Interfaces;
 using MusimilarApi.Models.DTOs;
+using MusimilarApi.Models.Queries;
 using MusimilarApi.Models.Requests;
 using MusimilarApi.Models.Responses;
 
@@ -19,13 +20,16 @@ namespace MusimilarApi.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
+        private readonly IPlaylistService _playlistService;
         private readonly IMapper _mapper;
 
         public UserController(IUserService userService, 
                               ILogger<UserController> logger,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IPlaylistService playlistService)
         {
             this._userService = userService;
+            this._playlistService = playlistService;
             this._logger = logger;
             this._mapper = mapper;
         }
@@ -87,9 +91,9 @@ namespace MusimilarApi.Controllers
             return Ok(user);
         }
 
-        [Authorize]
         [HttpPut("playlist")]
-        public async Task<ActionResult<PlaylistDTO>> AddPlaylistAsync([FromBody] AddPlaylistRequest request){
+        public async Task<ActionResult<IEnumerable<PlaylistResponse>>> AddPlaylistAsync([FromBody] AddPlaylistRequest request)
+        {
             PlaylistDTO playlistDTO = _mapper.Map<PlaylistDTO>(request);
 
             UserDTO userDTO = await _userService.GetById(request.UserId);
@@ -98,8 +102,19 @@ namespace MusimilarApi.Controllers
 
             if(userPlaylists == null)
                 return BadRequest("Playlist already exists");
-            else 
+            else
+            {
+                IEnumerable<PlaylistResponse> response = _mapper.Map<IEnumerable<PlaylistResponse>>(userPlaylists);
                 return Ok(userPlaylists);
+            } 
+        }
+
+        [HttpGet("feed")]
+        public async Task<List<PlaylistFeedResponse>> GetPlaylistFeed([FromQuery] GetPlaylistFeed getPlaylist){
+
+            List<PlaylistFeedDTO> playlistFeedDTOs = await this._playlistService.UsersFeedAsync(getPlaylist.Subscriptions);
+
+            return this._mapper.Map<List<PlaylistFeedResponse>>(playlistFeedDTOs);
         }
 
     }

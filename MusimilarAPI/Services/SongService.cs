@@ -80,10 +80,8 @@ namespace MusimilarApi.Service
                 return SongGenre.Latin;        
         }
 
-        public async Task<List<SongInfoDTO>> RecommendPlaylistAsync(SimilarSongsDTO request)
+        public async Task<List<SongInfoDTO>> RecommendPlaylistAsync(SongInfoDTO request, SongDTO songExample)
         {
-            SongDTO songExample = await GetSongByNameAsync(request.Name, request.Artist);
-
             List<SongDTO> songs = await GetSongsByGenreAsync(songExample.Genre);
 
             List<SongDTO> recommendedSongs = songs.OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
@@ -92,10 +90,9 @@ namespace MusimilarApi.Service
                                                   .ToList();
 
             List<SongInfoDTO> songInfos = _mapper.Map<List<SongInfoDTO>>(recommendedSongs);
-            long numberInput = await _playlistService.CreateSetOfSongs(songInfos, songExample.Id);
+            long numberInput = await _playlistService.CreateSetOfSongsAsync(songInfos, songExample.Genre, songExample.Id);
             _logger.LogInformation($"Set has {numberInput} songs");
             
-
             return songInfos;            
         }
 
