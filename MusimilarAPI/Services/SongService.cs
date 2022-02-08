@@ -80,7 +80,7 @@ namespace MusimilarApi.Service
                 return SongGenre.Latin;        
         }
 
-        public async Task<List<SongInfoDTO>> RecommendPlaylistAsync(SongInfoDTO request, SongDTO songExample)
+        public async Task<List<SongInfoDTO>> RecommendPlaylistAsync(SongDTO songExample)
         {
             List<SongDTO> songs = await GetSongsByGenreAsync(songExample.Genre);
 

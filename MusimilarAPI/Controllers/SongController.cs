@@ -50,16 +50,15 @@ namespace MusimilarApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("playlist")]
-        public async Task<List<SongInfoDTO>> RecommendPlaylist(SongInfoRequest request)
+        public async Task<List<SongInfoDTO>> RecommendPlaylistAsync(SongInfoRequest request)
         {
             SongDTO songExample = await this._songService.GetSongByNameAsync(request.Name, request.Artist);
 
             List<SongInfoDTO> songInfoDTOs = await this._playlistService.GetPlaylistAsync(songExample.Id);
             if(songInfoDTOs != null)
                 return songInfoDTOs;
-                
-            SongInfoDTO playlistDTO = _mapper.Map<SongInfoDTO>(request);
-            songInfoDTOs = await _songService.RecommendPlaylistAsync(playlistDTO, songExample);
+
+            songInfoDTOs = await _songService.RecommendPlaylistAsync(songExample);
             return songInfoDTOs;
         }
 

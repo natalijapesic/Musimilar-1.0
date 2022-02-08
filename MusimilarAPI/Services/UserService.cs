@@ -25,8 +25,6 @@ namespace MusimilarApi.Service
         private readonly IConnectionMultiplexer _redis;
         public readonly IConfiguration _configuration;
 
-
-        //private readonly string key;
         public UserService(IDatabaseSettings settings, 
                           IConfiguration config, 
                           ILogger<UserService> logger,
