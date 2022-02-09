@@ -31,34 +31,55 @@ namespace MusimilarApi.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<ArtistNode> GetArtistAsync(string name)
+        public async Task<ActionResult<ArtistNode>> GetArtistAsync(string name)
         {
-           return await _artistService.GetArtistAsync(name);
+            ArtistNode artistNode = await _artistService.GetArtistAsync(name);
+            if(artistNode == null)
+            {
+                artistNode = await this._artistService.GetArtistFromSpotify(name);
+            } 
+
+            if(artistNode != null)   
+                return Ok(artistNode);
+            else
+                return BadRequest(artistNode);
         }
 
-        [HttpGet("genre/{genre}")]
-        public async Task<List<ArtistNode>> GetArtistByGenreAsync(string genre)
+        [HttpGet("genre/{genreName}")]
+        public async Task<ActionResult<List<ArtistNode>>> GetArtistByGenreAsync(string genre)
         {
-           return await _artistService.GetArtistNodesByGenreAsync(genre);
+            var result = await _artistService.GetArtistNodesByGenreAsync(genre);
+            if(result == null)
+                return BadRequest();
+            else
+                return Ok(result);
+
         }
 
         [HttpGet("similar/{artistName}")]
-        public async Task<List<ArtistNode>> GetSimilarArtistsAsync(string artistName)
+        public async Task<ActionResult<List<ArtistNode>>> GetSimilarArtistsAsync(string artistName)
         {
-           return await _artistService.GetSimilarArtistsAsync(artistName);
+            List<ArtistNode> artistNodes = await _artistService.GetSimilarArtistsAsync(artistName);
+            if(artistNodes == null)
+                return BadRequest();
+            
+            return Ok(artistNodes);
+
         }
 
 
         [HttpPost]
-        public async Task<List<string>> InsertAsync(ArtistNode artist){
+        public async Task<ActionResult<ArtistNode>> InsertAsync(ArtistNode artist){
 
-            await _artistService.InserNodeAsync(artist);
+            ArtistNode artistNode = await _artistService.InserNodeAsync(artist);
+            if(artistNode == null)
+                return BadRequest();
             this._logger.LogInformation($"{artist.Name} was inserted in Neo4j");
 
             List<string> result = await _artistService.ConnectArtistWithGenresAsync(artist.Name, artist.Genres);
             this._logger.LogInformation($"{result} was inserted in Neo4j");
 
-            return result;
+            return Ok(artistNode);
             
         }
 

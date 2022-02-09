@@ -11,8 +11,8 @@ namespace MusimilarApi.Interfaces
         Task<List<ArtistNode>> GetArtistNodesByGenreAsync(string genre);
         Task<List<ArtistNode>> GetSimilarArtistsAsync(string artistName);
         Task DeleteAsync(string name);
-
         Task<ArtistNode> GetArtistAsync(string artistName);
+        Task<ArtistNode> GetArtistFromSpotify(string artistName);
 
     }
 }
