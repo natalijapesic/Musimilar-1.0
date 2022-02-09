@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MusimilarApi.Entities.MongoDB;
 using MusimilarApi.Entities.Neo4j;
 using MusimilarApi.Interfaces;
 using Neo4j.Driver;
 
 namespace MusimilarApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ArtistController : ControllerBase
@@ -23,7 +26,7 @@ namespace MusimilarApi.Controllers
             this._logger = logger;
         }
 
-
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("{name}")]
         public async Task DeleteArtistAsync(string name)
         {
@@ -56,6 +59,7 @@ namespace MusimilarApi.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpGet("similar/{artistName}")]
         public async Task<ActionResult<List<ArtistNode>>> GetSimilarArtistsAsync(string artistName)
         {
@@ -67,7 +71,7 @@ namespace MusimilarApi.Controllers
 
         }
 
-
+        [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public async Task<ActionResult<ArtistNode>> InsertAsync(ArtistNode artist){
 

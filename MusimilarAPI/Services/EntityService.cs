@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -44,13 +45,28 @@ namespace MusimilarApi.Services
 
         public async Task<T2> GetAsync(string id)
         {
-            T1 entity = await _collection.Find<T1>(obj => obj.Id == id).FirstOrDefaultAsync();
-            return _mapper.Map<T2>(entity);
+            try{
+                T1 entity = await _collection.Find<T1>(obj => obj.Id == id).FirstOrDefaultAsync();
+                return _mapper.Map<T2>(entity);
+            }
+            catch(Exception exception){
+
+                this._logger.LogError($"Get by id: {id} throws {exception}");
+                return null;
+            }
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
-            await _collection.DeleteOneAsync(obj => obj.Id == id);
+            try{
+                await _collection.DeleteOneAsync(obj => obj.Id == id);
+                return true;
+            }
+            catch(Exception exception){
+
+                this._logger.LogError($"Delete by id: {id} throws {exception}");
+                return false;
+            }
         }
 
         public virtual Task<ICollection<T2>> InsertManyAsync(ICollection<T2> obj)

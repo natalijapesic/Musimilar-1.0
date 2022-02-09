@@ -45,7 +45,11 @@ namespace MusimilarApi.Controllers
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<SongResponse>> GetSong(string id)
         {
-           return _mapper.Map<SongResponse>(await _songService.GetAsync(id));
+            SongDTO songDTO = await _songService.GetAsync(id);
+            if(songDTO == null)
+                return BadRequest();
+
+            return Ok(_mapper.Map<SongResponse>(songDTO));
         }
 
         [AllowAnonymous]
@@ -64,14 +68,19 @@ namespace MusimilarApi.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id:length(24)}")]
-        public async Task DeleteSong(string id)
+        public async Task<ActionResult> DeleteSong(string id)
         {
-           await _songService.DeleteAsync(id);
+            bool result = await _songService.DeleteAsync(id);
+            if(result)
+                return Ok();
+            else
+                return BadRequest();
+        
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
-        public async Task<SongResponse> Insert(SongRequest request){
+        public async Task<SongResponse> InsertAsync(SongRequest request){
             
             SongDTO songDTO = _mapper.Map<SongDTO>(request);
             songDTO = await _songService.InsertAsync(songDTO);
@@ -80,7 +89,7 @@ namespace MusimilarApi.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost("many")]
-        public async Task<ICollection<SongResponse>> InsertMany(ICollection<SongRequest> requests){
+        public async Task<ICollection<SongResponse>> InsertManyAsync(ICollection<SongRequest> requests){
             
             ICollection<SongDTO> songDTOs = _mapper.Map<ICollection<SongDTO>>(requests);
             songDTOs = await _songService.InsertManyAsync(songDTOs);

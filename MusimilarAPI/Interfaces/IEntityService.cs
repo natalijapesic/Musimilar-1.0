@@ -11,6 +11,6 @@ namespace MusimilarApi.Interfaces
         Task<T2> GetAsync(string id);
         Task<T2> InsertAsync(T2 obj);
         Task<ICollection<T2>> InsertManyAsync(ICollection<T2> obj);
-        Task DeleteAsync(string id);
+        Task<bool> DeleteAsync(string id);
     }
 }
