@@ -69,7 +69,7 @@ namespace MusimilarApi.Services
             }
         }
 
-        public virtual Task<ICollection<T2>> InsertManyAsync(ICollection<T2> obj)
+        public virtual Task<List<T2>> InsertManyAsync(List<T2> obj)
         {
             throw new System.NotImplementedException();
         }

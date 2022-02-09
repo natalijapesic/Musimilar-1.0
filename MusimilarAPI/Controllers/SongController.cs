@@ -80,20 +80,25 @@ namespace MusimilarApi.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
-        public async Task<SongResponse> InsertAsync(SongRequest request){
+        public async Task<ActionResult<SongResponse>> InsertAsync(SongRequest request){
             
             SongDTO songDTO = _mapper.Map<SongDTO>(request);
             songDTO = await _songService.InsertAsync(songDTO);
-            return _mapper.Map<SongResponse>(songDTO);
+            if(songDTO == null)
+                return BadRequest();
+
+            return Ok(_mapper.Map<SongResponse>(songDTO));
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost("many")]
-        public async Task<ICollection<SongResponse>> InsertManyAsync(ICollection<SongRequest> requests){
+        public async Task<ActionResult<ICollection<SongResponse>>> InsertManyAsync(ICollection<SongRequest> requests){
             
-            ICollection<SongDTO> songDTOs = _mapper.Map<ICollection<SongDTO>>(requests);
+            List<SongDTO> songDTOs = _mapper.Map<List<SongDTO>>(requests);
             songDTOs = await _songService.InsertManyAsync(songDTOs);
-            return _mapper.Map<ICollection<SongResponse>>(songDTOs);
+            if(songDTOs == null)
+                return BadRequest();
+            return Ok(_mapper.Map<ICollection<SongResponse>>(songDTOs));
         }
 
     }

@@ -28,7 +28,11 @@ namespace MusimilarApi.Service
 
         public override async Task<SongDTO> InsertAsync(SongDTO request){
 
+            if(request.Artist == null || request.Name == null || request.AudioFeatures == null)
+                return null;
+
             string genre = DetermineGenre(request.AudioFeatures);
+
             request.Genre = genre;
 
             await _collection.InsertOneAsync(_mapper.Map<Song>(request));
@@ -36,16 +40,27 @@ namespace MusimilarApi.Service
             return request;
         }
 
-        public override async Task<ICollection<SongDTO>> InsertManyAsync(ICollection<SongDTO> requests){
+        public override async Task<List<SongDTO>> InsertManyAsync(List<SongDTO> requests){
 
             string genre = null;
-
-            foreach (var request in requests)
+            int i = 0;
+            
+            while(requests.Count > 0 && i < requests.Count)
             {
-                genre = DetermineGenre(request.AudioFeatures);
+                if(requests[i].Artist == null || requests[i].Name == null || requests[i].AudioFeatures == null)
+                {
+                    requests.RemoveAt(i);
+                    continue;
+                }    
 
-                request.Genre = genre;
+                genre = DetermineGenre(requests[i].AudioFeatures);
+
+                requests[i].Genre = genre;
+                i++;
             }
+
+            if(requests.Count == 0)
+                return null;
 
             await _collection.InsertManyAsync(_mapper.Map<IEnumerable<Song>>(requests));
 
