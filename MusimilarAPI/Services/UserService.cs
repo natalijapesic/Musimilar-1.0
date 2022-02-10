@@ -24,16 +24,19 @@ namespace MusimilarApi.Service
     {
         private readonly IConnectionMultiplexer _redis;
         public readonly IConfiguration _configuration;
+        public readonly ISongService _songService;
 
         public UserService(IDatabaseSettings settings, 
                           IConfiguration config, 
                           ILogger<UserService> logger,
                           IConnectionMultiplexer redis,
-                          IMapper mapper)
+                          IMapper mapper,
+                          ISongService songService)
         :base(settings, settings.UsersCollectionName, logger, mapper){
 
             this._configuration = config;
             this._redis = redis;
+            this._songService = songService;
         }
 
 
@@ -137,32 +140,34 @@ namespace MusimilarApi.Service
             if(model.Password == null || model.Email == null || model.Name == null)
                 return false;
 
-            try
-            {
+            try{
                 var addr = new System.Net.Mail.MailAddress(model.Email);
                 return addr.Address == model.Email;
             }
-            catch
-            {
+            catch{
                 return false;
             }
         }
 
         public async Task<ICollection<PlaylistDTO>> AddPlaylistAsync(PlaylistDTO model, UserDTO userDTO)
         {
-            var result = userDTO.Playlists.Find(p => p.Example.Name == model.Example.Name && p.Example.Artist == model.Example.Artist);
-            if(userDTO.Playlists.Find(p => p.Example.Name == model.Example.Name && p.Example.Artist == model.Example.Artist) == null)
-            {
-                Playlist playlist = _mapper.Map<Playlist>(model);
-
-                ICollection<Playlist> playlists = _mapper.Map<ICollection<Playlist>>(userDTO.Playlists);
-                playlists.Add(playlist);
-                var update = Builders<User>.Update.Set(p => p.Playlists, playlists);
-                await _collection.UpdateOneAsync(u => u.Id == userDTO.Id, update);
-                return userDTO.Playlists;
-            }
-            else 
+            SongDTO song = await this._songService.GetSongByNameAsync(model.Example.Name, model.Example.Artist);
+            if(song == null)
                 return null;
+
+            PlaylistDTO playlistDTO = userDTO.Playlists.Find(p => p.Example.Name == model.Example.Name && p.Example.Artist == model.Example.Artist);
+
+            if(playlistDTO == null)
+                return null;
+
+            Playlist playlist = _mapper.Map<Playlist>(model);
+
+            ICollection<Playlist> playlists = _mapper.Map<ICollection<Playlist>>(userDTO.Playlists);
+            playlists.Add(playlist);
+
+            var update = Builders<User>.Update.Set(p => p.Playlists, playlists);
+            await _collection.UpdateOneAsync(u => u.Id == userDTO.Id, update);
+            return userDTO.Playlists;
         }
     }
 }

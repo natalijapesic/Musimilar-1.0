@@ -113,11 +113,14 @@ namespace MusimilarApi.Controllers
             PlaylistDTO playlistDTO = _mapper.Map<PlaylistDTO>(request);
 
             UserDTO userDTO = await _userService.GetAsync(request.UserId);
+
+            if(userDTO == null)
+                return BadRequest("User doesnt exist");
             
             IEnumerable<PlaylistDTO> userPlaylists = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
 
             if(userPlaylists == null)
-                return BadRequest("Playlist already exists");
+                return BadRequest("Playlist already exists or song-example doesnt exist");
             else
             {
                 IEnumerable<PlaylistResponse> response = _mapper.Map<IEnumerable<PlaylistResponse>>(userPlaylists);
