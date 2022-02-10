@@ -18,7 +18,8 @@ namespace MusimilarApi.Services
         public readonly ILogger<EntityService<T1, T2>> _logger;
         public readonly IMapper _mapper;
 
-        public EntityService(   IDatabaseSettings settings, 
+        public EntityService(
+                                IDatabaseSettings settings, 
                                 string collectionName, 
                                 ILogger<EntityService<T1, T2>> logger,
                                 IMapper mapper 

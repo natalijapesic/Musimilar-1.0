@@ -61,7 +61,7 @@ namespace MusimilarApi.Controllers
             if(songExample == null)
                 return BadRequest("Example song doesnt exist");
 
-            List<SongInfoDTO> songInfoDTOs = await this._playlistService.GetPlaylistAsync(songExample.Id);
+            List<SongInfoDTO> songInfoDTOs = await this._playlistService.GetAsync(songExample.Id);
             if(songInfoDTOs != null)
                 return Ok(songInfoDTOs);
 

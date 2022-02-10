@@ -129,11 +129,17 @@ namespace MusimilarApi.Controllers
         }
 
         [HttpGet("feed")]
-        public async Task<List<PlaylistFeedResponse>> GetPlaylistFeed([FromQuery] GetPlaylistFeed getPlaylist){
+        public async Task<ActionResult<List<PlaylistFeedResponse>>> GetPlaylistFeed([FromQuery] GetPlaylistFeed getPlaylist){
+
+            if(getPlaylist.Subscriptions.Count == 0)
+                return BadRequest();
 
             List<PlaylistFeedDTO> playlistFeedDTOs = await this._playlistService.UsersFeedAsync(getPlaylist.Subscriptions);
 
-            return this._mapper.Map<List<PlaylistFeedResponse>>(playlistFeedDTOs);
+            if(playlistFeedDTOs == null || playlistFeedDTOs.Count == 0)
+                return BadRequest();
+
+            return Ok(this._mapper.Map<List<PlaylistFeedResponse>>(playlistFeedDTOs));
         }
 
     }

@@ -10,7 +10,7 @@ namespace MusimilarApi.Interfaces
         Task AddNewAsync(string genre, string songId); 
         Task<double> LikeAsync(string key); 
         Task<List<PlaylistFeedDTO>> UsersFeedAsync(List<string> subscriptions);
-        Task<List<SongInfoDTO>> GetPlaylistAsync(string songId);
+        Task<List<SongInfoDTO>> GetAsync(string songId);
 
     }
 }

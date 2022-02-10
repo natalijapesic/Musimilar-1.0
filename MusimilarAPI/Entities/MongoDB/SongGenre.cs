@@ -2,12 +2,12 @@ namespace MusimilarApi.Entities.MongoDB
 {
     public static class SongGenre
     {
-        public const string Edm = "Edm";
-        public const string Pop = "Pop";
-        public const string Rock = "Rock";
-        public const string Rap = "Rap";
-        public const string Rb = "Rb";
-        public const string Latin = "Latin";
+        public const string Edm = "edm";
+        public const string Pop = "pop";
+        public const string Rock = "rock";
+        public const string Rap = "rap";
+        public const string Rb = "rb";
+        public const string Latin = "latin";
 
 
         public static bool Validate(string genre){

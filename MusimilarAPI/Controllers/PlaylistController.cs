@@ -30,6 +30,19 @@ namespace MusimilarApi.Controllers
         {
             var result = await this._playlistService.LikeAsync(songId);
 
+            if(result == -1)
+                return BadRequest();
+
+            return Ok(result);
+        }
+
+        [HttpGet("{id:length(24)}")]
+        public async Task<ActionResult<double>> GetAsync(string songId)
+        {
+            var result = await this._playlistService.GetAsync(songId);
+            if(result == null)
+                return BadRequest();
+                
             return Ok(result);
         }
 

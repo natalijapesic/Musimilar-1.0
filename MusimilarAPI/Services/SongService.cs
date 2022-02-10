@@ -114,12 +114,11 @@ namespace MusimilarApi.Service
             return songInfos;            
         }
 
-
-
         public async Task<SongDTO> GetSongByNameAsync(string name, string artist)
         {
             try{
-                Song song = await _collection.Find<Song>(s => s.Name == name && s.Artist == artist).FirstAsync();
+                Song song = await _collection.Find<Song>(s => s.Name.ToLower() == name.ToLower() && 
+                                                              s.Artist.ToLower() == artist.ToLower()).FirstAsync();
                 return _mapper.Map<SongDTO>(song);
 
             }catch(Exception exception){
