@@ -44,7 +44,7 @@ namespace MusimilarApi.Service
 
             string genre = null;
             int i = 0;
-            
+
             while(requests.Count > 0 && i < requests.Count)
             {
                 if(requests[i].Artist == null || requests[i].Name == null || requests[i].AudioFeatures == null)
@@ -99,6 +99,9 @@ namespace MusimilarApi.Service
         {
             List<SongDTO> songs = await GetSongsByGenreAsync(songExample.Genre);
 
+            if(songs == null)
+                return null;
+                
             List<SongDTO> recommendedSongs = songs.OrderBy(s => Math.Abs(s.AudioFeatures.Energy - songExample.AudioFeatures.Energy) + 
                                                             Math.Abs(s.AudioFeatures.Valence - songExample.AudioFeatures.Valence))
                                                   .Take(10)
@@ -115,14 +118,30 @@ namespace MusimilarApi.Service
 
         public async Task<SongDTO> GetSongByNameAsync(string name, string artist)
         {
-            Song song = await _collection.Find<Song>(s => s.Name == name && s.Artist == artist).FirstAsync();
-            return _mapper.Map<SongDTO>(song);
+            try{
+                Song song = await _collection.Find<Song>(s => s.Name == name && s.Artist == artist).FirstAsync();
+                return _mapper.Map<SongDTO>(song);
+
+            }catch(Exception exception){
+
+                this._logger.LogError($"GetSongBy name {name} and artistName {artist} throws {exception}");
+                return null;
+            }
+            
         }
 
         public async Task<List<SongDTO>> GetSongsByGenreAsync(string genre)
         {
-            List<Song> songs = await _collection.Find<Song>(song => song.Genre == genre).ToListAsync();
-            return _mapper.Map<List<SongDTO>>(songs);
+            try{
+
+                List<Song> songs = await _collection.Find<Song>(song => song.Genre == genre).ToListAsync();
+                return _mapper.Map<List<SongDTO>>(songs);
+
+            }catch(Exception exception){
+
+                this._logger.LogError($"GetSongsBy genre {genre} throws {exception}");
+                return null;
+            }
         }
 
     }
