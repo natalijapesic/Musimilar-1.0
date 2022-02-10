@@ -38,7 +38,11 @@ namespace MusimilarApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers(){
 
-            IEnumerable<User> users = _mapper.Map<IEnumerable<User>>(await _userService.GetAllAsync());
+            IEnumerable<UserDTO> userDTOs = await _userService.GetAllAsync();
+            if(userDTOs == null)
+                return NoContent();
+
+            IEnumerable<User> users = _mapper.Map<IEnumerable<User>>(userDTOs);
 
             return Ok(users);
         }
@@ -51,19 +55,25 @@ namespace MusimilarApi.Controllers
             if (id != currentUser && !User.IsInRole(Role.Admin))
                 return Forbid();
 
-            User user = _mapper.Map<User>(await _userService.GetAsync(id));
-
-            if (user == null)
+            UserDTO userDTO = await _userService.GetAsync(id);
+            if(userDTO == null)
                 return NotFound();
+
+            User user = _mapper.Map<User>(userDTO);
 
             return Ok(user);
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id:length(24)}")]
-        public async Task DeleteUser(string id)
+        public async Task<ActionResult> DeleteAsync(string id)
         {
-           await _userService.DeleteAsync(id);
+            bool result = await _userService.DeleteAsync(id);
+            if(result)
+                return Ok();
+            else
+                return BadRequest();
+                            
         }
 
         [AllowAnonymous]
@@ -71,6 +81,9 @@ namespace MusimilarApi.Controllers
         public async Task<ActionResult<UserResponse>> LogIn([FromBody] LoginRequest request){
 
             UserDTO userDTO = await _userService.LogInAsync(request.Email, request.Password);
+
+            if(userDTO == null)
+                return NotFound();
 
             if(userDTO.Token == null)
                 return Unauthorized();
@@ -81,10 +94,13 @@ namespace MusimilarApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("registration")]
-        public async Task<ActionResult<User>> Registration([FromBody] RegisterRequest request)
+        public async Task<ActionResult<User>> RegisterAsync([FromBody] RegisterRequest request)
         {
             UserDTO userDTO = _mapper.Map<UserDTO>(request);
             userDTO = await _userService.RegisterAsync(userDTO);
+
+            if(userDTO == null)
+                return BadRequest();
 
             User user = _mapper.Map<User>(userDTO);
 
@@ -96,7 +112,7 @@ namespace MusimilarApi.Controllers
         {
             PlaylistDTO playlistDTO = _mapper.Map<PlaylistDTO>(request);
 
-            UserDTO userDTO = await _userService.GetById(request.UserId);
+            UserDTO userDTO = await _userService.GetAsync(request.UserId);
             
             IEnumerable<PlaylistDTO> userPlaylists = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
 

@@ -39,55 +39,113 @@ namespace MusimilarApi.Service
 
         public async Task<UserDTO> LogInAsync(string email, string password)
         {
-            User user = await _collection.Find(u => u.Email == email).FirstOrDefaultAsync();
+            try{
 
-            if(user == null || !BCryptNet.Verify(password, user.PasswordHash))
-                throw new AppException("Username or password is incorrect");
+                User user = await _collection.Find(u => u.Email == email).FirstOrDefaultAsync();
+                if(user == null || !BCryptNet.Verify(password, user.PasswordHash))
+                    throw new AppException("Username or password is incorrect");
+                
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var tokenKey = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtKey").ToString());
+                var tokenDescriptor = new SecurityTokenDescriptor(){
+                    Subject = new ClaimsIdentity(new Claim[]{
+                        new Claim(ClaimTypes.Email, email),
+                        new Claim(ClaimTypes.Role, user.Role)
+                    }),
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtKey").ToString());
-            var tokenDescriptor = new SecurityTokenDescriptor(){
-                Subject = new ClaimsIdentity(new Claim[]{
-                    new Claim(ClaimTypes.Email, email),
-                    new Claim(ClaimTypes.Role, user.Role)
-                }),
+                    Expires = DateTime.Now.AddHours(6),
 
-                Expires = DateTime.Now.AddHours(6),
+                    SigningCredentials = new SigningCredentials(
+                        new SymmetricSecurityKey(tokenKey), 
+                        SecurityAlgorithms.HmacSha256Signature
+                    )
+                };
 
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(tokenKey), 
-                    SecurityAlgorithms.HmacSha256Signature
-                )
-            };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                user.Token = tokenHandler.WriteToken(token);     
+                user.WithoutPassword();
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);     
-            user.WithoutPassword();
+                return _mapper.Map<UserDTO>(user);
 
-            return _mapper.Map<UserDTO>(user);
+            }catch(Exception exception){
+
+                this._logger.LogError($"LogIn email {email} and password {password} throws exception {exception}");
+                return null;
+            } 
         }
 
-        public async Task<UserDTO> GetById(string id) 
+        public override async Task<UserDTO> GetAsync(string id) 
         {
-            var user = await _collection.Find(x => x.Id == id).FirstOrDefaultAsync();
-            user.WithoutPassword();
+            try{
+                var user = await _collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+                user.WithoutPassword();
             
-            return _mapper.Map<UserDTO>(user);
+                return _mapper.Map<UserDTO>(user);
+
+            }catch(Exception exception){
+
+                this._logger.LogError($"Get id {id} throws exception {exception}");
+                return null;
+            }
         }
+
+        public override async Task<IEnumerable<UserDTO>> GetAllAsync() 
+        {
+            try{
+                IEnumerable<User> users = await _collection.Find<User>(obj => true).ToListAsync();
+                foreach (var user in users)
+                    user.WithoutPassword();
+
+                return _mapper.Map<IEnumerable<UserDTO>>(users);
+
+            }catch(Exception exception){
+
+                this._logger.LogError($"GetAll throws exception {exception}");
+                return null;
+            }
+        }
+        
 
         public async Task<UserDTO> RegisterAsync(UserDTO model)
         {
-            if(_collection.Find(x => x.Email == model.Email).Any())
+            if(!ValidateModel(model))
+                return null;
+
+            try{
+                if(_collection.Find(x => x.Email == model.Email).Any())
                 throw new AppException($"User with this email already exist");
 
-            User user = _mapper.Map<User>(model);
-            user.PasswordHash = BCryptNet.HashPassword(model.Password);
-            user.Role = model.Role;
+                User user = _mapper.Map<User>(model);
+                user.PasswordHash = BCryptNet.HashPassword(model.Password);
+                user.Role = model.Role;
 
-            await _collection.InsertOneAsync(user);   
+                await _collection.InsertOneAsync(user);   
+                
+                user.WithoutPassword();
+                return _mapper.Map<UserDTO>(user);
+            }
+            catch(Exception exception)
+            {
+                this._logger.LogError($"Register throws exception {exception}");
+                return null;
+            }
             
-            user.WithoutPassword();
-            return _mapper.Map<UserDTO>(user);
+        }
+
+        private bool ValidateModel(UserDTO model){
+
+            if(model.Password == null || model.Email == null || model.Name == null)
+                return false;
+
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(model.Email);
+                return addr.Address == model.Email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<ICollection<PlaylistDTO>> AddPlaylistAsync(PlaylistDTO model, UserDTO userDTO)

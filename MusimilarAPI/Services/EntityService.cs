@@ -37,13 +37,13 @@ namespace MusimilarApi.Services
         }
 
 
-        public async Task<IEnumerable<T2>> GetAllAsync(){
+        public virtual async Task<IEnumerable<T2>> GetAllAsync(){
 
             IEnumerable<T1> entity = await _collection.Find<T1>(obj => true).ToListAsync();
             return _mapper.Map<IEnumerable<T2>>(entity);
         }
 
-        public async Task<T2> GetAsync(string id)
+        public virtual async Task<T2> GetAsync(string id)
         {
             try{
                 T1 entity = await _collection.Find<T1>(obj => obj.Id == id).FirstOrDefaultAsync();
