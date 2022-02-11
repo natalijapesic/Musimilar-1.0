@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RegisterRequest } from '@app/_requests';
 import { UserService } from '@app/_services';
 
@@ -19,7 +21,8 @@ export class RegisterComponent implements OnInit {
 
 
   constructor(public userService: UserService, 
-              private errorLabel: ElementRef) 
+              private errorLabel: ElementRef,
+              public router: Router) 
               {
                 this.errorLabel.nativeElement;
                 
@@ -86,9 +89,14 @@ export class RegisterComponent implements OnInit {
     
     let request =  new RegisterRequest(this.nameInput, this.passwordInput, this.emailInput);
 
-
     this.userService.register(request).subscribe(response =>{
+
       console.log(response);
+      this.router.navigate(["/login"]);
+        
+    },
+    (error: HttpErrorResponse) => {
+      alert("Check your email or user already exists.");
     })
   }
 

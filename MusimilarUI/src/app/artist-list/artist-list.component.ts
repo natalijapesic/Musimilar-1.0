@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Artist } from '@app/_models';
@@ -13,7 +14,7 @@ export class ArtistListComponent implements OnInit {
 
   private searchValue: string = '';
   public finished: boolean = false;
-  public artistList = new BehaviorSubject<Artist[]>([]); //pocetna vrednost je prazan niz
+  public artistList = new BehaviorSubject<Artist[]>([]);
 
   constructor(private artistService: ArtistService,
               private activeRoute: ActivatedRoute) { }
@@ -30,16 +31,16 @@ export class ArtistListComponent implements OnInit {
       this.searchValue = routeParams['artist_name'];
       
       if(this.searchValue)
-        this.artistService.getSimilarArtists(this.searchValue).subscribe(response => {
-          if(!response[0])
-            this.finished = true;
-          else{
-
-            this.finished = false;
-            this.artistList.next([...this.artistList.getValue(), ...response]);
-            //konkatenira liste, postojecu sa reponse
+        this.artistService.getSimilarArtists(this.searchValue).subscribe(
+          response => {
+            if(response[0] == null)
+              alert("Similar artists dont exist. Try someone else.")
+            this.artistList.next(response);
+          },
+          (error: HttpErrorResponse) =>{
+            alert("Artist doesnt exist.")
           }
-        })
+        )
     });
   }
 

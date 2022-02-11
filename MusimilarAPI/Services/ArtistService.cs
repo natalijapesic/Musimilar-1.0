@@ -96,6 +96,7 @@ namespace MusimilarApi.Service
             }
             catch(Exception example){
                 this._logger.LogError($"GetSimilarArtists exception: {example}");
+                
                 return null;
             }
             finally{
@@ -186,7 +187,11 @@ namespace MusimilarApi.Service
             }
             catch(Exception example){
                 this._logger.LogError($"GetArtist exception: {example}");
-                return null;
+
+                ArtistNode artistNode = await GetArtistFromSpotify(artistName);
+                if(artistNode != null)
+                    artistNode = await InserNodeAsync(artistNode);
+                return artistNode;
             }
             finally{
                 await session.CloseAsync();

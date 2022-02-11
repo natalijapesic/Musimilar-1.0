@@ -37,10 +37,6 @@ namespace MusimilarApi.Controllers
         public async Task<ActionResult<ArtistNode>> GetArtistAsync(string name)
         {
             ArtistNode artistNode = await _artistService.GetArtistAsync(name);
-            if(artistNode == null)
-            {
-                artistNode = await this._artistService.GetArtistFromSpotify(name);
-            } 
 
             if(artistNode != null)   
                 return Ok(artistNode);
@@ -54,9 +50,8 @@ namespace MusimilarApi.Controllers
             var result = await _artistService.GetArtistNodesByGenreAsync(genre);
             if(result == null)
                 return BadRequest();
-            else
-                return Ok(result);
 
+            return Ok(result);
         }
 
         [AllowAnonymous]
@@ -65,7 +60,7 @@ namespace MusimilarApi.Controllers
         {
             List<ArtistNode> artistNodes = await _artistService.GetSimilarArtistsAsync(artistName);
             if(artistNodes == null)
-                return BadRequest();
+                return NotFound();
             
             return Ok(artistNodes);
 
