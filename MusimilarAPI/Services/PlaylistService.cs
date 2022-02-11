@@ -12,17 +12,14 @@ namespace MusimilarApi.Service
     public class PlaylistService: IPlaylistService
     {
         private readonly IDatabase _redisClient;
-        private readonly ISongService _songService;
         private readonly ILogger<ArtistService> _logger;
 
         public PlaylistService( IConnectionMultiplexer redis, 
-                                ILogger<ArtistService> logger,
-                                ISongService songService
+                                ILogger<ArtistService> logger
                                 ){
 
             _redisClient = redis.GetDatabase();
             _logger = logger;
-            this._songService = songService;
         }
 
         public async Task AddNewAsync(string genre, string songId)
@@ -64,10 +61,6 @@ namespace MusimilarApi.Service
 
         public async Task<double> LikeAsync(string songId)
         {
-            SongDTO song = await this._songService.GetAsync(songId);
-
-            if(song == null)
-                return -1;
             string key = "playlist:leadboard";
             string data = $"playlist:{songId}";
             var result = await this._redisClient.SortedSetIncrementAsync(key, data, 1);
@@ -117,7 +110,6 @@ namespace MusimilarApi.Service
             }
 
             return playlistFeedDTOs;
-                
         }
 
         private string[] ToStringArray(RedisValue[] values){

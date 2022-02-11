@@ -24,19 +24,16 @@ namespace MusimilarApi.Service
     {
         private readonly IConnectionMultiplexer _redis;
         public readonly IConfiguration _configuration;
-        public readonly ISongService _songService;
 
         public UserService(IDatabaseSettings settings, 
                           IConfiguration config, 
                           ILogger<UserService> logger,
                           IConnectionMultiplexer redis,
-                          IMapper mapper,
-                          ISongService songService)
+                          IMapper mapper)
         :base(settings, settings.UsersCollectionName, logger, mapper){
 
             this._configuration = config;
             this._redis = redis;
-            this._songService = songService;
         }
 
 
@@ -151,10 +148,6 @@ namespace MusimilarApi.Service
 
         public async Task<ICollection<PlaylistDTO>> AddPlaylistAsync(PlaylistDTO model, UserDTO userDTO)
         {
-            SongDTO song = await this._songService.GetSongByNameAsync(model.Example.Name, model.Example.Artist);
-            if(song == null)
-                return null;
-
             PlaylistDTO playlistDTO = userDTO.Playlists.Find(p => p.Example.Name == model.Example.Name && p.Example.Artist == model.Example.Artist);
 
             if(playlistDTO == null)

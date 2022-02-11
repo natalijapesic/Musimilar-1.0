@@ -108,8 +108,6 @@ namespace MusimilarApi.Service
                                                   .ToList();
 
             List<SongInfoDTO> songInfos = _mapper.Map<List<SongInfoDTO>>(recommendedSongs);
-            long numberInput = await _playlistService.CreateSetOfSongsAsync(songInfos, songExample.Genre, songExample.Id);
-            _logger.LogInformation($"Set has {numberInput} songs");
             
             return songInfos;            
         }

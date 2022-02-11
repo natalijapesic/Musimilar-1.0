@@ -54,7 +54,7 @@ namespace MusimilarApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("playlist")]
-        public async Task<ActionResult<List<SongInfoDTO>>> RecommendPlaylistAsync(SongInfoRequest request)
+        public async Task<ActionResult<List<SongInfoResponse>>> RecommendPlaylistAsync(SongInfoRequest request)
         {
             SongDTO songExample = await this._songService.GetSongByNameAsync(request.Name, request.Artist);
 
@@ -68,8 +68,11 @@ namespace MusimilarApi.Controllers
             songInfoDTOs = await _songService.RecommendPlaylistAsync(songExample);
             if(songInfoDTOs == null)
                 return BadRequest("Similar song doesnt exist");
+            
+            long numberInput = await _playlistService.CreateSetOfSongsAsync(songInfoDTOs, songExample.Genre, songExample.Id);
+            _logger.LogInformation($"Set has {numberInput} songs");
 
-            return Ok(songInfoDTOs);
+            return Ok(this._mapper.Map<List<SongInfoResponse>>(songInfoDTOs));
         }
 
         [Authorize(Roles = Role.Admin)]

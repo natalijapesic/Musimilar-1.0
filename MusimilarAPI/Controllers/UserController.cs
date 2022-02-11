@@ -21,17 +21,20 @@ namespace MusimilarApi.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
         private readonly IPlaylistService _playlistService;
+        private readonly ISongService _songService;
         private readonly IMapper _mapper;
 
         public UserController(IUserService userService, 
                               ILogger<UserController> logger,
                               IMapper mapper,
-                              IPlaylistService playlistService)
+                              IPlaylistService playlistService,
+                              ISongService songService)
         {
             this._userService = userService;
             this._playlistService = playlistService;
             this._logger = logger;
             this._mapper = mapper;
+            this._songService = songService;
         }
 
         [Authorize(Roles = Role.Admin)]
@@ -116,6 +119,10 @@ namespace MusimilarApi.Controllers
 
             if(userDTO == null)
                 return BadRequest("User doesnt exist");
+            
+            SongDTO song = await this._songService.GetSongByNameAsync(request.Example.Name, request.Example.Artist);
+            if(song == null)
+                return BadRequest();
             
             IEnumerable<PlaylistDTO> userPlaylists = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
 

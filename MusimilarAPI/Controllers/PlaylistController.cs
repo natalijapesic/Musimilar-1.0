@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MusimilarApi.Interfaces;
+using MusimilarApi.Models.DTOs;
 
 namespace MusimilarApi.Controllers
 {
@@ -14,13 +15,16 @@ namespace MusimilarApi.Controllers
     {
         private readonly ILogger<SongController> _logger;
         private readonly IPlaylistService _playlistService;
+        private readonly ISongService _songService;
         private readonly IMapper _mapper;
 
         public PlaylistController(ILogger<SongController> logger,
                                   IPlaylistService playlistService,
-                                  IMapper mapper)
+                                  IMapper mapper,
+                                  ISongService songService)
         {
             this._playlistService = playlistService;
+            this._songService = songService;
             this._logger = logger;
             this._mapper = mapper;
         }
@@ -30,7 +34,9 @@ namespace MusimilarApi.Controllers
         {
             var result = await this._playlistService.LikeAsync(songId);
 
-            if(result == -1)
+            SongDTO song = await this._songService.GetAsync(songId);
+
+            if(song == null)
                 return BadRequest();
 
             return Ok(result);
