@@ -163,5 +163,24 @@ namespace MusimilarApi.Service
             UpdateResult result = await _collection.UpdateOneAsync(u => u.Id == userDTO.Id, update);
             return result.IsAcknowledged;
         }
+
+        public async Task<bool> DeletePlaylistAsync(string playlistName, UserDTO userDTO)
+        {
+            PlaylistDTO playlistDTO = userDTO.Playlists.Find(p => p.Name.ToLower() == playlistName.ToLower());
+
+            if(playlistDTO == null)
+                return false;
+
+            Playlist playlist = _mapper.Map<Playlist>(playlistDTO);
+
+            List<Playlist> playlists = _mapper.Map<List<Playlist>>(userDTO.Playlists);
+
+            var isRemoved = playlists.RemoveAll(p => p.Name.ToLower() == playlistName.ToLower());
+
+            var update = Builders<User>.Update.Set(p => p.Playlists, playlists);
+            UpdateResult result = await _collection.UpdateOneAsync(u => u.Id == userDTO.Id, update);
+
+            return result.IsAcknowledged;
+        }
     }
 }

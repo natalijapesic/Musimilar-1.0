@@ -40,7 +40,7 @@ export class PlaylistComponent implements OnInit {
       alert("This song doesnt exist");
     }
     );
-  }
+    }
 
   onSave(playlistName: HTMLInputElement){
     let request = new AddPlaylistRequest(this.user.id, playlistName.value, this.example, this.songList)

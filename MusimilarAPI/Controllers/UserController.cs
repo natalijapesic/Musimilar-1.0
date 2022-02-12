@@ -131,6 +131,22 @@ namespace MusimilarApi.Controllers
                 return Ok();
         }
 
+        [HttpPut("deletePlaylist")]
+        public async Task<ActionResult> DeletePlaylistAsync([FromBody] DeletePlaylistRequest request)
+        {
+            UserDTO userDTO = await _userService.GetAsync(request.UserId);
+
+            if(userDTO == null)
+                return BadRequest("User doesnt exist");
+            
+            var result = await _userService.DeletePlaylistAsync(request.PlaylistName, userDTO);
+
+            if(!result)
+                return BadRequest();
+                
+            return Ok();
+        }
+
         [HttpGet("feed")]
         public async Task<ActionResult<List<PlaylistFeedResponse>>> GetPlaylistFeed([FromQuery] GetPlaylistFeed getPlaylist){
 

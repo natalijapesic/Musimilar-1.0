@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MusimilarApi.Models.DTOs;
-using StackExchange.Redis;
 
 namespace MusimilarApi.Interfaces
 {

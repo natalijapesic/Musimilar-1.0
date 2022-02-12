@@ -8,6 +8,7 @@ namespace MusimilarApi.Interfaces
         Task<UserDTO> LogInAsync(string email, string password);
         Task<UserDTO> RegisterAsync(UserDTO model);
         Task<bool> AddPlaylistAsync(PlaylistDTO model, UserDTO user);
+        Task<bool> DeletePlaylistAsync(string playlistName, UserDTO user);
 
     }
 }
