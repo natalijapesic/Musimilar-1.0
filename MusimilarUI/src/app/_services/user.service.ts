@@ -31,17 +31,18 @@ export class UserService {
 
     getPlaylistFeed(request: GetPlaylistFeed){
         let url:string = this.createURL(request);
-        return this.http.get<Playlist[]>(`${environment.apiUrl}/user/playlist/feed?${url}`);
+        return this.http.get<Playlist[]>(`${environment.apiUrl}/user/playlist/feed${url}`);
     }
 
     createURL(request: GetPlaylistFeed):string{
 
         let url:string ='?';
-        for(let genre in request.subscriptions){
+        request.subscriptions.forEach(genre =>{
+            url+=`Subscriptions=${genre}&`;
+        })
 
-            url.concat(`Subscriptions=${genre}&`);
-        }
-        url.slice(request.subscriptions.length-1, 1)
+        console.log("Natalija")
+        url.substring(0, url.length-1)
         console.log(url);
         return url;
     }
