@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Song, User } from '@app/_models';
 import { AddPlaylistRequest, PlaylistRequest } from '@app/_requests';
@@ -34,15 +35,21 @@ export class PlaylistComponent implements OnInit {
       else{
         this.songList = data;
       }
-    });
+    },
+    (error: HttpErrorResponse) =>{
+      alert("This song doesnt exist");
+    }
+    );
   }
 
   onSave(playlistName: HTMLInputElement){
     let request = new AddPlaylistRequest(this.user.id, playlistName.value, this.example, this.songList)
-    this.userService.addPlaylist(request).subscribe(response =>{
-       console.log(response);
+    this.userService.addPlaylist(request).subscribe({
+      next: (v) => alert("Playlist is succesfuly added!")
+      //  this.router.navigate(["/profile"]);
+      ,
+      error:(e) => alert("This playlist is already saved")
     })
-        
   }
 
 }

@@ -146,12 +146,13 @@ namespace MusimilarApi.Service
             }
         }
 
-        public async Task<ICollection<PlaylistDTO>> AddPlaylistAsync(PlaylistDTO model, UserDTO userDTO)
+        public async Task<bool> AddPlaylistAsync(PlaylistDTO model, UserDTO userDTO)
         {
-            PlaylistDTO playlistDTO = userDTO.Playlists.Find(p => p.Example.Name == model.Example.Name && p.Example.Artist == model.Example.Artist);
+            PlaylistDTO playlistDTO = userDTO.Playlists.Find(p => p.Example.Name.ToLower() == model.Example.Name.ToLower() && 
+                                                                  p.Example.Artist.ToLower() == model.Example.Artist.ToLower());
 
-            if(playlistDTO == null)
-                return null;
+            if(playlistDTO != null)
+                return false;
 
             Playlist playlist = _mapper.Map<Playlist>(model);
 
@@ -159,8 +160,8 @@ namespace MusimilarApi.Service
             playlists.Add(playlist);
 
             var update = Builders<User>.Update.Set(p => p.Playlists, playlists);
-            await _collection.UpdateOneAsync(u => u.Id == userDTO.Id, update);
-            return userDTO.Playlists;
+            UpdateResult result = await _collection.UpdateOneAsync(u => u.Id == userDTO.Id, update);
+            return result.IsAcknowledged;
         }
     }
 }

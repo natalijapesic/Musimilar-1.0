@@ -28,8 +28,7 @@ namespace MusimilarApi.Controllers
                               ILogger<UserController> logger,
                               IMapper mapper,
                               IPlaylistService playlistService,
-                              ISongService songService)
-        {
+                              ISongService songService){
             this._userService = userService;
             this._playlistService = playlistService;
             this._logger = logger;
@@ -111,7 +110,7 @@ namespace MusimilarApi.Controllers
         }
 
         [HttpPut("playlist")]
-        public async Task<ActionResult<IEnumerable<PlaylistResponse>>> AddPlaylistAsync([FromBody] AddPlaylistRequest request)
+        public async Task<ActionResult> AddPlaylistAsync([FromBody] AddPlaylistRequest request)
         {
             PlaylistDTO playlistDTO = _mapper.Map<PlaylistDTO>(request);
 
@@ -124,15 +123,12 @@ namespace MusimilarApi.Controllers
             if(song == null)
                 return BadRequest();
             
-            IEnumerable<PlaylistDTO> userPlaylists = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
+            var result = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
 
-            if(userPlaylists == null)
+            if(!result)
                 return BadRequest("Playlist already exists or song-example doesnt exist");
             else
-            {
-                IEnumerable<PlaylistResponse> response = _mapper.Map<IEnumerable<PlaylistResponse>>(userPlaylists);
-                return Ok(userPlaylists);
-            } 
+                return Ok();
         }
 
         [HttpGet("feed")]

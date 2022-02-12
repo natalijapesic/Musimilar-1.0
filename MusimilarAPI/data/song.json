@@ -1,62 +1,650 @@
 [
-	{
-		"name" : "rapsong2",
-		"artist" : "Artist6",
-		"audioFeatures" : {
-				"tempo" : 140.55,
-				"energy" : 0.85,
-				"speechiness" : 0.25,
-				"danceability" : 0.411,
-				"durationMS" : 157859,
-				"valence" : 1
-		}
-	},
-	{
-		"name" : "rocksong2",
-		"artist" : "Artist7",
-		"audioFeatures" : {
-				"tempo" : 140.55,
-				"energy" : 0.85,
-				"speechiness" : 0.11,
-				"danceability" : 0.411,
-				"durationMS" : 157859,
-				"valence" : 0.79
-		}
-	},
-	{
-		"name" : "edmsong2",
-		"artist" : "Artist8",
-		"audioFeatures" : {
-				"tempo" : 0.25,
-				"energy" : 0.23,
-				"speechiness" : 0.11,
-				"danceability" : 0.7,
-				"durationMS" : 157859,
-				"valence" : 0.79
-		}
-	},
-	{
-		"name" : "randbsong2",
-		"artist" : "Artist9",
-		"audioFeatures" : {
-				"tempo" : 0.03,
-				"energy" : 0.79,
-				"speechiness" : 0.11,
-				"danceability" : 0.7,
-				"durationMS" : 0.4,
-				"valence" : 0.46
-		}
-	},
-	{
-		"name" : "latinsong2",
-		"artist" : "Artist10",
-		"audioFeatures" : {
-				"tempo" : 0.03,
-				"energy" : 1,
-				"speechiness" : 0.11,
-				"danceability" : 0.7,
-				"durationMS" : 0.3,
-				"valence" : 0.85
-		}
-	}
+   {
+      "artist":"Kehlani",
+      "name":"Intro",
+      "audioFeatures":{
+         "durationMS":139261,
+         "energy":0.361,
+         "danceability":0.683,
+         "speechiness":0.954,
+         "valence":0.403,
+         "tempo":140.783
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"You Should Be Here",
+      "audioFeatures":{
+         "durationMS":157859,
+         "energy":0.58,
+         "danceability":0.411,
+         "speechiness":0.0684,
+         "valence":0.27,
+         "tempo":140.55
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"How That Taste",
+      "audioFeatures":{
+         "durationMS":152595,
+         "energy":0.873,
+         "danceability":0.437,
+         "speechiness":0.377,
+         "valence":0.506,
+         "tempo":73.05
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Jealous (feat. Lexii Alijai)",
+      "audioFeatures":{
+         "durationMS":218592,
+         "energy":0.462,
+         "danceability":0.559,
+         "speechiness":0.216,
+         "valence":0.65,
+         "tempo":115.587
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Niggas",
+      "audioFeatures":{
+         "durationMS":174765,
+         "energy":0.688,
+         "danceability":0.455,
+         "speechiness":0.113,
+         "valence":0.413,
+         "tempo":148.038
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Wanted",
+      "audioFeatures":{
+         "durationMS":130588,
+         "energy":0.801,
+         "danceability":0.511,
+         "speechiness":0.267,
+         "valence":0.384,
+         "tempo":135.394
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"The Way (feat. Chance the Rapper)",
+      "audioFeatures":{
+         "durationMS":262520,
+         "energy":0.538,
+         "danceability":0.746,
+         "speechiness":0.32,
+         "valence":0.516,
+         "tempo":101.018
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Unconditional",
+      "audioFeatures":{
+         "durationMS":156456,
+         "energy":0.64,
+         "danceability":0.478,
+         "speechiness":0.0417,
+         "valence":0.319,
+         "tempo":100.099
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"The Letter",
+      "audioFeatures":{
+         "durationMS":232169,
+         "energy":0.241,
+         "danceability":0.448,
+         "speechiness":0.0328,
+         "valence":0.131,
+         "tempo":131.259
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Runnin' - Interlude",
+      "audioFeatures":{
+         "durationMS":137848,
+         "energy":0.515,
+         "danceability":0.571,
+         "speechiness":0.445,
+         "valence":0.443,
+         "tempo":133.106
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Be Alright",
+      "audioFeatures":{
+         "durationMS":174618,
+         "energy":0.669,
+         "danceability":0.546,
+         "speechiness":0.0584,
+         "valence":0.4,
+         "tempo":100.037
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Down for You (feat. BJ The Chicago Kid)",
+      "audioFeatures":{
+         "durationMS":227754,
+         "energy":0.711,
+         "danceability":0.479,
+         "speechiness":0.236,
+         "valence":0.347,
+         "tempo":79.54
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Yet",
+      "audioFeatures":{
+         "durationMS":149529,
+         "energy":0.623,
+         "danceability":0.437,
+         "speechiness":0.283,
+         "valence":0.396,
+         "tempo":152.613
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Bright",
+      "audioFeatures":{
+         "durationMS":257179,
+         "energy":0.435,
+         "danceability":0.446,
+         "speechiness":0.107,
+         "valence":0.232,
+         "tempo":50.176
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Alive (feat. Coucheron)",
+      "audioFeatures":{
+         "durationMS":187991,
+         "energy":0.71,
+         "danceability":0.598,
+         "speechiness":0.0554,
+         "valence":0.568,
+         "tempo":93.997
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Gangsta",
+      "audioFeatures":{
+         "durationMS":177773,
+         "energy":0.446,
+         "danceability":0.465,
+         "speechiness":0.0433,
+         "valence":0.131,
+         "tempo":121.801
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"CRZY",
+      "audioFeatures":{
+         "durationMS":191720,
+         "energy":0.702,
+         "danceability":0.827,
+         "speechiness":0.267,
+         "valence":0.694,
+         "tempo":130.02
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Distraction",
+      "audioFeatures":{
+         "durationMS":235693,
+         "energy":0.698,
+         "danceability":0.66,
+         "speechiness":0.0467,
+         "valence":0.396,
+         "tempo":120.959
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Keep On",
+      "audioFeatures":{
+         "durationMS":209121,
+         "energy":0.453,
+         "danceability":0.74,
+         "speechiness":0.151,
+         "valence":0.514,
+         "tempo":98.057
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"In My Feelings",
+      "audioFeatures":{
+         "durationMS":219596,
+         "energy":0.723,
+         "danceability":0.556,
+         "speechiness":0.149,
+         "valence":0.555,
+         "tempo":110.628
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Personal",
+      "audioFeatures":{
+         "durationMS":227186,
+         "energy":0.638,
+         "danceability":0.765,
+         "speechiness":0.13,
+         "valence":0.626,
+         "tempo":113.981
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Escape",
+      "audioFeatures":{
+         "durationMS":201720,
+         "energy":0.688,
+         "danceability":0.562,
+         "speechiness":0.0794,
+         "valence":0.707,
+         "tempo":79.979
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Undercover",
+      "audioFeatures":{
+         "durationMS":183280,
+         "energy":0.593,
+         "danceability":0.721,
+         "speechiness":0.0397,
+         "valence":0.721,
+         "tempo":145.025
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Piece of Mind",
+      "audioFeatures":{
+         "durationMS":225079,
+         "energy":0.841,
+         "danceability":0.539,
+         "speechiness":0.138,
+         "valence":0.397,
+         "tempo":77.079
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Do U Dirty",
+      "audioFeatures":{
+         "durationMS":197541,
+         "energy":0.553,
+         "danceability":0.653,
+         "speechiness":0.236,
+         "valence":0.468,
+         "tempo":118.004
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Advice",
+      "audioFeatures":{
+         "durationMS":202720,
+         "energy":0.742,
+         "danceability":0.497,
+         "speechiness":0.054,
+         "valence":0.324,
+         "tempo":172.007
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Everything Is Yours",
+      "audioFeatures":{
+         "durationMS":200621,
+         "energy":0.466,
+         "danceability":0.608,
+         "speechiness":0.286,
+         "valence":0.307,
+         "tempo":91.947
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Get Like",
+      "audioFeatures":{
+         "durationMS":170978,
+         "energy":0.557,
+         "danceability":0.607,
+         "speechiness":0.0345,
+         "valence":0.351,
+         "tempo":180.081
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Too Much",
+      "audioFeatures":{
+         "durationMS":224117,
+         "energy":0.769,
+         "danceability":0.691,
+         "speechiness":0.211,
+         "valence":0.563,
+         "tempo":158.018
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Not Used to It",
+      "audioFeatures":{
+         "durationMS":235560,
+         "energy":0.796,
+         "danceability":0.383,
+         "speechiness":0.23,
+         "valence":0.377,
+         "tempo":100.48
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"I Wanna Be",
+      "audioFeatures":{
+         "durationMS":211733,
+         "energy":0.568,
+         "danceability":0.564,
+         "speechiness":0.248,
+         "valence":0.417,
+         "tempo":191.923
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Hold Me by the Heart",
+      "audioFeatures":{
+         "durationMS":202630,
+         "energy":0.383,
+         "danceability":0.435,
+         "speechiness":0.0331,
+         "valence":0.209,
+         "tempo":71.376
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Intro",
+      "audioFeatures":{
+         "durationMS":59826,
+         "energy":0.2,
+         "danceability":0.691,
+         "speechiness":0.949,
+         "valence":0.889,
+         "tempo":105.815
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Thank You",
+      "audioFeatures":{
+         "durationMS":188843,
+         "energy":0.795,
+         "danceability":0.448,
+         "speechiness":0.359,
+         "valence":0.473,
+         "tempo":132.72
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Footsteps (feat. Musiq Soulchild)",
+      "audioFeatures":{
+         "durationMS":273349,
+         "energy":0.638,
+         "danceability":0.42,
+         "speechiness":0.209,
+         "valence":0.478,
+         "tempo":88.546
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Too Deep",
+      "audioFeatures":{
+         "durationMS":167206,
+         "energy":0.638,
+         "danceability":0.516,
+         "speechiness":0.0796,
+         "valence":0.642,
+         "tempo":180.216
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Nunya (feat. Dom Kennedy)",
+      "audioFeatures":{
+         "durationMS":244688,
+         "energy":0.71,
+         "danceability":0.675,
+         "speechiness":0.21,
+         "valence":0.574,
+         "tempo":97.98
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Morning Glory",
+      "audioFeatures":{
+         "durationMS":179336,
+         "energy":0.833,
+         "danceability":0.589,
+         "speechiness":0.118,
+         "valence":0.653,
+         "tempo":172.037
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Feels",
+      "audioFeatures":{
+         "durationMS":181140,
+         "energy":0.609,
+         "danceability":0.369,
+         "speechiness":0.184,
+         "valence":0.381,
+         "tempo":80.362
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Nights Like This (feat. Ty Dolla $ign)",
+      "audioFeatures":{
+         "durationMS":201787,
+         "energy":0.725,
+         "danceability":0.61,
+         "speechiness":0.15,
+         "valence":0.291,
+         "tempo":146.163
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"RPG (feat. 6lack)",
+      "audioFeatures":{
+         "durationMS":236218,
+         "energy":0.534,
+         "danceability":0.758,
+         "speechiness":0.287,
+         "valence":0.719,
+         "tempo":132.94
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Butterfly",
+      "audioFeatures":{
+         "durationMS":163839,
+         "energy":0.345,
+         "danceability":0.583,
+         "speechiness":0.0709,
+         "valence":0.701,
+         "tempo":79.107
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Love Language",
+      "audioFeatures":{
+         "durationMS":213364,
+         "energy":0.586,
+         "danceability":0.582,
+         "speechiness":0.0838,
+         "valence":0.698,
+         "tempo":89.599
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Valentine's Day (Shameful)",
+      "audioFeatures":{
+         "durationMS":291884,
+         "energy":0.411,
+         "danceability":0.503,
+         "speechiness":0.387,
+         "valence":0.348,
+         "tempo":134.752
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Toxic",
+      "audioFeatures":{
+         "durationMS":168182,
+         "energy":0.453,
+         "danceability":0.656,
+         "speechiness":0.0351,
+         "valence":0.0407,
+         "tempo":111.804
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"All Me (feat. Keyshia Cole)",
+      "audioFeatures":{
+         "durationMS":178347,
+         "energy":0.731,
+         "danceability":0.42,
+         "speechiness":0.0548,
+         "valence":0.588,
+         "tempo":95.575
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"You Know Wassup",
+      "audioFeatures":{
+         "durationMS":201142,
+         "energy":0.404,
+         "danceability":0.475,
+         "speechiness":0.0946,
+         "valence":0.463,
+         "tempo":104.513
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Again",
+      "audioFeatures":{
+         "durationMS":220218,
+         "energy":0.326,
+         "danceability":0.662,
+         "speechiness":0.0293,
+         "valence":0.634,
+         "tempo":95.926
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Already Won",
+      "audioFeatures":{
+         "durationMS":164165,
+         "energy":0.794,
+         "danceability":0.511,
+         "speechiness":0.268,
+         "valence":0.625,
+         "tempo":119.791
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Touch",
+      "audioFeatures":{
+         "durationMS":183276,
+         "energy":0.593,
+         "danceability":0.46,
+         "speechiness":0.0363,
+         "valence":0.0999,
+         "tempo":104.932
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Honey",
+      "audioFeatures":{
+         "durationMS":199209,
+         "energy":0.24,
+         "danceability":0.606,
+         "speechiness":0.0369,
+         "valence":0.526,
+         "tempo":96.792
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"24/7",
+      "audioFeatures":{
+         "durationMS":182257,
+         "energy":0.532,
+         "danceability":0.662,
+         "speechiness":0.0534,
+         "valence":0.397,
+         "tempo":92.048
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"Did I",
+      "audioFeatures":{
+         "durationMS":215556,
+         "energy":0.627,
+         "danceability":0.443,
+         "speechiness":0.151,
+         "valence":0.351,
+         "tempo":128.485
+      }
+   },
+   {
+      "artist":"Kehlani",
+      "name":"FWU",
+      "audioFeatures":{
+         "durationMS":202682,
+         "energy":0.698,
+         "danceability":0.627,
+         "speechiness":0.0524,
+         "valence":0.809,
+         "tempo":137.915
+      }
+   }
 ]

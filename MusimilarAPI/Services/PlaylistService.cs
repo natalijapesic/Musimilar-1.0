@@ -128,8 +128,8 @@ namespace MusimilarApi.Service
             List<SongInfoDTO> convertedSongs = new List<SongInfoDTO>();
             foreach (var song in songs)
             {
-                string[] s = song.Split(" "); // $"{songs[i].Artist} - {songs[i].Name}"
-                SongInfoDTO convertedSong = new SongInfoDTO(s[0], s[2]);
+                string[] s = song.Split(" - "); // $"{songs[i].Artist} - {songs[i].Name}"
+                SongInfoDTO convertedSong = new SongInfoDTO(s[0], s[1]);
                 convertedSongs.Add(convertedSong);
             }
 
@@ -139,11 +139,11 @@ namespace MusimilarApi.Service
         public async Task<List<SongInfoDTO>> GetAsync(string songId)
         {
             string key = $"playlist:{songId}";
-            RedisValue[] songs =  await this._redisClient.SortedSetRangeByRankAsync(key, 0, -1, Order.Descending);
+            RedisValue[] songs =  await this._redisClient.SortedSetRangeByRankAsync(key, 0, -1, Order.Ascending);
 
             if(songs.Length > 0)
             {
-                var result = await _redisClient.KeyExpireAsync(key, DateTime.Today.AddDays(2));
+                var result = await _redisClient.KeyExpireAsync(key, DateTime.Today.AddHours(4));
                 string[] songsString = ToStringArray(songs);
                 return ConvertStringSongs(songsString);
             }

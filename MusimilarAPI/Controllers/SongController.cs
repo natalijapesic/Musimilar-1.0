@@ -36,9 +36,9 @@ namespace MusimilarApi.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpGet]
-        public async Task<IEnumerable<SongResponse>> GetSongs(){
+        public async Task<IEnumerable<SongDTO>> GetSongs(){
             
-            return _mapper.Map<IEnumerable<SongResponse>>(await _songService.GetAllAsync());
+            return await _songService.GetAllAsync();
         }
 
         
