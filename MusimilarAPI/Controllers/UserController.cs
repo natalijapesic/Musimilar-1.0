@@ -161,5 +161,20 @@ namespace MusimilarApi.Controllers
             return Ok(this._mapper.Map<List<PlaylistFeedResponse>>(playlistFeedDTOs));
         }
 
+        [HttpPut("subscribe")]
+        public async Task<ActionResult> SubscribeGenreAsync([FromBody] SubscribeGenreRequest request)
+        {
+            UserDTO userDTO = await _userService.GetAsync(request.UserId);
+
+            if(userDTO == null)
+                return BadRequest("User doesnt exist");
+            
+            bool result = await _userService.AddSubscriptionAsync(request.Genre, userDTO);
+
+            if(!result)
+                return BadRequest();
+                
+            return Ok();
+        }
     }
 }

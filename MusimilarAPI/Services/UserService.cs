@@ -187,5 +187,19 @@ namespace MusimilarApi.Service
                 return this._mapper.Map<PlaylistDTO>(playlist);
             return null;
         }
+
+        public async Task<bool> AddSubscriptionAsync(string genre, UserDTO user)
+        {
+            if(user.Subscriptions.Contains(genre))
+                return false;
+            
+            ICollection<string> subs = user.Subscriptions;
+            subs.Add(genre);
+
+            var update = Builders<User>.Update.Set(s => s.Subscriptions, subs);
+            UpdateResult result = await _collection.UpdateOneAsync(u => u.Id == user.Id, update);
+
+            return result.IsAcknowledged;
+        }
     }
 }

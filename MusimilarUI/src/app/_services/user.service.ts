@@ -30,6 +30,19 @@ export class UserService {
     }
 
     getPlaylistFeed(request: GetPlaylistFeed){
-        //return this.http.get(`${environment.apiUrl}/user/playlist/feed`, {params:request.subscriptions});
+        let url:string = this.createURL(request);
+        return this.http.get<Playlist[]>(`${environment.apiUrl}/user/playlist/feed?${url}`);
+    }
+
+    createURL(request: GetPlaylistFeed):string{
+
+        let url:string ='?';
+        for(let genre in request.subscriptions){
+
+            url.concat(`Subscriptions=${genre}&`);
+        }
+        url.slice(request.subscriptions.length-1, 1)
+        console.log(url);
+        return url;
     }
 }
