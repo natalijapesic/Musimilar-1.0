@@ -11,6 +11,7 @@ import { ArtistListComponent } from './artist-list';
 import { PlaylistComponent } from './playlist';
 import { UserProfileComponent } from './user-profile';
 import { SimilarSongsComponent } from './similar-songs';
+import { PlaylistFeedComponent } from './playlist-feed';
 
 const routes: Routes = [
     {
@@ -48,6 +49,11 @@ const routes: Routes = [
     {
         path: 'similar-songs',
         component: SimilarSongsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'playlist-feed',
+        component: PlaylistFeedComponent,
         canActivate: [AuthGuard]
     },
 

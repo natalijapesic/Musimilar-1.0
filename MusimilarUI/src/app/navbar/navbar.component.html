@@ -9,6 +9,7 @@
         <div class= "drop-down">
             <button class="drop-down-btn"> User </button>
             <div class="drop-down-content">
+                <a routerLink="/user-profile" *ngIf="isLogin">Profile</a>
                 <a routerLink="/admin" *ngIf="isAdmin">Admin</a>
                 <a routerLink="/similar-songs" *ngIf="isLogin">Similar songs</a>
                 <a (click)="logout()" *ngIf="isLogin">Logout</a>

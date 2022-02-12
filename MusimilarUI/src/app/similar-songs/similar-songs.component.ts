@@ -18,7 +18,7 @@ export class SimilarSongsComponent implements OnInit {
   constructor(public songService: SongService,
     public authenticationService: AuthenticationService) 
     { 
-      this.authenticationService.user.subscribe(x => this.user = x);
+      this.user = this.authenticationService.userValue;
     }
 
   ngOnInit(): void {}

@@ -18,6 +18,7 @@ import { NavbarComponent } from './navbar';
 import { PlaylistComponent } from './playlist';
 import { UserProfileComponent } from './user-profile';
 import { SimilarSongsComponent } from './similar-songs/similar-songs.component';
+import { PlaylistFeedComponent } from './playlist-feed/playlist-feed.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SimilarSongsComponent } from './similar-songs/similar-songs.component';
     NavbarComponent,
     PlaylistComponent,
     UserProfileComponent,
-    SimilarSongsComponent
+    SimilarSongsComponent,
+    PlaylistFeedComponent
   ],
   imports: [
     BrowserModule,

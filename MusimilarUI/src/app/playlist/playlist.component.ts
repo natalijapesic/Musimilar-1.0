@@ -15,14 +15,14 @@ export class PlaylistComponent implements OnInit {
 
   user: User;
   @Input() songList:SongResponse[];
-  example: Song;
+  @Input() example: Song;
 
   constructor(public songService: SongService,
               public authenticationService: AuthenticationService,
               public userService: UserService, 
               public router: Router) 
               { 
-                this.authenticationService.user.subscribe(x => this.user = x);
+                this.user = this.authenticationService.userValue;
               }
 
   ngOnInit(): void {}
