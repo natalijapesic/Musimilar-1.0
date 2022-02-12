@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Song, User } from '@app/_models';
-import { AddPlaylistRequest, PlaylistRequest } from '@app/_requests';
+import { AddPlaylistRequest, DeletePlaylistRequest, PlaylistRequest } from '@app/_requests';
 import { SongResponse } from '@app/_responses';
 import { AuthenticationService, SongService, UserService } from '@app/_services';
 
@@ -31,9 +31,10 @@ export class PlaylistComponent implements OnInit {
   onSave(playlistName: HTMLInputElement){
     let request = new AddPlaylistRequest(this.user.id, playlistName.value, this.example, this.songList)
     this.userService.addPlaylist(request).subscribe({
-      next:(v) => this.router.navigate(["/user-profile"]),
+      next:(v) => {
+        this.user.playlists.push(v);
+        this.router.navigate(["/user-profile"])},
       error:(e) => alert("This playlist is already saved")
     })
   }
-
 }

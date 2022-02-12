@@ -1,8 +1,7 @@
-import { HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Artist } from '@app/_models';
 import { environment } from '@environments/environment';
-import { catchError, map, Observable, throwError} from 'rxjs';
+import { map, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +14,6 @@ export class ArtistService {
     return this.http.get<any>(`${environment.apiUrl}/artist/similar/${artistRequest}`);
   }
 
-  handleError(error: HttpErrorResponse) {
-    return throwError(error);
-  }
   addMany(artists: JSON){
     console.log(artists);
   }

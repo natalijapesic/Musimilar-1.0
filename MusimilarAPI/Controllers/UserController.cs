@@ -109,8 +109,8 @@ namespace MusimilarApi.Controllers
             return Ok(user);
         }
 
-        [HttpPut("playlist")]
-        public async Task<ActionResult> AddPlaylistAsync([FromBody] AddPlaylistRequest request)
+        [HttpPut("add/playlist")]
+        public async Task<ActionResult<Playlist>> AddPlaylistAsync([FromBody] AddPlaylistRequest request)
         {
             PlaylistDTO playlistDTO = _mapper.Map<PlaylistDTO>(request);
 
@@ -123,31 +123,31 @@ namespace MusimilarApi.Controllers
             if(song == null)
                 return BadRequest();
             
-            var result = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
+            playlistDTO = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
 
-            if(!result)
+            if(playlistDTO == null)
                 return BadRequest("Playlist already exists or song-example doesnt exist");
             else
-                return Ok();
+                return Ok(this._mapper.Map<Playlist>(playlistDTO));
         }
 
-        [HttpPut("deletePlaylist")]
-        public async Task<ActionResult> DeletePlaylistAsync([FromBody] DeletePlaylistRequest request)
+        [HttpPut("delete/playlist")]
+        public async Task<ActionResult<PlaylistDTO>> DeletePlaylistAsync([FromBody] DeletePlaylistRequest request)
         {
             UserDTO userDTO = await _userService.GetAsync(request.UserId);
 
             if(userDTO == null)
                 return BadRequest("User doesnt exist");
             
-            var result = await _userService.DeletePlaylistAsync(request.PlaylistName, userDTO);
+            PlaylistDTO playlistDTO = await _userService.DeletePlaylistAsync(request.PlaylistName, userDTO);
 
-            if(!result)
+            if(playlistDTO == null)
                 return BadRequest();
                 
-            return Ok();
+            return Ok(this._mapper.Map<Playlist>(playlistDTO));
         }
 
-        [HttpGet("feed")]
+        [HttpGet("playlist/feed")]
         public async Task<ActionResult<List<PlaylistFeedResponse>>> GetPlaylistFeed([FromQuery] GetPlaylistFeed getPlaylist){
 
             if(getPlaylist.Subscriptions.Count == 0)

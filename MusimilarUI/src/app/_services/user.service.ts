@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
-import { User } from '@app/_models';
-import { AddPlaylistRequest, RegisterRequest } from '@app/_requests';
+import { Playlist, User } from '@app/_models';
+import { AddPlaylistRequest, DeletePlaylistRequest, GetPlaylistFeed, RegisterRequest } from '@app/_requests';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -22,6 +22,14 @@ export class UserService {
     }
 
     addPlaylist(request: AddPlaylistRequest){
-        return this.http.put(`${environment.apiUrl}/user/playlist`, request);
+        return this.http.put<Playlist>(`${environment.apiUrl}/user/add/playlist`, request);
+    }
+
+    deletePlaylist(request: DeletePlaylistRequest){
+        return this.http.put<Playlist>(`${environment.apiUrl}/user/delete/playlist`, request);
+    }
+
+    getPlaylistFeed(request: GetPlaylistFeed){
+        //return this.http.get(`${environment.apiUrl}/user/playlist/feed`, {params:request.subscriptions});
     }
 }

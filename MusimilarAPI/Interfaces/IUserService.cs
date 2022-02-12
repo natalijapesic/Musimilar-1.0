@@ -7,8 +7,8 @@ namespace MusimilarApi.Interfaces
     public interface IUserService : IEntityService<User, UserDTO>{
         Task<UserDTO> LogInAsync(string email, string password);
         Task<UserDTO> RegisterAsync(UserDTO model);
-        Task<bool> AddPlaylistAsync(PlaylistDTO model, UserDTO user);
-        Task<bool> DeletePlaylistAsync(string playlistName, UserDTO user);
+        Task<PlaylistDTO> AddPlaylistAsync(PlaylistDTO model, UserDTO user);
+        Task<PlaylistDTO> DeletePlaylistAsync(string playlistName, UserDTO user);
 
     }
 }

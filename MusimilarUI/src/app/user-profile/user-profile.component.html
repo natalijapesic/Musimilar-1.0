@@ -1,1 +1,17 @@
-<p>user-profile works!</p>
+<h2>Name: {{user.name}}</h2>
+<div>
+    <h3>Playlists:</h3>
+    <div class="playlists" *ngFor="let playlist of user.playlists;">
+        <div class = "playlist">
+            <div>
+                <h4>{{playlist.name}}</h4>
+                <button (click)="onDelete(playlist.name)">Delete</button>
+            </div>
+            <div class="song" *ngFor="let song of playlist.songs; let indexOfElement=index;">
+                <td>{{indexOfElement}}. {{song.artist}} - {{song.name}} </td>
+            </div>
+        </div>
+        
+    </div>
+</div>
+    
