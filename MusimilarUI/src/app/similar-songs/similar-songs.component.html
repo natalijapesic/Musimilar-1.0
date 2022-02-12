@@ -1,0 +1,14 @@
+<div class="main">
+    <app-playlist [songList] = 'songList'></app-playlist>
+    <div class="form">
+        <h1>Find similar songs</h1>
+        <div class="info">
+            <input #artistName type="text" placeholder="Input artist name">
+        </div>
+        <div class="info">
+            <input #songName type="text" placeholder="Input song name">
+        </div>
+        <button (click)="onRecommend(songName, artistName)">Recommend playlist</button>
+
+    </div>
+</div>

@@ -10,7 +10,7 @@
             <button class="drop-down-btn"> User </button>
             <div class="drop-down-content">
                 <a routerLink="/admin" *ngIf="isAdmin">Admin</a>
-                <a routerLink="/playlist" *ngIf="isLogin">Playlist</a>
+                <a routerLink="/similar-songs" *ngIf="isLogin">Similar songs</a>
                 <a (click)="logout()" *ngIf="isLogin">Logout</a>
                 <a routerLink="/login" *ngIf="!isLogin">Sign In</a>
                 <a routerLink="/register" *ngIf="!isLogin">Sign Up</a>

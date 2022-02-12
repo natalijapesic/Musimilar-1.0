@@ -1,22 +1,10 @@
-<div class="main">
-    <div class="playlist" *ngIf="this.songList">
-        <h3>The songs are sorted by similarity</h3>
-        <label> Artist name - Song name </label>
-        <div class="song" *ngFor="let song of songList; let indexOfElement=index;">
-            <td>{{indexOfElement}}. {{song.artist}} - {{song.name}} </td>
-        </div>
-        <input #playlistName type="text" placeholder="Input playlist name">
-        <button (click)="onSave(playlistName)">Save</button>
-    </div>
-    <div class="form">
-        <h1>Find similar songs</h1>
-        <div class="info">
-            <input #artistName type="text" placeholder="Input artist name">
-        </div>
-        <div class="info">
-            <input #songName type="text" placeholder="Input song name">
-        </div>
-        <button (click)="onRecommend(songName, artistName)">Recommend playlist</button>
 
+<div class="playlist" *ngIf="this.songList">
+    <h3>The songs are sorted by similarity</h3>
+    <label> Artist name - Song name </label>
+    <div class="song" *ngFor="let song of songList; let indexOfElement=index;">
+        <td>{{indexOfElement}}. {{song.artist}} - {{song.name}} </td>
     </div>
+    <input #playlistName type="text" placeholder="Input playlist name">
+    <button (click)="onSave(playlistName)">Save</button>
 </div>

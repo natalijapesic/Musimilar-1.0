@@ -16,8 +16,8 @@ import { AddComponent } from './add';
 import { ArtistListComponent } from './artist-list';
 import { NavbarComponent } from './navbar';
 import { PlaylistComponent } from './playlist';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-
+import { UserProfileComponent } from './user-profile';
+import { SimilarSongsComponent } from './similar-songs/similar-songs.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ArtistListComponent,
     NavbarComponent,
     PlaylistComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    SimilarSongsComponent
   ],
   imports: [
     BrowserModule,

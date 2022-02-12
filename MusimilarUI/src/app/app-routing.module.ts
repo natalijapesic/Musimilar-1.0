@@ -9,6 +9,8 @@ import { RegisterComponent } from './register';
 import { AdminComponent } from './admin';
 import { ArtistListComponent } from './artist-list';
 import { PlaylistComponent } from './playlist';
+import { UserProfileComponent } from './user-profile';
+import { SimilarSongsComponent } from './similar-songs';
 
 const routes: Routes = [
     {
@@ -37,6 +39,16 @@ const routes: Routes = [
     {
         path: 'register',
         component: RegisterComponent
+    },
+    {
+        path: 'user-profile',
+        component: UserProfileComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'similar-songs',
+        component: SimilarSongsComponent,
+        canActivate: [AuthGuard]
     },
 
     // otherwise redirect to home
