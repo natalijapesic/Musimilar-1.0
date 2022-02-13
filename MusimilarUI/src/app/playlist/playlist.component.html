@@ -1,6 +1,6 @@
 
 <div class="playlist" *ngIf="this.songList">
-    <h3>The songs are sorted by similarity</h3>
+    <h6 *ngIf="this.date">{{date}}</h6>
     <label> Artist name - Song name </label>
     <div class="song" *ngFor="let song of songList; let indexOfElement=index;">
         <td>{{indexOfElement}}. {{song.artist}} - {{song.name}} </td>

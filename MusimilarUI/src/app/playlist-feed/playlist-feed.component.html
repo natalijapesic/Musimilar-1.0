@@ -1,1 +1,10 @@
-<app-playlist></app-playlist>
+<div *ngFor="let playlist of feed | async"> 
+    <br><br>
+    <app-playlist
+    [songList] = 'playlist.songs'
+    [example] = 'playlist.example'
+    [date] = 'playlist.date'
+    ></app-playlist>
+    <br><br>
+</div>
+

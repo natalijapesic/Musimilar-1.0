@@ -16,6 +16,7 @@ export class PlaylistComponent implements OnInit {
   user: User;
   @Input() songList:SongResponse[];
   @Input() example: Song;
+  @Input() date: Date;
 
   constructor(public songService: SongService,
               public authenticationService: AuthenticationService,

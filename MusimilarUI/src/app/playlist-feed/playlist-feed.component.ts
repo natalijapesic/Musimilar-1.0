@@ -32,11 +32,9 @@ export class PlaylistFeedComponent implements OnInit {
     let request = new GetPlaylistFeed(this.user.subscriptions);
     this.userService.getPlaylistFeed(request).subscribe({
       next:(data) => {
-        console.log(data);
         if(data[0] == null)
           alert("There is still no new playlists");
         this.feed.next(data);
-        console.log(this.feed)
       },
       error:(e) => alert("Do you follow any of the genres?")
     })

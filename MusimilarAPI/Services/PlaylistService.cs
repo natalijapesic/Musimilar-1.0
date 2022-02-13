@@ -95,7 +95,7 @@ namespace MusimilarApi.Service
 
             foreach (var playlist in playlists)
             {
-                RedisValue[] songs = await this._redisClient.SortedSetRangeByRankAsync(playlist.Element.ToString(), 0, -1, Order.Descending);
+                RedisValue[] songs = await this._redisClient.SortedSetRangeByRankAsync(playlist.Element.ToString(), 0, -1, Order.Ascending);
 
                 if(songs.Length == 0)
                     continue; 
