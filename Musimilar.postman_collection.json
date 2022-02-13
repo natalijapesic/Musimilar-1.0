@@ -1,0 +1,564 @@
+{
+	"info": {
+		"_postman_id": "007fa5d3-606b-4885-a74f-94c02cd838a4",
+		"name": "Musimilar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"natalija\",\r\n    \"email\": \"natalija@elfak.rs\",\r\n    \"password\": \"zdravozivo\",\r\n    \"userRole\": \"Admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/User/registration",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"User",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"natalija@elfak.rs\",\r\n    \"password\": \"zdravozivo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/user/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/User",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"User"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Similar",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZpbmRiZWF1dHlAZWxmYWsucnMiLCJuYmYiOjE2MzkxNDI5OTIsImV4cCI6MTYzOTE2NDU5MiwiaWF0IjoxNjM5MTQyOTkyfQ.2qrfn0FTJ-fbwkiuV1wfjGJYOrNRlXDqpssxQy92X0A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"Fleetwood Mac\",\r\n\t\"genres\": [\"chillsynth\", \"spacewave\"],\r\n\t\"image\": \"https://i.scdn.co/image/ab67616d00001e020b0bd8a215dec9f663439ac7\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Artist/similar/LorDe",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Artist",
+						"similar",
+						"LorDe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete artist",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n\t\"name\": \"Corsair Vengeance RGB Pro 16 GB\",\r\n\t\"rating\": 4,\r\n\t\"rating_count\": 56,\r\n\t\"price_usd\": 119.99,\r\n\t\"speed\": \"DDR4-3600\",\r\n\t\"modules\": \"2 x 8GB\",\r\n\t\"price_/_gb\": \"$7.499\",\r\n\t\"color\": \"Black\",\r\n\t\"first_word_latency\": \"10 ns\",\r\n\t\"cas_latency\": \"18\"\r\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/User/61b34c1aa51e39a9d0d79480",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"User",
+						"61b34c1aa51e39a9d0d79480"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Song",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"LA\",\r\n\t\"artist\": \"Boy Harsher\", \r\n    \"audioFeatures\": \r\n    {\r\n        \"durationMS\": 165, \r\n        \"energy\": 0.98, \r\n        \"danceability\": 0.99, \r\n        \"speechiness\": 0.2, \r\n        \"valence\": 0.85, \r\n        \"tempo\": 0.5\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Song",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Song"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddSongs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    { \r\n    \"audioFeatures\": \r\n    {\r\n        \"durationMS\": 165, \r\n        \"energy\": 0.98, \r\n        \"danceability\": 0.99, \r\n        \"speechiness\": 0.2, \r\n        \"valence\": 0.85, \r\n        \"tempo\": 0.5\r\n    }\r\n},\r\n{ \r\n    \"audioFeatures\": \r\n    {\r\n        \"durationMS\": 165, \r\n        \"energy\": 0.98, \r\n        \"danceability\": 0.99, \r\n        \"speechiness\": 0.2, \r\n        \"valence\": 0.85, \r\n        \"tempo\": 0.5\r\n    }\r\n},\r\n{ \r\n    \"audioFeatures\": \r\n    {\r\n        \"durationMS\": 165, \r\n        \"energy\": 0.98, \r\n        \"danceability\": 0.99, \r\n        \"speechiness\": 0.2, \r\n        \"valence\": 0.85, \r\n        \"tempo\": 0.5\r\n    }\r\n},\r\n{ \r\n    \"audioFeatures\": \r\n    {\r\n        \"durationMS\": 165, \r\n        \"energy\": 0.98, \r\n        \"danceability\": 0.99, \r\n        \"speechiness\": 0.2, \r\n        \"valence\": 0.85, \r\n        \"tempo\": 0.5\r\n    }\r\n},\r\n{\r\n    \"name\": \"LA\",\r\n\t\"artist\": \"Boy Harsher\", \r\n    \"audioFeatures\": \r\n    {\r\n        \"durationMS\": 165, \r\n        \"energy\": 0.98, \r\n        \"danceability\": 0.99, \r\n        \"speechiness\": 0.2, \r\n        \"valence\": 0.85, \r\n        \"tempo\": 0.5\r\n    }\r\n}\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Song/many",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Song",
+						"many"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "playlist req",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"LA\",\r\n    \"artist\" : \"Boy Harsher\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Song/playlist",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Song",
+						"playlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add playlist",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"61c487b76e37c6576dce9e63\",\r\n    \"name\": \"za zivota2\",\r\n    \"example\": {\r\n                \"artist\": \"uyin\", \r\n                \"name\": \"gvbhnk\"\r\n               },\r\n    \"songs\": [\r\n    {\r\n        \"artist\": \"Artist3\",\r\n        \"name\": \"rocksong\"\r\n    },\r\n    {\r\n        \"artist\": \"Kehlani\",\r\n        \"name\": \"You Should Be Here\"\r\n    },\r\n    {\r\n        \"artist\": \"Artist3\",\r\n        \"name\": \"rocksong2\"\r\n    },\r\n    {\r\n        \"artist\": \"Artist7\",\r\n        \"name\": \"rocksong2\"\r\n    },\r\n    {\r\n        \"artist\": \"Artist7\",\r\n        \"name\": \"rocksong2\"\r\n    },\r\n    {\r\n        \"artist\": \"Artist7\",\r\n        \"name\": \"rocksong2\"\r\n    }\r\n]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/User/add/playlist",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"User",
+						"add",
+						"playlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscriptions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdGFsaWphQGVsZmFrLnJzIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjQ0MzUyNzIyLCJleHAiOjE2NDQzNzQzMjIsImlhdCI6MTY0NDM1MjcyMn0.pp8J3MsQCsFWN5YMxIb7q7uNAONplfkpHAp6IIK-U-k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/User/feed?Subscriptions=Rock",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"User",
+						"feed"
+					],
+					"query": [
+						{
+							"key": "Subscriptions",
+							"value": "Rock"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetArtist",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Artist/madonna",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Artist",
+						"madonna"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSongs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Song",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Song"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSong",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Song/61c4b646376e361fdcae8895",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Song",
+						"61c4b646376e361fdcae8895"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteSong",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Song/61c4b646376e361fdcae8895",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Song",
+						"61c4b646376e361fdcae8895"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommend playlist",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"sdofndsof\",\r\n    \"artist\":\"slfjsd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Song/playlist",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Song",
+						"playlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPlaylist",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/User/playlist/feed?Subscriptions=Rock",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"User",
+						"playlist",
+						"feed"
+					],
+					"query": [
+						{
+							"key": "Subscriptions",
+							"value": "Rock"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePlaylist",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"620586b04575323e6209e116\",\r\n    \"playlistName\": \"KehlaniPL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/user/delete/playlist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"user",
+						"delete",
+						"playlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddSubbscription",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\":\"620586b04575323e6209e116\",\r\n    \"genre\": \"rock\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/user/subscribe",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"user",
+						"subscribe"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdGFsaWphQGVsZmFrLnJzIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjQ0Njk0MzA5LCJleHAiOjE2NDQ3MTU5MDksImlhdCI6MTY0NDY5NDMwOX0.PYZrcNoSQyDuIYoxrQlXiqNQOmbbIvvONzvZVuDPr_0",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "natalija",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdGFsaWphcGVzaWNAZWxmYWsucnMiLCJuYmYiOjE2Mzk2NjE0NDksImV4cCI6MTYzOTY4MzA0OSwiaWF0IjoxNjM5NjYxNDQ5fQ.J53VVfJdKpLUUURasIPEhWakIFZpivKNIohFpQrAnic"
+		}
+	]
+}
