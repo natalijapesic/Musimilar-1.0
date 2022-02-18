@@ -188,15 +188,12 @@ namespace MusimilarApi.Service
             return null;
         }
 
-        public async Task<bool> AddSubscriptionAsync(string genre, UserDTO user)
+        public async Task<bool> AddSubscriptionAsync(List<string> genres, UserDTO user)
         {
-            if(user.Subscriptions.Contains(genre))
+            if(user.Subscriptions.Count > 0)
                 return false;
-            
-            ICollection<string> subs = user.Subscriptions;
-            subs.Add(genre);
 
-            var update = Builders<User>.Update.Set(s => s.Subscriptions, subs);
+            var update = Builders<User>.Update.Set(s => s.Subscriptions, genres);
             UpdateResult result = await _collection.UpdateOneAsync(u => u.Id == user.Id, update);
 
             return result.IsAcknowledged;

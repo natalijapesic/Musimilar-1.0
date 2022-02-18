@@ -169,7 +169,7 @@ namespace MusimilarApi.Controllers
             if(userDTO == null)
                 return BadRequest("User doesnt exist");
             
-            bool result = await _userService.AddSubscriptionAsync(request.Genre, userDTO);
+            bool result = await _userService.AddSubscriptionAsync(request.Genres, userDTO);
 
             if(!result)
                 return BadRequest();

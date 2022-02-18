@@ -1,7 +1,7 @@
 import { Component, OnInit, QueryList } from '@angular/core';
 import { Router } from '@angular/router';
 import { Playlist, User } from '@app/_models';
-import { AddSubscriptionsRequest, GetPlaylistFeed } from '@app/_requests';
+import { GetPlaylistFeed, SubscribeGenreRequest } from '@app/_requests';
 import { AuthenticationService, UserService } from '@app/_services';
 import { BehaviorSubject } from 'rxjs';
 
@@ -42,8 +42,12 @@ export class PlaylistFeedComponent implements OnInit {
   }
 
   onSaveChanges(){
-    let addSubscriptions = new AddSubscriptionsRequest(this.user.id, this.user.subscriptions);
-    this.userService.addSubscriptions(addSubscriptions);
+    let addSubscriptions = new SubscribeGenreRequest(this.user.id, this.user.subscriptions);
+    this.userService.addSubscriptions(addSubscriptions).subscribe({
+      next:(v) => {
+      },
+      error:(e) => alert("This playlist is already saved")
+    })
     this.generateFeed();
 
   }
@@ -51,15 +55,14 @@ export class PlaylistFeedComponent implements OnInit {
   generateFeed(){
     this.feed = new BehaviorSubject<any[]>([]);
     let request = new GetPlaylistFeed(this.user.subscriptions);
-    console.log(this.feed)
+
     if(this.user.subscriptions.length > 0)
       this.userService.getPlaylistFeed(request).subscribe({
         next:(data) => {
           if(data[0] == null)
             alert("There is still no new playlists");
           this.feed.next(data);
-        },
-        error:(e) => alert("Do you follow any of the genres?")
+        }
       })
   }
 

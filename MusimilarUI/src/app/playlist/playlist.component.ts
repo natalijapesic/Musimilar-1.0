@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Song, User } from '@app/_models';
@@ -30,11 +29,10 @@ export class PlaylistComponent implements OnInit {
 
   onSave(playlistName: HTMLInputElement){
     let request = new AddPlaylistRequest(this.user.id, playlistName.value, this.example, this.songList)
-    console.log(this.songList)
-    console.log(this.example)
-    console.log(playlistName.value)
+    console.log(request)
     this.userService.addPlaylist(request).subscribe({
       next:(v) => {
+        console.log(request)
         this.user.playlists.push(v)
         this.router.navigate(["/user-profile"]);
       },
