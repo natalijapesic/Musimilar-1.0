@@ -160,7 +160,8 @@ class SpotifyAPI(object):
     
 if __name__ == "__main__":
     CLIENT_ID = '3854cdee614241c0bd0eff6370e12ec7'
-    CLIENT_SECRET = '46d5973b00844a6188f7fc83c81f9dc7'
+    CLIENT_SECRET = '99891b7d06d24719a1e537fe69edd0b2'
+
     spotify = SpotifyAPI(CLIENT_ID, CLIENT_SECRET)
 
     print(spotify.get_artist_info(sys.argv[1]))

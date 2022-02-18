@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { Playlist, User } from '@app/_models';
-import { AddPlaylistRequest, DeletePlaylistRequest, GetPlaylistFeed, RegisterRequest } from '@app/_requests';
+import { AddPlaylistRequest, AddSubscriptionsRequest, DeletePlaylistRequest, GetPlaylistFeed, RegisterRequest } from '@app/_requests';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -32,6 +32,10 @@ export class UserService {
     getPlaylistFeed(request: GetPlaylistFeed){
         let url:string = this.createURL(request);
         return this.http.get<Playlist[]>(`${environment.apiUrl}/user/playlist/feed${url}`);
+    }
+
+    addSubscriptions(request: AddSubscriptionsRequest){
+        return this.http.put(`${environment.apiUrl}/user/subscriptions`, {request});
     }
 
     createURL(request: GetPlaylistFeed):string{

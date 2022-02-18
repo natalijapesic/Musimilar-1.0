@@ -1,10 +1,21 @@
+<div class = "subscriptions">
+    <br>
+    <div class = "checkbox">
+        <div  class = "check" *ngFor="let genre of genres">
+           <input #checkbox (change)="checkValue(checkbox)" type="checkbox" value = {{genre}} [checked] = "this.user.subscriptions.includes(genre)"> 
+           <label> {{genre}} </label>
+        </div>
+    </div>
+    <button (click)="onSaveChanges()">Save changes</button>
+</div>
+
 <div *ngFor="let playlist of feed | async"> 
     <br><br>
     <app-playlist
-    [songList] = 'playlist.songs'
-    [example] = 'playlist.example'
-    [date] = 'playlist.date'
-    ></app-playlist>
+        [songList] = 'playlist.songs'
+        [example] = 'playlist.example'
+    >
+    </app-playlist>
     <br><br>
 </div>
 
