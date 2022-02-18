@@ -148,8 +148,7 @@ namespace MusimilarApi.Service
 
         public async Task<PlaylistDTO> AddPlaylistAsync(PlaylistDTO model, UserDTO userDTO)
         {
-            PlaylistDTO playlistDTO = userDTO.Playlists.Find(p => p.Example.Name.ToLower() == model.Example.Name.ToLower() && 
-                                                                  p.Example.Artist.ToLower() == model.Example.Artist.ToLower());
+            PlaylistDTO playlistDTO = userDTO.Playlists.Find(p => p.Example == model.Example);
 
             if(playlistDTO != null)
                 return null;

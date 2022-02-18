@@ -13,7 +13,7 @@ export class SimilarSongsComponent implements OnInit {
 
   user: User;
   songList:SongResponse[];
-  example: Song;
+  example: string;
 
   constructor(public songService: SongService,
     public authenticationService: AuthenticationService) 
@@ -25,7 +25,6 @@ export class SimilarSongsComponent implements OnInit {
 
   
   onRecommend(songName: HTMLInputElement, artistName: HTMLInputElement){
-    this.example = new Song(songName.value, artistName.value);
     let request = new PlaylistRequest(songName.value, artistName.value);
 
     this.songService.recommendPlaylist(request).subscribe({

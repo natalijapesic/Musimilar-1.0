@@ -4,5 +4,5 @@ export class Playlist{
 
     constructor(public name:string, 
                 public songs: Song[],
-                public example: Song){}
+                public example?: string){}
 }

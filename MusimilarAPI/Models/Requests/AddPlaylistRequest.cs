@@ -8,7 +8,7 @@ namespace MusimilarApi.Models.Requests{
         public string Name { get; set; }
         public ICollection<SongInfoRequest> Songs { get; set; }
 
-        public SongInfoRequest Example { get; set; }
+        public string Example { get; set; }
 
     }
 }

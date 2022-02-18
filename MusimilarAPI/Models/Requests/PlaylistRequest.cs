@@ -7,9 +7,9 @@ namespace MusimilarApi.Models.Requests
         public string Name { get; set; }
         public ICollection<SongInfoRequest> Songs { get; set; }
 
-        public SongInfoRequest Example { get; set; }
+        public string Example { get; set; }
 
-        public PlaylistRequest(string name, List<SongInfoRequest> songs, SongInfoRequest info){
+        public PlaylistRequest(string name, List<SongInfoRequest> songs, string info){
             
             this.Name = name;
             this.Songs = songs;  

@@ -119,14 +119,10 @@ namespace MusimilarApi.Controllers
             if(userDTO == null)
                 return BadRequest("User doesnt exist");
             
-            SongDTO song = await this._songService.GetSongByNameAsync(request.Example.Name, request.Example.Artist);
-            if(song == null)
-                return BadRequest();
-            
             playlistDTO = await _userService.AddPlaylistAsync(playlistDTO, userDTO);
 
             if(playlistDTO == null)
-                return BadRequest("Playlist already exists or song-example doesnt exist");
+                return BadRequest("Playlist already exists");
             else
                 return Ok(this._mapper.Map<Playlist>(playlistDTO));
         }

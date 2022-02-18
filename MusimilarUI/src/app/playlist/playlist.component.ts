@@ -14,7 +14,7 @@ export class PlaylistComponent implements OnInit {
 
   user: User;
   @Input() songList:SongResponse[];
-  @Input() example: Song;
+  @Input() example: string;
 
   constructor(public songService: SongService,
               public authenticationService: AuthenticationService,
@@ -29,12 +29,11 @@ export class PlaylistComponent implements OnInit {
 
   onSave(playlistName: HTMLInputElement){
     let request = new AddPlaylistRequest(this.user.id, playlistName.value, this.example, this.songList)
-    console.log(request)
+
     this.userService.addPlaylist(request).subscribe({
       next:(v) => {
-        console.log(request)
         this.user.playlists.push(v)
-        this.router.navigate(["/user-profile"]);
+          this.router.navigate(["/user-profile"]);
       },
       error:(e) => alert("This playlist is already saved")
     })

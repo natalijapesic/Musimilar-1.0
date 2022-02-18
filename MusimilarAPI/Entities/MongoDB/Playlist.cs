@@ -12,14 +12,8 @@ namespace MusimilarApi.Entities.MongoDB
         public ICollection<SongInfo> Songs { get; set; }
 
         [BsonElement("example")]
-        public SongInfo Example { get; set; }
+        public string Example { get; set; }
 
-        // public Playlist(string name, List<SongInfo> songs, SongInfo info){
-            
-        //     this.Name = name;
-        //     this.Songs = songs;  
-        //     this.Example = info;          
-        // }
 
     }
 }

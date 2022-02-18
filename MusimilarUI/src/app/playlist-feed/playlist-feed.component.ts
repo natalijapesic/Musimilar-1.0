@@ -62,6 +62,7 @@ export class PlaylistFeedComponent implements OnInit {
           if(data[0] == null)
             alert("There is still no new playlists");
           this.feed.next(data);
+          console.log(this.feed)
         }
       })
   }
