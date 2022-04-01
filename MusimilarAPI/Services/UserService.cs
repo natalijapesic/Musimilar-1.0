@@ -189,8 +189,8 @@ namespace MusimilarApi.Service
 
         public async Task<bool> AddSubscriptionAsync(List<string> genres, UserDTO user)
         {
-            if(user.Subscriptions.Count > 0)
-                return false;
+            // if(user.Subscriptions.Count > 0)
+            //     return false;
 
             var update = Builders<User>.Update.Set(s => s.Subscriptions, genres);
             UpdateResult result = await _collection.UpdateOneAsync(u => u.Id == user.Id, update);

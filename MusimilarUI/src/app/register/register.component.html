@@ -1,13 +1,11 @@
 <div class="main">
     <div class="form">
         <h1>Welcome to Musimilar</h1>
-        <label class="error-label">{{errorMessage}}</label>
         <div class="info">
             <input #name (keyup)="checkName(name.value)" type="text" placeholder="Input name">
         </div>
         <div class="info">
             <input #email (keyup)="checkEmail(email.value)" type="text" placeholder="Input e-mail">
-            <span *ngIf="!isEmailGood"><img src="../../../assets/img/error (1).png"></span>
         </div>
         <div class="info">
             <input #password (keyup)="checkPassword(password.value)" type="password" placeholder="Input password">
