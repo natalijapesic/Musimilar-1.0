@@ -15,7 +15,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"natalija\",\r\n    \"email\": \"natalija@elfak.rs\",\r\n    \"password\": \"zdravozivo\",\r\n    \"userRole\": \"Admin\"\r\n}",
+					"raw": "{\r\n    \"name\": \"elena\",\r\n    \"email\": \"elena@elfak.rs\",\r\n    \"password\": \"elena\",\r\n    \"userRole\": \"Admin\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -48,7 +48,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"natalija@elfak.rs\",\r\n    \"password\": \"zdravozivo\"\r\n}",
+					"raw": "{\r\n    \"email\": \"elena@elfak.rs\",\r\n    \"password\": \"elena\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -172,7 +172,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"LA\",\r\n\t\"artist\": \"Boy Harsher\", \r\n    \"audioFeatures\": \r\n    {\r\n        \"durationMS\": 165, \r\n        \"energy\": 0.98, \r\n        \"danceability\": 0.99, \r\n        \"speechiness\": 0.2, \r\n        \"valence\": 0.85, \r\n        \"tempo\": 0.5\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"One more step\",\r\n\t\"artist\": \"Hugo Kant\", \r\n    \"audioFeatures\": \r\n    {\r\n        \"durationMS\": 165, \r\n        \"energy\": 0.98, \r\n        \"danceability\": 0.99, \r\n        \"speechiness\": 0.2, \r\n        \"valence\": 0.85, \r\n        \"tempo\": 0.5\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -288,34 +288,29 @@
 		{
 			"name": "Subscriptions",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdGFsaWphQGVsZmFrLnJzIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjQ0MzUyNzIyLCJleHAiOjE2NDQzNzQzMjIsImlhdCI6MTY0NDM1MjcyMn0.pp8J3MsQCsFWN5YMxIb7q7uNAONplfkpHAp6IIK-U-k",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:5001/api/User/feed?Subscriptions=Rock",
-					"protocol": "https",
+					"raw": "http://localhost:5000/api/User/playlist/feed?Subscriptions=rock&Subscriptions=edm",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5001",
+					"port": "5000",
 					"path": [
 						"api",
 						"User",
+						"playlist",
 						"feed"
 					],
 					"query": [
 						{
 							"key": "Subscriptions",
-							"value": "Rock"
+							"value": "rock"
+						},
+						{
+							"key": "Subscriptions",
+							"value": "edm"
 						}
 					]
 				}
@@ -436,34 +431,6 @@
 			"response": []
 		},
 		{
-			"name": "GetPlaylist",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:5001/api/User/playlist/feed?Subscriptions=Rock",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"api",
-						"User",
-						"playlist",
-						"feed"
-					],
-					"query": [
-						{
-							"key": "Subscriptions",
-							"value": "Rock"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "DeletePlaylist",
 			"request": {
 				"method": "PUT",
@@ -493,36 +460,6 @@
 				}
 			},
 			"response": []
-		},
-		{
-			"name": "AddSubbscription",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"userId\":\"620586b04575323e6209e116\",\r\n    \"genre\": \"rock\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://localhost:5001/api/user/subscribe",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"api",
-						"user",
-						"subscribe"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"auth": {
@@ -530,7 +467,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdGFsaWphQGVsZmFrLnJzIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjQ0Njk0MzA5LCJleHAiOjE2NDQ3MTU5MDksImlhdCI6MTY0NDY5NDMwOX0.PYZrcNoSQyDuIYoxrQlXiqNQOmbbIvvONzvZVuDPr_0",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVsZW5hQGVsZmFrLnJzIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjQ4OTEzNjQ3LCJleHAiOjE2NDg5MzUyNDcsImlhdCI6MTY0ODkxMzY0N30.PbHWXezpXDA9rHHxsKLs3uhkQoqmdvL3hdk4oSvvFDQ",
 				"type": "string"
 			}
 		]
